@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" >
+
+    <EditText
+        android:id="@+id/txtClientName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/btnOk"
+        android:ems="10"
+        android:hint="@string/txt_client"
+        android:inputType="textPersonName" >
+        <requestFocus />
+    </EditText>
+    
+    <EditText
+        android:id="@+id/txtClientEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtClientName"
+        android:layout_toLeftOf="@+id/btnOk"
+        android:ems="10"
+        android:hint="@string/txt_client_email"
+        android:inputType="textEmailAddress" />
+    
+    <EditText
+        android:id="@+id/txtClientCpf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtClientEmail"
+        android:layout_toLeftOf="@+id/btnOk"
+        android:ems="10"
+        android:hint="@string/txt_client_cpf"
+        android:inputType="numberSigned" />
+
+    <EditText
+        android:id="@+id/txtCodeSale"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtClientCpf"
+        android:layout_toLeftOf="@+id/btnOk"
+        android:ems="10"
+        android:hint="@string/txt_code_sale"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/txtSellerCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtCodeSale"
+        android:layout_toLeftOf="@+id/btnOk"
+        android:ems="10"
+        android:hint="@string/txt_seller_code"
+        android:inputType="text" >
+
+    </EditText>
+
+    <Button
+        android:id="@+id/btnOk"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:focusable="true"
+        android:text="@android:string/ok" />
+    
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btnOk"
+        android:text="@string/action_cancel" />
+
+    <CheckBox
+        android:id="@+id/cbShowDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtSellerCode"
+        android:text="@string/txt_no_show_dialog_new_sale"
+    	android:paddingTop="@dimen/activity_vertical_margin"
+    	android:paddingBottom="@dimen/activity_vertical_margin" />
+
+</RelativeLayout>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="divider">-------------------------------\n</string>
+    <string name="cupom_not_fiscal">Este cupom NÃO tem valor fiscal\n</string>
+    <string name="sale_code">Código da Venda\n</string>
+    <string name="code_wait">SENHA DE ESPERA: %1$s \n</string>
+    <string name="sale_detail">Detalhes em: \nwww.autaz.me/sale/show/%1$s \n</string>
+</resources>

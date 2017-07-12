@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:clickable="true"
+    style="@style/buttonProduct">
+
+    <TextView
+        android:id="@+id/txtNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:singleLine="false"
+        android:minLines="3"
+        android:paddingTop="@dimen/vertical_padding_textView"
+        android:paddingBottom="@dimen/vertical_padding_textView"
+        android:paddingLeft="@dimen/horizontal_padding_textView"
+        android:paddingRight="@dimen/horizontal_padding_textView"
+        android:textAppearance="@style/textProductMedium" />
+
+    <RelativeLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:gravity="center"
+	    android:padding="0dp"
+	    android:background="@drawable/bg_product_text_stock">
+	    
+        <Button 
+	        android:id="@+id/btDecrementItem"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentBottom="true"
+	        android:text=" - "
+	        android:textColor="@android:color/white"
+	    	style="@style/buttonProductDecrement"
+	    	android:padding="0dp"/>
+	    
+        <TextView
+	        android:id="@+id/txtPriceInit"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerHorizontal="true"
+	        android:layout_alignParentTop="true"
+	        android:singleLine="true"
+	        android:paddingTop="2dp"
+	        android:paddingLeft="5dp"
+	        android:paddingRight="5dp"
+	        android:textAppearance="@style/textProductMedium" 
+	        android:textSize="@dimen/text_size_small_small"
+	        android:textColor="@color/red"/>
+	    <TextView
+	        android:id="@+id/txtPriceFinal"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerHorizontal="true"
+	        android:layout_below="@+id/txtPriceInit"
+	        android:singleLine="true"
+	        android:paddingLeft="5dp"
+	        android:paddingRight="5dp"
+	        android:textStyle="bold"
+	        android:textAppearance="@style/textProductMedium"/>
+	    
+        <Button 
+	        android:id="@+id/btIncrementItem"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentBottom="true"
+	        android:text=" + "
+	        android:textColor="@android:color/white"
+	    	style="@style/buttonProductIncrement"/>
+	</RelativeLayout>
+</LinearLayout>

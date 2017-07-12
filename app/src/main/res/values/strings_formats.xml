@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="format_date">dd-MM-yyyy</string>
+    <string name="format_date_divider">dd%1$sMM%1$syyyy</string>
+    <string name="format_date_time">dd-MM-yyyy HH:mm:ss</string>
+    <string name="format_date_time_divider">dd%1$sMM%1$syyyy HH:mm:ss</string>
+    <string name="format_date_time_divider_comercial">dd%1$sMM%1$syyyy - HH:mm</string>
+
+    <string name="format_money">##,##0.00</string>
+    <string name="format_money_with_symbol">R$ ##,##0.00</string>
+</resources>

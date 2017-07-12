@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/horizontal_padding_textView"
+    android:clickable="true">
+
+    <TextView
+        android:id="@+id/txtDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/container1"
+        android:singleLine="true"
+		android:paddingTop="@dimen/horizontal_padding_textView"
+		android:paddingBottom="@dimen/vertical_padding_textView"
+        android:textAppearance="@style/textProductMedium"
+        android:textColor="@color/gray" />
+    
+    <TableRow
+        android:id="@+id/container1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+		android:paddingBottom="@dimen/horizontal_padding_textView"
+        android:gravity="center_vertical|center_horizontal" >
+
+        <TextView
+	        android:id="@+id/txt1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:singleLine="true"
+	        android:paddingRight="@dimen/horizontal_padding_textView"
+	        android:textAppearance="@style/textProductMedium"
+	        android:textColor="@android:color/black"/>
+        
+        <Space
+             android:layout_width="0dp"
+             android:layout_height="wrap_content" 
+             android:layout_weight="0.3"/>
+	    
+	    <TextView
+	        android:id="@+id/txt2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:singleLine="true"
+	        android:paddingRight="@dimen/horizontal_padding_textView"
+	        android:textAppearance="@style/textProductLarge"
+	        android:textColor="@android:color/black"/>
+        
+        <Space
+             android:layout_width="0dp"
+             android:layout_height="wrap_content" 
+             android:layout_weight="1"/>
+	
+	    <TextView
+	        android:id="@+id/txt3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:singleLine="true"
+	        android:paddingRight="@dimen/horizontal_padding_textView"
+	        android:textAppearance="@style/textProductMedium"
+	        android:textColor="@android:color/black"/>
+    </TableRow>
+</RelativeLayout>

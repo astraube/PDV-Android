@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="options_sales_sync_activity">
+        <item>Hoje</item>
+        <item>Semana Atual</item>
+        <item>Mês Atual</item>
+        <item>Ano Atual</item>
+    </string-array>
+    
+    <string-array name="pref_value_cupons">
+        <item>0</item>
+        <item>1</item>
+	    <item>2</item>
+	    <item>3</item>
+	    <item>4</item>
+	    <item>5</item>
+	</string-array>
+    
+    <string-array name="pref_length_order_code">
+	    <item>2</item>
+	    <item>3</item>
+	    <item>4</item>
+	    <item>5</item>
+	    <item>6</item>
+	</string-array>
+    
+    <array name="arr_items_payment_types">
+        <item>sale_pay_type_money</item>
+        <item>sale_pay_type_debt</item>
+        <item>sale_pay_type_credit</item>
+        <item>sale_pay_type_voucher</item>
+    </array>
+	<array name="arr_icons_payment_types">
+        <item>bg_button_payment_money</item>
+        <item>bg_button_payment_debit</item>
+        <item>bg_button_payment_credit</item>
+        <item>bg_button_payment_voucher</item>
+    </array>
+     
+	<array name="arr_items_float_menu">
+		<!-- <item>float_menu_item_calc</item> -->
+		<item>float_menu_item_products</item>
+		<item>float_menu_item_sales</item>
+		<!-- <item>float_menu_item_help</item> -->
+		<!-- <item>float_menu_item_layout</item> -->
+		<!-- <item>float_menu_item_style</item>  -->
+		<item>float_menu_item_adjustments</item>
+        <item>float_menu_item_suggestion</item>
+        <item>float_menu_item_printer</item>
+	</array>
+	<array name="arr_icons_float_menu">
+        <!-- <item>ic_calc</item> -->
+        <item>ic_product</item>
+        <item>ic_launcher</item>
+        <!-- <item>ic_ladrao_off</item> -->
+        <!-- <item>ic_layout</item> -->
+        <!-- <item>ic_style</item> -->
+        <item>ic_settings</item>
+        <item>ic_suggestion</item>
+        <item>ic_printer</item>
+    </array>
+
+</resources>

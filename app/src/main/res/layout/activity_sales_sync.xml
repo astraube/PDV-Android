@@ -1,0 +1,86 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+    </ListView>
+    
+    <LinearLayout
+        android:id="@+id/containerResume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="top|center_horizontal"
+        android:paddingTop="@dimen/vertical_padding_textView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/listView"
+        android:orientation="vertical"
+        android:background="@drawable/bg_button_white"
+        android:clickable="true" >
+        
+        <Spinner 
+            android:id="@+id/spinnerTipoRelatorio"
+		    android:layout_width="200dp"
+		    android:layout_height="50dp"
+		    android:layout_gravity="left"
+		    android:entries="@array/options_sales_sync_activity"/>
+        
+        <TextView
+            android:id="@+id/textViewTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/vertical_padding_textView"
+            android:paddingBottom="@dimen/vertical_padding_textView"
+            android:text="R$"
+            android:textSize="32dip"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <TextView
+            android:id="@+id/textViewDateSaled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/vertical_padding_textView"
+            android:textColor="@color/black_opaque"/>
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="@dimen/vertical_padding_textView"
+            android:paddingBottom="@dimen/vertical_padding_textView"
+            android:background="@color/gray_opaque"
+            android:textColor="@color/black_opaque"
+            android:text="@string/txt_resume" />
+
+    </LinearLayout>
+	
+    <TableLayout
+        android:id="@+id/tableLayoutDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/containerResume"
+        android:gravity="top|right"
+        android:paddingBottom="@dimen/vertical_padding_textView"
+        android:paddingLeft="@dimen/horizontal_padding_textView"
+        android:paddingRight="@dimen/horizontal_padding_textView"
+        android:paddingTop="@dimen/vertical_padding_textView" >
+
+        
+    </TableLayout>
+    
+    <com.autazcloud.pdv.ui.views.FloatUserButtonView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
+
+</RelativeLayout>

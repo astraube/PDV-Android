@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:paddingBottom="@dimen/vertical_padding_textView"
+    android:paddingLeft="@dimen/horizontal_padding_textView"
+    android:paddingRight="@dimen/horizontal_padding_textView"
+    android:paddingTop="@dimen/vertical_padding_textView"
+    android:clickable="true"
+    android:background="@drawable/bg_button_sale_pay">
+    
+
+    <TextView
+        android:id="@+id/txtNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:singleLine="false"
+        android:paddingTop="@dimen/vertical_padding_textView"
+        android:paddingBottom="@dimen/vertical_padding_textView"
+        android:paddingLeft="@dimen/horizontal_padding_textView"
+        android:paddingRight="@dimen/horizontal_padding_textView"
+        android:textAppearance="@style/textProductLarge"/>
+    
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+    	 />
+
+    <TextView
+        android:id="@+id/txtDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:singleLine="false"
+        android:paddingTop="@dimen/vertical_padding_textView"
+        android:paddingBottom="@dimen/vertical_padding_textView"
+        android:paddingLeft="@dimen/horizontal_padding_textView"
+        android:paddingRight="@dimen/horizontal_padding_textView"
+        android:textAppearance="@style/textProductMedium" />
+</LinearLayout>

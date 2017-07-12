@@ -1,0 +1,72 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <PreferenceCategory
+        android:summary="@string/category_globals_title"
+        android:title="@string/category_globals_summary" >
+        <ListPreference     
+            android:title="@string/globals_cupom_print_title"
+            android:summary="@string/globals_cupom_print_summary"
+            android:key="@string/pref_key_num_cupons_print"
+            android:defaultValue="1"
+		    android:inputType="number"
+            android:entries="@array/pref_value_cupons"
+            android:entryValues="@array/pref_value_cupons" />
+        
+        <ListPreference     
+            android:title="@string/globals_length_order_code_title"
+            android:summary="@string/globals_length_order_code_summary"
+            android:key="@string/pref_key_length_order_code"
+            android:defaultValue="3"
+		    android:inputType="number"
+            android:entries="@array/pref_length_order_code"
+            android:entryValues="@array/pref_length_order_code" />
+        
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_product_joker"
+            android:title="@string/globals_joker_title"
+            android:summary="@string/globals_joker_summary" />
+    </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:summary="@string/category_login_title"
+        android:title="@string/category_login_summary" >
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_key_login_required_startup"
+            android:title="@string/login_required_startup_title"
+            android:summary="@string/login_required_startup_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_key_pass_required_inactivity"
+            android:title="@string/pass_required_inactivity_title"
+            android:summary="@string/pass_required_inactivity_summary" />
+    </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:summary="@string/category_dialog_title"
+        android:title="@string/category_dialog_summary" >
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_key_display_dialog_new_sale"
+            android:title="@string/display_dialog_new_sale_title"
+            android:summary="@string/display_dialog_new_sale_summary" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_key_display_dialog_scc"
+            android:title="@string/display_dialog_scc_title"
+            android:summary="@string/display_dialog_scc_summary" />
+    </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:summary="@string/category_visual_title"
+        android:title="@string/category_visual_summary" >
+
+        <!--<SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_key_show_flake_anime"
+            android:title="@string/show_flake_anime_title"
+            android:summary="@string/show_flake_anime_summary" />-->
+
+    </PreferenceCategory>
+</PreferenceScreen>

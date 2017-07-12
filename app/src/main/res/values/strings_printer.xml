@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialog_print_title">Imprimir Cupom</string>
+    <string name="dialog_print_msg">Deseja realmente imprimir o cupom da venda?</string>
+    <string name="action_yes_print">Sim, imprimir!</string>
+    <string name="methoderr_errcode">Error Code</string>
+    <string name="methoderr_method">Method</string>
+    <string name="statusmsg_result">Result</string>
+    <string name="statusmsg_status">Status</string>
+    <string name="statusmsg_batterystatus">Battery Status</string>
+    <string name="statusmsg_ipaddress">IP Address / MAC Address / USB Device Node</string>
+    <string name="errmsg_noaddress">IP address or MAC address or USB Device Node is not specified.</string>
+    <string name="errmsg_notext">Print data is not input.</string>
+    <string name="errmsg_noimage">Print image is not selected.</string>
+    <string name="errmsg_getname">Failed to get printer name.</string>
+    <string name="namemsg_name">Printer Name</string>
+    <string name="namemsg_language">Language</string>
+    
+    
+    <string name="errmsg_text_print">Erro ao Enviar dados de impressão!</string>
+
+
+    <string name="handlingmsg_err_not_config">A impressora não foi configurada!\n</string>
+    <string name="handlingmsg_err_head">Print head of printer is hot.\n</string>
+    <string name="handlingmsg_err_motor">Motor Driver IC of printer is hot.\n</string>
+    <string name="handlingmsg_err_battery">Battery of printer is hot.\n</string>
+    <string name="handlingmsg_err_overheat">Please wait until error LED of the printer turns off. \n</string>
+    <string name="handlingmsg_err_no_response">Please check the connection of the printer and the mobile terminal.\nConnection get lost.\n</string>
+    <string name="handlingmsg_err_cover_open">Please close roll paper cover.\n</string>
+    <string name="handlingmsg_err_paper_feed">Please release a paper feed switch.\n</string>
+    <string name="handlingmsg_err_receipt_end">Please check roll paper.\n</string>
+    <string name="handlingmsg_err_wrong_paper">Please set correct roll paper.\n</string>
+    <string name="handlingmsg_err_autocutter">Please remove any jammed paper or foreign substances in the printer, and then turn the printer off and turn the printer on again.\n</string>
+    <string name="handlingmsg_err_need_recover">Then, If the printer doesn\'t recover from error, please cycle the power switch.\n</string>
+    <string name="handlingmsg_err_unrecover">Please cycle the power switch of the printer.\nIf same errors occurred even power cycled, the printer may out of order.</string>
+    <string name="handlingmsg_err_battery_real_end">Please connect AC adapter or change the battery.\nBattery of printer is almost empty.\n</string>
+    <string name="handlingmsg_warn_receipt_near_end">Roll paper is nearly end.\n</string>
+    <string name="handlingmsg_warn_battery_near_end">Battery level of printer is low.\n</string>
+    <string name="handlingmsg_ex_param">Programming error: Parameter error has occurred.\n</string>
+    <string name="handlingmsg_ex_open">Please check the connection of the printer and the mobile terminal.\nFailed to open communication port.\n</string>
+    <string name="handlingmsg_ex_connect">Por favor, reconecte a impressora ao terminal de vendas.\nFalha ao se comunicar com a impressora.\n</string>
+    <string name="handlingmsg_ex_timeout">Please check the connection of the printer and the mobile terminal.\nCommunication has timed out.\n</string>
+    <string name="handlingmsg_ex_memory">Please close unnessesary applications.\nFree memory of the mobile terminal is insufficient.</string>
+    <string name="handlingmsg_ex_illegal">Programming error: Some API was called improperly.\n</string>
+    <string name="handlingmsg_ex_processing">Programming error: Please wait until completion of current processing.\n</string>
+    <string name="handlingmsg_ex_unsupported">Programming error: Unsupported printer has selected.\n</string>
+    <string name="handlingmsg_ex_off_line">Printer is offline.\n</string>
+    <string name="handlingmsg_ex_failure">Please check communication settings of the mobile terminal and application execution environment.\nUnknown error has occurred.\n</string>
+    <string name="handlingmsg_ex_application_error">Please contact developer of this application.\nApplication error has occurred.\n</string>
+    <string name="handlingmsg_notice_printer_problems">Printer problems:\n</string>
+    <string name="handlingmsg_notice_failed">Failed to get printer status.\n</string>
+    <string name="handlingmsg_notice_error">Error:\n</string>
+    <string name="handlingmsg_notice_warning">Warning:\n</string>
+</resources>

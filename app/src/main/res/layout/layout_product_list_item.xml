@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:id="@+id/txt1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lines="1"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="@dimen/horizontal_padding_textView"
+        android:paddingRight="@dimen/horizontal_padding_textView"
+        android:paddingTop="@dimen/vertical_padding_textView"
+        android:textAppearance="@style/textProductLarge"
+        android:textColor="@android:color/black"/>
+    
+    <TextView
+        android:id="@+id/txt2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lines="1"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingRight="200dp"
+        android:textAppearance="@style/textProductLarge"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:id="@+id/txt3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lines="1"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txt1"
+        android:paddingLeft="@dimen/horizontal_padding_textView"
+        android:paddingRight="@dimen/horizontal_padding_textView"
+        android:paddingBottom="@dimen/vertical_padding_textView"
+        android:textAppearance="@style/textProductMedium"
+        android:textColor="@android:color/black"/>
+</merge>

@@ -1,0 +1,48 @@
+<resources>
+
+    <string name="title_activity_settings">Ajustes</string>
+    
+    <!-- Strings Category Globals -->
+    <string name="category_globals_title">Configurações Globais</string>
+    <string name="category_globals_summary">Configurações Globais</string>
+    
+    <string name="globals_joker_title">Exibir produto coringa</string>
+    <string name="globals_joker_summary">Se selecionado exibe um produto com o nome diversos. O preço é inserido manualmente.</string>
+    <string name="globals_cupom_print_title">Cupons</string>
+    <string name="globals_cupom_print_summary">Quantos cupons deve imprimir ao efetuar uma venda?</string>
+    <string name="globals_cupom_print_dialog">Cupons para imprimir</string>
+    <string name="globals_length_order_code_title">Senha de Pedido</string>
+    <string name="globals_length_order_code_summary">Quantos números tem a senha de pedidos?</string>
+    <string name="globals_length_order_code_dialog">Tamanho da Senha de Pedido</string>
+    
+    
+    <!-- Strings Category Login -->
+    <string name="category_login_title">Configurações de Login</string>
+    <string name="category_login_summary">Configurações de Login</string>
+    
+    <string name="login_required_startup_title">Solicitar login ao iniciar o programa</string>
+    <string name="login_required_startup_summary">Se selecionado exibe a tela de login na inicialização do programa.</string>
+    <string name="pass_required_inactivity_title">Solicitar senha ao desligar tela</string>
+    <string name="pass_required_inactivity_summary">Se selecionado solicita senha quando o programa entrar em inatividade.</string>
+    
+    <!-- Strings Category Dialog -->
+    <string name="category_dialog_title">Caixas de Diálogo</string>
+    <string name="category_dialog_summary">Caixas de Diálogo</string>
+    
+    <string name="display_dialog_new_sale_title">Não exibir popup de Informações da Venda</string>
+    <string name="display_dialog_new_sale_summary">Se selecionado deixa de exibir a caixa de diálogo ao clicar em \"Nova Venda\".</string>
+    
+    <string name="display_dialog_scc_title">Não exibir popup de Cancelar Venda</string>
+    <string name="display_dialog_scc_summary">Se selecionado deixa de exibir a caixa de diálogo para cancelar venda zerada, ao clicar em \"Voltar\".</string>
+    
+    <!-- Strings Category Visual -->
+    <string name="category_visual_title">Configurações de Layout e Visual</string>
+    <string name="category_visual_summary">Configurações de Layout e Visual.</string>
+    
+    <string name="show_flake_anime_title">Exibir animação chuva de imagens</string>
+    <string name="show_flake_anime_summary">Se selecionado exibe a animação de \"chuva de imagens\" na tela inicial.</string>
+    
+    <string name="show_layout_title">Layout do Sistema</string>
+    <string name="show_layout_summary">Escolha o layout do sistema que mais atende seu estabelecimento.</string>
+
+</resources>

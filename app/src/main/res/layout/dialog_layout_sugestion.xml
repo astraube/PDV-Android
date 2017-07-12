@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" >
+    
+    <EditText
+        android:id="@+id/txSubject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/btSend"
+        android:ems="10"
+        android:hint="@string/txt_sugestion_subject"
+        android:inputType="text" >
+        <requestFocus />
+    </EditText>
+	
+    <EditText
+        android:id="@+id/txText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txSubject"
+        android:layout_toLeftOf="@+id/btSend"
+        android:ems="10"
+        android:hint="@string/txt_sugestion_text"
+        android:inputType="text" >
+    </EditText>
+    
+	<Button
+        android:id="@+id/btSend"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:focusable="true"
+        android:text="@string/action_send" />
+	
+	<Button
+        android:id="@+id/btnCancel"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btSend"
+        android:text="@string/action_cancel" />
+</RelativeLayout>

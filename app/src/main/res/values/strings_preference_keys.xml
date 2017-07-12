@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- <string name="pref_key_"></string>-->
+    
+    <string name="pref_key_help_button_on">isHelpButtonOn</string>
+    
+    <!-- Exclusivas para o aplicativo PDV -->
+    <string name="pref_key_layout_selected_id">layoutSelectedId</string>
+    <string name="pref_key_num_cupons_print">numCuponsPrint</string>
+    <string name="pref_key_length_order_code">numLengthOrderCode</string> <!-- Quantidade de numeros para a senha de pedidos -->
+    <string name="pref_key_num_count_sales">countSales</string> <!-- Contagem sequencial de vendas efetuadas -->
+    <string name="pref_key_product_joker">isVisibleProductJoker</string>
+    <string name="pref_key_login_required_startup">isLoginRequired</string>
+    <string name="pref_key_pass_required_inactivity">isPassRequiredInactivity</string>
+    <string name="pref_key_display_dialog_new_sale">isShowDialogNewSale</string>
+    <string name="pref_key_display_dialog_scc">isShowSccDialog</string>
+    <string name="pref_key_show_flake_anime">isShowFlakeAnime</string>
+</resources>
