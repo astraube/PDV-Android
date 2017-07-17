@@ -9,8 +9,8 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
 import com.autazcloud.pdv.R;
-import com.autazcloud.pdv.domain.constants.Constants;
 import com.autazcloud.pdv.data.local.PreferencesRepository;
+import com.autazcloud.pdv.domain.constants.Constants;
 
 public class SaleCloseDialog extends AlertDialog.Builder {
 	

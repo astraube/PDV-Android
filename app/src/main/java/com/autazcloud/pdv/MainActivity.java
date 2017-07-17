@@ -8,17 +8,16 @@ import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.autazcloud.pdv.ui.base.BaseActivity;
+import com.autazcloud.pdv.data.local.PreferencesRepository;
+import com.autazcloud.pdv.data.remote.ResultDefault;
+import com.autazcloud.pdv.data.remote.repositoryes.AuthRepository;
 import com.autazcloud.pdv.data.remote.service.ApiService;
+import com.autazcloud.pdv.data.remote.subscribers.SubscriberInterface;
 import com.autazcloud.pdv.domain.constants.AuthAttr;
 import com.autazcloud.pdv.domain.interfaces.LoginInterface;
-import com.autazcloud.pdv.data.local.PreferencesRepository;
 import com.autazcloud.pdv.helpers.defaults.MainThreadBus;
-import com.autazcloud.pdv.data.remote.ResultDefault;
-import com.autazcloud.pdv.data.remote.subscribers.LoginSubscriber;
-import com.autazcloud.pdv.data.remote.subscribers.SubscriberInterface;
+import com.autazcloud.pdv.ui.base.BaseActivity;
 import com.autazcloud.pdv.ui.dialog.LoginDialog;
 import com.github.pierry.simpletoast.SimpleToast;
 import com.google.gson.Gson;
@@ -28,7 +27,6 @@ import com.google.gson.JsonObject;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
-import rx.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity implements LoginInterface, SubscriberInterface {
 
@@ -41,6 +39,8 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 
 	private LoginDialog loginDialog = null;
 	private ApiService advService;
+
+	private AuthRepository mAuthRepo;
 
 	@Inject
 	MainThreadBus bus;
@@ -61,6 +61,8 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 		//bus.register(this);
 
 		advService = getApp().getApiService();
+
+		this.mAuthRepo = new AuthRepository(this);
 		
 		/*
 		String deviceId = Settings.System.getString(getContentResolver(), Secure.ANDROID_ID);
@@ -77,6 +79,11 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 		//Log.v(TAG, "onStart");
 
 		//((CustomApplication)getApplication()).isFirstAcccess()
+
+		if (BuildConfig.DEBUG) {
+			onLoginDebug();
+			return;
+		}
 
 		if (PreferencesRepository.isValueEmpty(AuthAttr.USER_API_TOKEN) || PreferencesRepository.isValueEmpty(AuthAttr.ACCOUNT_PUBLIC_TOKEN)) {
 			showLoginView();
@@ -127,11 +134,6 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 	}
 
 	@Override
-	public SubscriberInterface getSubscriberInterface() {
-		return this;
-	}
-
-	@Override
 	public boolean onLogin(String username, String password) {
 		if(TextUtils.isEmpty(username.trim()) || TextUtils.isEmpty(password.trim()))  {
 			return false;
@@ -141,15 +143,25 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 		PreferencesRepository.setValue(AuthAttr.USERNAME, username);
 
 		try {
-			advService.authorization(username, password)
-					.subscribeOn(Schedulers.io())
-					.subscribe(new LoginSubscriber(MainActivity.this));
+			this.mAuthRepo.onLogin(username, password);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 		return true;
+	}
+
+	private void onLoginDebug() {
+		PreferencesRepository.setValue(AuthAttr.USER_NAME, "Andre Straube");
+		PreferencesRepository.setValue(AuthAttr.USER_EMAIL, "a.straube.m@gmail.com");
+		PreferencesRepository.setValue(AuthAttr.USER_API_TOKEN, "fc8425fdf0350941c9bff17a4b4e42bbaf45189df25b1142000c47f9e4752663");
+		PreferencesRepository.setValue(AuthAttr.USER_PUBLIC_TOKEN, "19dc8dd3cfe1cf9a08624a74c2de19f2");
+
+		PreferencesRepository.setValue(AuthAttr.ACCOUNT_CLIENT_ID, "865f7ac2b211e5f6b8b88a15c6f73ca28abb3c34a1e39fa38663398b983e174c");
+		PreferencesRepository.setValue(AuthAttr.ACCOUNT_PUBLIC_TOKEN, "7c25b7f2be31e30bb96ed3097feec183");
+
+		initialize();
 	}
 
     @Override

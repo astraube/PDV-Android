@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.autazcloud.pdv.R;
 import com.autazcloud.pdv.controllers.printer.Cupom;
+import com.autazcloud.pdv.data.local.ProductsRealmRepository;
+import com.autazcloud.pdv.data.local.SalesRealmRepository;
 import com.autazcloud.pdv.domain.enums.PaymentMethodEnum;
 import com.autazcloud.pdv.domain.enums.SaleStatusEnum;
 import com.autazcloud.pdv.domain.interfaces.ProductInterface;
@@ -14,8 +16,6 @@ import com.autazcloud.pdv.domain.models.Payment;
 import com.autazcloud.pdv.domain.models.Product;
 import com.autazcloud.pdv.domain.models.SaleItemModel;
 import com.autazcloud.pdv.domain.models.SaleModel;
-import com.autazcloud.pdv.data.local.ProductsRealmRepository;
-import com.autazcloud.pdv.data.local.SalesRealmRepository;
 import com.autazcloud.pdv.ui.base.CustomApplication;
 
 public abstract class SaleController implements SaleControllerInterface {

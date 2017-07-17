@@ -24,7 +24,7 @@
     
     <dimen name="height_search_view_product">70dp</dimen>
     
-    <dimen name="corner_button_product">8dp</dimen>
+    <dimen name="corner_button">8dp</dimen>
 
     <dimen name="key_height">52dip</dimen>
     <dimen name="candidate_font_height">20sp</dimen>

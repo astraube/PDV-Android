@@ -1,57 +1,36 @@
 package com.autazcloud.pdv;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
-import android.support.v4.content.ContextCompat;
-import android.text.Layout;
-import android.text.TextPaint;
 import android.util.Log;
-import android.view.Display;
-import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.autazcloud.pdv.controllers.MaterialIntroController;
-import com.autazcloud.pdv.data.local.PreferencesRepository;
-import com.autazcloud.pdv.data.local.ProductsRealmRepository;
-import com.autazcloud.pdv.data.remote.ResultDefault;
-import com.autazcloud.pdv.data.remote.subscribers.DefaultSubscriber;
-import com.autazcloud.pdv.data.remote.subscribers.LoginSubscriber;
-import com.autazcloud.pdv.domain.constants.AuthAttr;
-import com.autazcloud.pdv.domain.models.Client;
-import com.autazcloud.pdv.helpers.IDManagement;
-import com.autazcloud.pdv.ui.base.BaseActivity;
 import com.autazcloud.pdv.controllers.SaleController;
-import com.autazcloud.pdv.domain.enums.PaymentMethodEnum;
+import com.autazcloud.pdv.data.local.ProductsRealmRepository;
+import com.autazcloud.pdv.data.local.SalesRealmRepository;
+import com.autazcloud.pdv.data.remote.repositoryes.AuthRepository;
+import com.autazcloud.pdv.data.remote.repositoryes.ProductsRepository;
+import com.autazcloud.pdv.data.remote.subscribers.SubscriberInterface;
 import com.autazcloud.pdv.domain.enums.SaleStatusEnum;
 import com.autazcloud.pdv.domain.models.CallbackModel;
+import com.autazcloud.pdv.domain.models.Client;
 import com.autazcloud.pdv.domain.models.SaleModel;
-import com.autazcloud.pdv.executor.adapters.SalesGridAdapter;
-import com.autazcloud.pdv.data.local.SalesRealmRepository;
-import com.autazcloud.pdv.data.remote.ProductsRepository;
+import com.autazcloud.pdv.ui.adapters.SalesGridAdapter;
+import com.autazcloud.pdv.ui.base.BaseActivity;
 import com.autazcloud.pdv.ui.dialog.DialogUtil;
 import com.autazcloud.pdv.ui.dialog.SaleNewDialog;
 import com.autazcloud.pdv.ui.views.FloatUserButtonView;
-import com.google.gson.JsonObject;
 import com.madx.updatechecker.lib.UpdateRunnable;
 
 import java.util.ArrayList;
@@ -59,12 +38,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import info.hoang8f.android.segmented.SegmentedGroup;
-import rx.schedulers.Schedulers;
 
 
-public class SalesGridActivity extends BaseActivity {
+public class SalesGridActivity extends BaseActivity implements SubscriberInterface {
 	
 	private final String TAG;
 	private SaleCtrl mSaleCtrl;
@@ -72,6 +49,8 @@ public class SalesGridActivity extends BaseActivity {
 	private SaleStatusEnum currentStatus;
 	private List<SaleModel> mCurrentSaleList;
 	private MaterialIntroController mIntroCtrl;
+	private ProductsRepository mProductsRepo;
+	private AuthRepository mAuthRepo;
 
 	@BindView(R.id.btNewSale)
 	Button btNewSale;
@@ -98,6 +77,11 @@ public class SalesGridActivity extends BaseActivity {
 		super();
 		this.TAG = getClass().getSimpleName();
 	}
+
+	// color chooser dialog
+	private int primaryPreselect;
+	// UTILITY METHODS
+	private int accentPreselect;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -134,48 +118,12 @@ public class SalesGridActivity extends BaseActivity {
 		rbt.setSelected(true);
 		setCurrentStatus(SaleStatusEnum.OPEN);
 
+		this.mProductsRepo = new ProductsRepository(this);
+		this.mAuthRepo = new AuthRepository(this);
+
+		this.mAuthRepo.onValidateCredentialsUser(this);
+
 		new UpdateRunnable(this, new Handler(), 10 * 1000).start();
-
-
-		if (ProductsRealmRepository.count() == 0)
-			ProductsRepository.onLoadProducts(this);
-	}
-
-	private void validateCredentialsUser() {
-		String apiToken = PreferencesRepository.getValue(AuthAttr.USER_API_TOKEN);
-		String publicToken = PreferencesRepository.getValue(AuthAttr.USER_PUBLIC_TOKEN);
-
-		getApp().getApiService().authorizationValidate(apiToken, publicToken)
-				.subscribeOn(Schedulers.io())
-				.subscribe(new DefaultSubscriber<ResultDefault>() {
-
-					@Override
-					public void onError(Throwable e) {
-						// TODO - exibir o erro que o servidor retornou
-						Log.e("LoginSubscriber - ", e.getMessage());
-						Log.e("LoginSubscriber - ", e.getLocalizedMessage());
-
-						PreferencesRepository.setValue(AuthAttr.USER_API_TOKEN, "");
-						PreferencesRepository.setValue(AuthAttr.USER_PUBLIC_TOKEN, "");
-
-						SweetAlertDialog pDialog = new SweetAlertDialog(SalesGridActivity.this, SweetAlertDialog.ERROR_TYPE);
-						pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-						pDialog.setTitle(R.string.err_login_try_again);
-						pDialog.setContentText(getString(R.string.err_auth_invalid));
-						pDialog.setCancelable(false);
-						pDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-							@Override
-							public void onDismiss(DialogInterface dialogInterface) {
-								Intent intent = new Intent(SalesGridActivity.this, MainActivity.class);
-								intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-								startActivity(intent);
-							}
-						});
-						SalesGridActivity.this.setSweetDialog(pDialog);
-
-						super.onError(e);
-					}
-				});
 	}
 
 	private void setCurrentStatus(SaleStatusEnum statusSale) {
@@ -233,20 +181,11 @@ public class SalesGridActivity extends BaseActivity {
 	}
 
 	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		super.onWindowFocusChanged(hasFocus);
-		Log.v(TAG, "onWindowFocusChanged - " + hasFocus);
-
-		if (hasFocus) {
-			this.mIntroCtrl.start();
-		} else {
-			this.mIntroCtrl.stop();
-		}
-	}
-
-	@Override
 	public void onStart() {
 		super.onStart();
+
+		if (ProductsRealmRepository.count() == 0)
+			this.mProductsRepo.onLoadProducts();
 
 		/*
 		// Cria adapter para o GridView e cria o botao "Nova Venda"
@@ -261,21 +200,35 @@ public class SalesGridActivity extends BaseActivity {
 
 		this.setCurrentStatus(this.currentStatus);
 
-		this.validateCredentialsUser();
-
 		this.startIntro();
+	}
+
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		super.onWindowFocusChanged(hasFocus);
+		Log.v(TAG, "onWindowFocusChanged - " + hasFocus);
+
+		if (hasFocus) {
+			this.mIntroCtrl.start();
+		} else {
+			this.mIntroCtrl.stop();
+		}
 	}
 	
 	@Override
     protected void onPause() {
         super.onPause();
+
+		// Serve para remover o focus do serchView
+		searchView.clearFocus();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        //updater.start();
+		// Serve para remover o focus do serchView
+		searchView.clearFocus();
     }
     
     @Override 

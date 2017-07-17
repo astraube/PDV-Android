@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,10 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
 import com.autazcloud.pdv.LayoutActivity;
+import com.autazcloud.pdv.PreferenceActivity;
 import com.autazcloud.pdv.ProductsActivity;
 import com.autazcloud.pdv.R;
 import com.autazcloud.pdv.SalesActivity;
-import com.autazcloud.pdv.SettingsActivity;
 import com.autazcloud.pdv.controllers.printer.DiscoverPrinterActivity;
 import com.autazcloud.pdv.ui.views.ImageTextView;
 
@@ -47,34 +48,31 @@ public class FloatMenuDialog extends Dialog implements View.OnClickListener {
 	@Override
 	public void onClick(View v) {
 		Log.v(TAG, "Clicked: " + v.getTag());
-		
+
+		String tag = v.getTag().toString();
 		Intent intent = null;
 		
-		if (v.getTag().toString().equals(mActivity.getString(R.string.float_menu_item_adjustments))) {
+		if (tag.equals(mActivity.getString(R.string.float_menu_item_adjustments)) || tag.equals(mActivity.getString(R.string.float_menu_item_style))) {
 			// Ajustes
-			intent = new Intent(mActivity, SettingsActivity.class);
+			intent = new Intent(mActivity, PreferenceActivity.class);
 			
-		} else if (v.getTag().toString().equals(mActivity.getString(R.string.float_menu_item_layout))) {
+		} else if (tag.equals(mActivity.getString(R.string.float_menu_item_layout))) {
 			// Layout
 			intent = new Intent(mActivity, LayoutActivity.class);
 			
-		} else if (v.getTag().toString().equals(mActivity.getString(R.string.float_menu_item_style))) {
-			// Estilo
-			intent = new Intent(mActivity, SettingsActivity.class);
-			
-		} else if (v.getTag().toString().equals(mActivity.getString(R.string.float_menu_item_products))) {
+		} else if (tag.equals(mActivity.getString(R.string.float_menu_item_products))) {
 			// Produtos
 			intent = new Intent(mActivity, ProductsActivity.class);
 			
-		} else if (v.getTag().toString().equals(mActivity.getString(R.string.float_menu_item_sales))) {
+		} else if (tag.equals(mActivity.getString(R.string.float_menu_item_sales))) {
 			// Vendas Sync
 			intent = new Intent(mActivity, SalesActivity.class);
 			
-		} else if (v.getTag().toString().equals(mActivity.getString(R.string.float_menu_item_suggestion))) {
+		} else if (tag.equals(mActivity.getString(R.string.float_menu_item_suggestion))) {
 			// Sugest�es
 			new SugestionDialog(mActivity);
 			
-		} else if (v.getTag().toString().equals(mActivity.getString(R.string.float_menu_item_calc))) {
+		} else if (tag.equals(mActivity.getString(R.string.float_menu_item_calc))) {
 			// Calculadora
 			//ComponentName cn = new ComponentName("br.com.i9algo", "br.com.i9algo.calc");
 			//ComponentName cn = new ComponentName("com.android", "com.android.calculator2");
@@ -86,7 +84,7 @@ public class FloatMenuDialog extends Dialog implements View.OnClickListener {
 			intent.addCategory(Intent.CATEGORY_LAUNCHER);
 			intent.setComponent(new ComponentName("com.android.calculator2", "com.android.calculator2.Calculator"));
 			
-		} else if (v.getTag().toString().equals(mActivity.getString(R.string.float_menu_item_printer))) {
+		} else if (tag.equals(mActivity.getString(R.string.float_menu_item_printer))) {
 			// Assistende da impressora
 			intent = new Intent(mActivity, DiscoverPrinterActivity.class);
 			mActivity.startActivityForResult(intent, 0);

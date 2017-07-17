@@ -45,7 +45,7 @@ public class SaleStatusUtil {
                 color = ResourcesCompat.getColor(c.getResources(), R.color.orange, null);
                 break;
             case CANCELED:
-                color = ResourcesCompat.getColor(c.getResources(), R.color.error_stroke_color, null);
+                color = ResourcesCompat.getColor(c.getResources(), R.color.red, null);
                 break;
         }
         return color;

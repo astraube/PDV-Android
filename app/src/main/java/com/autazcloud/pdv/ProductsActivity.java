@@ -5,14 +5,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.autazcloud.pdv.ui.base.BaseActivity;
+import com.autazcloud.pdv.data.local.ProductsRealmRepository;
 import com.autazcloud.pdv.domain.interfaces.ProductControllerInterface;
 import com.autazcloud.pdv.domain.models.Product;
-import com.autazcloud.pdv.executor.adapters.ProductsListAdapter;
-import com.autazcloud.pdv.data.local.ProductsRealmRepository;
+import com.autazcloud.pdv.ui.adapters.ProductsListAdapter;
+import com.autazcloud.pdv.ui.base.BaseActivity;
 import com.autazcloud.pdv.ui.dialog.ProductEditDialog;
 import com.github.clans.fab.FloatingActionButton;
 

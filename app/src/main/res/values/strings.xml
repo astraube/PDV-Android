@@ -138,11 +138,13 @@
 
     <string name="err_oops">Ooops...</string>
     <string name="err_try_again">Por favor, tente novamente mais tarde.</string>
+    <string name="err_working_offline_title">Você esta trabalhando off-line</string>
+    <string name="err_working_offline_msg">Tudo que você vender ou editar no programa ficará salvo apenas neste equipamento!</string>
+    <string name="err_auth_invalid">Nossos servidores recusaram suas credenciais.</string>
     <string name="err_login_title">Erro de credenciais</string>
-    <string name="err_login_try_again">Efetue login novamente.</string>
+    <string name="err_login_try_again">Efetue login novamente</string>
     <string name="err_login_msg">Os dados inseridos não conferem com nossos registros.</string>
     <string name="err_download_products_account">Não conseguimos recuperar os produtos da sua conta!</string>
     <string name="err_download_data_account">Não conseguimos recuperar os dados da sua conta.</string>
-    <string name="err_auth_invalid">Nossos servidores recusaram suas credenciais.</string>
 
 </resources>

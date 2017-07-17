@@ -27,7 +27,8 @@
         android:paddingTop="@dimen/vertical_padding_textView"
         android:paddingLeft="@dimen/horizontal_padding_textView"
         android:paddingRight="@dimen/horizontal_padding_textView"
-        android:textAppearance="@style/textProductLarge" />
+        android:textAppearance="@style/textProductLarge"
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/txtCode"
@@ -38,7 +39,8 @@
         android:paddingBottom="@dimen/vertical_padding_textView"
         android:paddingLeft="@dimen/horizontal_padding_textView"
         android:paddingRight="@dimen/horizontal_padding_textView"
-        android:textAppearance="@style/textProductMedium" />
+        android:textAppearance="@style/textProductMedium"
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/txtQtdItems"
@@ -52,6 +54,6 @@
         android:paddingLeft="@dimen/horizontal_padding_textView"
         android:paddingRight="@dimen/horizontal_padding_textView"
         android:background="@drawable/bg_product_text_stock"
-        android:textAppearance="@style/textProductMedium" />
+        android:textAppearance="@style/textProductMedium"/>
 
 </LinearLayout>

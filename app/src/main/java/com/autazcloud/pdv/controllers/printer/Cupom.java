@@ -7,13 +7,13 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.autazcloud.pdv.R;
+import com.autazcloud.pdv.data.local.PreferencesRepository;
 import com.autazcloud.pdv.domain.constants.DateFormats;
 import com.autazcloud.pdv.domain.enums.PaymentMethodEnum;
 import com.autazcloud.pdv.domain.models.SaleItemModel;
 import com.autazcloud.pdv.domain.models.SaleModel;
 import com.autazcloud.pdv.helpers.FormatUtil;
 import com.autazcloud.pdv.helpers.OrderCodeUtil;
-import com.autazcloud.pdv.data.local.PreferencesRepository;
 import com.autazcloud.pdv.helpers.ShowMsg;
 import com.epson.eposprint.BatteryStatusChangeEventListener;
 import com.epson.eposprint.Builder;
@@ -55,12 +55,9 @@ public class Cupom implements StatusChangeEventListener, BatteryStatusChangeEven
                     Log.v("Cupom", "---> getEposException - " + result.getEposException());
                     Log.v("Cupom", "---> getEpsonIoException - " + result.getEpsonIoException());
 
-                    if (result.getPrinterStatus() > 0) {
-                        // Run print sequence of sample receipt
-                        builder = createReceiptData(result, sale, method, amountPaid, troco);
-                    }
+                    builder = createReceiptData(result, sale, method, amountPaid, troco);
 			
-			        if (builder != null && result.getEposException() == null) {
+			        if (result.getEposException() == null) {
 			            print(builder, result);
 			        }
 			

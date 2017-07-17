@@ -8,12 +8,13 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.GridView;
@@ -25,10 +26,9 @@ import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 
-import com.autazcloud.pdv.data.local.SalesRealmRepository;
-import com.autazcloud.pdv.ui.base.BaseActivity;
 import com.autazcloud.pdv.controllers.SaleController;
 import com.autazcloud.pdv.controllers.printer.Cupom;
+import com.autazcloud.pdv.data.local.ProductsRealmRepository;
 import com.autazcloud.pdv.domain.constants.Constants;
 import com.autazcloud.pdv.domain.enums.PaymentMethodEnum;
 import com.autazcloud.pdv.domain.enums.SaleStatusEnum;
@@ -37,10 +37,10 @@ import com.autazcloud.pdv.domain.models.CallbackModel;
 import com.autazcloud.pdv.domain.models.Product;
 import com.autazcloud.pdv.domain.models.SaleItemModel;
 import com.autazcloud.pdv.domain.models.SaleModel;
-import com.autazcloud.pdv.executor.adapters.ProductsGridAdapter;
-import com.autazcloud.pdv.executor.adapters.SaleItensAdapter;
-import com.autazcloud.pdv.data.local.ProductsRealmRepository;
+import com.autazcloud.pdv.ui.adapters.ProductsGridAdapter;
+import com.autazcloud.pdv.ui.adapters.SaleItensAdapter;
 import com.autazcloud.pdv.helpers.FormatUtil;
+import com.autazcloud.pdv.ui.base.BaseActivity;
 import com.autazcloud.pdv.ui.dialog.DialogUtil;
 import com.autazcloud.pdv.ui.dialog.ProductChangePriceDialog;
 import com.autazcloud.pdv.ui.dialog.SaleCloseDialog;
@@ -54,6 +54,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
@@ -63,7 +64,8 @@ public class SaleControllActivity extends BaseActivity {
 	private final String TAG;
 
 
-	@BindView(R.id.gridView) GridView gridViewProducts;
+	@BindView(R.id.gridView)
+	RecyclerView gridViewProducts;
 	@BindView(R.id.txtTotalInit) TextView txtTotalInit;
 	@BindView(R.id.txtTotalFinal) MoneyTextView txtTotalFinal;
 	@BindView(R.id.txtSaleName) TextView txtSaleName;
@@ -73,7 +75,7 @@ public class SaleControllActivity extends BaseActivity {
 	@BindView(R.id.containerInfoSale) LinearLayout containerInfoSale;
 	@BindView(R.id.containerTotalPaid) RelativeLayout containerTotalPaid;
 	@BindView(R.id.containerTotalToPay) RelativeLayout containerTotalToPay;
-	@BindView(R.id.searchView) SearchView searchView;
+	@BindView(R.id.searchView) SearchView mSearchView;
 	@BindView(R.id.viewRight) RelativeLayout viewRight;
 	@BindView(R.id.btnPaySale) Button btnPaySale;
 	@BindView(R.id.btnPrint) ImageButton btnPrint;
@@ -88,8 +90,7 @@ public class SaleControllActivity extends BaseActivity {
 	private SaleCtrl mSaleCtrl;
 	private ProductsGridAdapter mProductsAdapter;
 	private SaleItensAdapter saleListAdapter;
-
-	public List<Product> productsList;
+	private List<Product> productsList;
 
 
 	RealmChangeListener<SaleModel> listenerSaleModel = new RealmChangeListener<SaleModel>() {
@@ -123,12 +124,13 @@ public class SaleControllActivity extends BaseActivity {
         // Buscar Produtos no DB Realm
 		this.productsList = ProductsRealmRepository.getAll();
 
+
 		// Inicia Adapter para o GridView produto
 		mProductsAdapter = new ProductsGridAdapter(this, mSaleCtrl);
-		mProductsAdapter.setData(this.productsList);
-		gridViewProducts.setAdapter(mProductsAdapter);
-		gridViewProducts.setTextFilterEnabled(true);
-		gridViewProducts.invalidate();
+        mProductsAdapter.setData(this.productsList);
+        gridViewProducts.setHasFixedSize(true);
+        gridViewProducts.setLayoutManager(new GridLayoutManager(this, 4));
+        gridViewProducts.setAdapter(mProductsAdapter);
 
 
 		//Inicia total a pagar em 0
@@ -177,10 +179,10 @@ public class SaleControllActivity extends BaseActivity {
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void setupSearchView() {
-		searchView.setOnClickListener(mSearchViewOnClickListener);
-	    searchView.setQueryHint("Buscar produto...");
-	    searchView.setIconifiedByDefault(false);
-	    searchView.setSubmitButtonEnabled(true);
+		mSearchView.setOnClickListener(mSearchViewOnClickListener);
+	    mSearchView.setQueryHint("Buscar produto...");
+	    mSearchView.setIconifiedByDefault(false);
+	    mSearchView.setSubmitButtonEnabled(true);
 	    
 	    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 		    SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -189,13 +191,11 @@ public class SaleControllActivity extends BaseActivity {
 	        	// Try to use the "applications" global search provider
 	        	SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
 	        	
-	            searchView.setSearchableInfo(info);
-	            
-	            //createSearchViewList(null);
+	            mSearchView.setSearchableInfo(info);
 	        }
-		    searchView.setOnQueryTextListener(searchQueryListener);
+			mSearchView.setOnQueryTextListener(new SearchListener());
 	    }
-	    searchView.onActionViewCollapsed();
+		mSearchView.onActionViewCollapsed();
 	}
 
 	@Override
@@ -300,10 +300,10 @@ public class SaleControllActivity extends BaseActivity {
         new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            searchView.onActionViewExpanded();
+            mSearchView.onActionViewExpanded();
             //searchView.performClick();
             //searchView.requestFocus();
-            showTheKeyboardWhenQWERTY(SaleControllActivity.this, searchView);
+            showTheKeyboardWhenQWERTY(SaleControllActivity.this, mSearchView);
         }
     };
 
@@ -367,7 +367,7 @@ public class SaleControllActivity extends BaseActivity {
         	onBack();
 			
 		} else {
-			searchView.onActionViewExpanded();
+			mSearchView.onActionViewExpanded();
 			//searchView.performClick();
 		    //searchView.requestFocus();
 		}
@@ -390,11 +390,11 @@ public class SaleControllActivity extends BaseActivity {
 			
 			newConfig.keyboard = Configuration.HARDKEYBOARDHIDDEN_NO;
 			newConfig.hardKeyboardHidden = Configuration.HARDKEYBOARDHIDDEN_YES;
-			showTheKeyboardWhenQWERTY(this, searchView);
+			showTheKeyboardWhenQWERTY(this, mSearchView);
 			
 		} else if (newConfig.hardKeyboardHidden > Configuration.HARDKEYBOARDHIDDEN_NO) {
 			
-			showTheKeyboardWhenQWERTY(this, searchView);
+			showTheKeyboardWhenQWERTY(this, mSearchView);
 		}
 	}
 	
@@ -417,37 +417,33 @@ public class SaleControllActivity extends BaseActivity {
         InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.RESULT_UNCHANGED_SHOWN, 0);
     }
+
+
 	
-	private OnQueryTextListener searchQueryListener = new OnQueryTextListener() {
+	class SearchListener implements  SearchView.OnQueryTextListener
+	{
 	    @Override
 	    public boolean onQueryTextSubmit(String query) {
 			//Log.w(TAG, "onQueryTextSubmit(" + query + ")");
-	        search(query);
 	        return false;
 	    }
 
 	    @Override
 	    public boolean onQueryTextChange(String newText) {
 			//Log.w(TAG, "onQueryTextChange(" + newText + ")");
-	        
-	        if (TextUtils.isEmpty(newText)) {
+
+			mProductsAdapter.filter(newText);
+
+	        /*if (TextUtils.isEmpty(newText)) {
 	        	gridViewProducts.clearTextFilter();
 	        } else {
 	        	gridViewProducts.setFilterText(newText);
-	        }
+	        }*/
 	        return true;
 	    }
-
-	    public void search(String query) {
-			Log.w(TAG, "search(" + query + ")");
-			//createSearchViewList(query);
-			
-			gridViewProducts.setFilterText(query);
-			
-			//searchView.onActionViewCollapsed();
-	    }
 	};
-	
+
+
 	class SaleCtrl extends SaleController {
 
 		public SaleCtrl(Context context) {
@@ -480,8 +476,8 @@ public class SaleControllActivity extends BaseActivity {
 			Log.v(TAG, "---> onDecrementProduct");
 			//Log.v(TAG, "---> onDecrementProduct - " + product.toString());
 			
-			gridViewProducts.clearTextFilter();
-			searchView.onActionViewCollapsed();
+			//gridViewProducts.clearTextFilter();
+			mSearchView.onActionViewCollapsed();
 			getCurrentSale().setDecrement((Product) product);
 
 			//mSaleCtrl.onSyncSale(getCurrentSale());
@@ -505,8 +501,8 @@ public class SaleControllActivity extends BaseActivity {
 						this);
 				return;
 			}
-			gridViewProducts.clearTextFilter();
-			searchView.onActionViewCollapsed();
+			//gridViewProducts.clearTextFilter();
+			mSearchView.onActionViewCollapsed();
 			getCurrentSale().setIncrement((Product) product);
 
 			//mSaleCtrl.onSyncSale(getCurrentSale());
@@ -526,7 +522,7 @@ public class SaleControllActivity extends BaseActivity {
 		}
 
 		public void onClickPrintCupom() {
-			new SweetAlertDialog(SaleControllActivity.this, SweetAlertDialog.WARNING_TYPE)
+            setSweetDialog(new SweetAlertDialog(SaleControllActivity.this, SweetAlertDialog.WARNING_TYPE)
 					.setTitleText(getResources().getString(R.string.dialog_print_title))
 					.setContentText(getResources().getString(R.string.dialog_print_msg))
 					.setConfirmText(getResources().getString(R.string.action_yes_print))
@@ -536,8 +532,7 @@ public class SaleControllActivity extends BaseActivity {
 							SaleCtrl.this.onPrintCupom();
 							sDialog.dismissWithAnimation();
 						}
-					})
-					.show();
+					}));
 
         }
 		

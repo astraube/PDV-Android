@@ -7,11 +7,14 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.autazcloud.pdv.ui.base.CustomApplication;
+import com.autazcloud.pdv.data.remote.repositoryes.ProductsRepository;
 import com.autazcloud.pdv.data.remote.service.ApiService;
-import com.autazcloud.pdv.executor.receivers.SampleAlarmReceiver;
-import com.autazcloud.pdv.data.remote.ProductsRepository;
 import com.autazcloud.pdv.data.remote.subscribers.SubscriberInterface;
+import com.autazcloud.pdv.executor.receivers.SampleAlarmReceiver;
+import com.autazcloud.pdv.ui.base.CustomApplication;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 
 /**
  * This {@code IntentService} does the app's actual work.
@@ -22,18 +25,22 @@ import com.autazcloud.pdv.data.remote.subscribers.SubscriberInterface;
  */
 public class SampleSchedulingService extends IntentService implements SubscriberInterface {
 
-    public SampleSchedulingService() {
-        super("SchedulingService");
-    }
-
     public static final String TAG = "SampleSchedulingService";
     public static final String TAG2 = "Scheduling";
 
     // An ID used to post the notification.
     public static final int NOTIFICATION_ID = 1;
 
+    private ProductsRepository mProductsRepo;
+
     private NotificationManager mNotificationManager;
     private NotificationCompat.Builder mBuilder;
+
+
+    public SampleSchedulingService() {
+        super("SchedulingService");
+        this.mProductsRepo = new ProductsRepository(this);
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -52,7 +59,7 @@ public class SampleSchedulingService extends IntentService implements Subscriber
         Log.i(TAG, TAG2 + " onHandleIntent: " + dataString);
         */
 
-        ProductsRepository.onLoadProducts(this);
+        this.mProductsRepo.onLoadProducts();
 
         Log.i(TAG, TAG2 + " onHandleIntent finish");
 
@@ -85,6 +92,16 @@ public class SampleSchedulingService extends IntentService implements Subscriber
 
     @Override
     public void onSubscriberNext(Object t) {
+
+    }
+
+    @Override
+    public SweetAlertDialog getSweetDialog() {
+        return null;
+    }
+
+    @Override
+    public void setSweetDialog(SweetAlertDialog dialog) {
 
     }
 

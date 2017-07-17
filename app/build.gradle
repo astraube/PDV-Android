@@ -57,20 +57,29 @@ android {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/notice'
+        /*exclude 'META-INF/notice'
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/license'
-        exclude 'META-INF/license.txt'
+        exclude 'META-INF/license.txt'*/
     }
     productFlavors {
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ["src/main/jniLibs", "$buildDir/native-libs"]
+        }
     }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    provided fileTree(include: ['*.so'], dir: 'libs')
+    //compile fileTree(dir: "$buildDir/native-libs", include: 'native-libs.jar')
+    //compile fileTree(include: ['*.so'], dir: 'libs')
+    /*androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    })*/
 
     compile 'org.apache.commons:commons-lang3:3.4'
     // // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
@@ -80,11 +89,8 @@ dependencies {
     compile 'com.android.support:animated-vector-drawable:25.3.1'
     compile 'com.android.support:cardview-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.clans:fab:1.6.4'
     compile 'com.github.danielemaddaluno.androidupdatechecker:library:1.0.2'
-    compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.android.volley:volley:1.0.0'
     compile 'com.google.dagger:dagger:2.0.2'
     compile 'com.jakewharton:butterknife:8.6.0'
     // https://github.com/JakeWharton/butterknife
@@ -98,21 +104,18 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.2.1'
     compile 'javax.annotation:jsr250-api:1.0'
-    compile 'cn.pedant.sweetalert:library:1.3'
-    // https://github.com/pedant/sweet-alert-dialog
     compile 'com.github.florent37:materialtextfield:1.0.7'
     compile 'org.fabiomsr:moneytextview:1.1.0'
     compile 'com.github.faranjit:currency-edittext:1.0.1'
-    compile 'com.pddstudio:encrypted-preferences:1.3.0'
-    // https://github.com/PDDStudio/EncryptedPreferences
-    compile 'com.google.firebase:firebase-messaging:11.0.1'
-    compile 'info.hoang8f:android-segmented:1.0.6'
-    // https://github.com/Kaopiz/android-segmented
+    compile 'com.pddstudio:encrypted-preferences:1.3.0' // https://github.com/PDDStudio/EncryptedPreferences
+    compile 'info.hoang8f:android-segmented:1.0.6'// https://github.com/Kaopiz/android-segmented
     //compile 'de.hdodenhof:circleimageview:2.1.0' //https://github.com/hdodenhof/CircleImageView
     compile 'com.dynamitechetan.flowinggradient:flowinggradient:1.1'
     compile 'com.github.iammert:MaterialIntroView:1.6.0' // https://github.com/iammert/MaterialIntroView
-    compile 'com.getkeepsafe.taptargetview:taptargetview:1.9.1' //https://github.com/KeepSafe/TapTargetView
+    //compile 'com.getkeepsafe.taptargetview:taptargetview:1.9.1' //https://github.com/KeepSafe/TapTargetView
     compile 'com.github.Pierry:SimpleToast:v1.7' //https://github.com/Pierry/SimpleToast
+    compile 'cn.pedant.sweetalert:library:1.3' // https://github.com/pedant/sweet-alert-dialog
+    //compile 'com.afollestad.material-dialogs:core:0.9.4.5' //https://github.com/afollestad/material-dialogs
     compile files('libs/ePOS-Print.jar')
     //provided 'org.glassfish:javax.annotation:10.0-b28' // http://www.jsonschema2pojo.org/
     testCompile 'junit:junit:4.12'
@@ -121,3 +124,54 @@ dependencies {
 }
 
 //apply plugin: 'com.google.gms.google-services'
+
+def safeCopy = { src, dst ->
+    File fdst = new File(dst)
+    fdst.parentFile.mkdirs()
+    fdst.bytes = new File(src).bytes
+
+}
+
+def archFromName = { name ->
+    switch (name) {
+        case ~/.*android-(x86-64|x86_64|amd64).*/:
+            return "x86_64"
+        case ~/.*android-(i386|i686|x86).*/:
+            return "x86"
+        case ~/.*android-(arm64|aarch64).*/:
+            return "arm64-v8a"
+        case ~/.*android-(armhf|armv7|arm-v7|armeabi-v7).*/:
+            return "armeabi-v7a"
+        case ~/.*android-(arm).*/:
+            return "armeabi"
+        case ~/.*android-(mips).*/:
+            return "mips"
+        case ~/.*android-(mips64).*/:
+            return "mips64"
+        default:
+            return null
+    }
+}
+
+task extractNatives << {
+    project.configurations.compile.each { dep ->
+        println "Scanning ${dep.name} for native libs"
+        if (!dep.name.endsWith(".jar"))
+            return
+        zipTree(dep).visit { zDetail ->
+            if (!zDetail.name.endsWith(".so"))
+                return
+            print "\tFound ${zDetail.name}"
+            String arch = archFromName(zDetail.toString())
+            if(arch != null){
+                println " -> $arch"
+                safeCopy(zDetail.file.absolutePath,
+                        "$buildDir/native-libs/$arch/${zDetail.file.name}")
+            } else {
+                println " -> No valid arch"
+            }
+        }
+    }
+}
+
+preBuild.dependsOn(['extractNatives'])

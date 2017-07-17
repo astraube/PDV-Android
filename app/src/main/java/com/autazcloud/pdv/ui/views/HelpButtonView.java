@@ -5,9 +5,9 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.autazcloud.pdv.R;
+import com.autazcloud.pdv.data.local.PreferencesRepository;
 import com.autazcloud.pdv.domain.interfaces.HelpButtonInterface;
 import com.autazcloud.pdv.executor.receivers.HelpReceiver;
-import com.autazcloud.pdv.data.local.PreferencesRepository;
 
 public class HelpButtonView extends ImageTextView implements View.OnClickListener, HelpButtonInterface {
 

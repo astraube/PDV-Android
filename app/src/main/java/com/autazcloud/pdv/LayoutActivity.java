@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.GridView;
 
-import com.autazcloud.pdv.ui.base.BaseActivity;
+import com.autazcloud.pdv.data.local.PreferencesRepository;
 import com.autazcloud.pdv.domain.interfaces.ItemAdapterInterface;
 import com.autazcloud.pdv.domain.models.LayoutModel;
-import com.autazcloud.pdv.executor.adapters.LayoutsGridAdapter;
-import com.autazcloud.pdv.data.local.PreferencesRepository;
+import com.autazcloud.pdv.ui.adapters.LayoutsGridAdapter;
+import com.autazcloud.pdv.ui.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;

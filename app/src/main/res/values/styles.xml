@@ -19,7 +19,7 @@
     
     <!-- TextView Style Big. -->
     <style name="textBig" parent="@android:style/TextAppearance.DeviceDefault.Large">
-       <item name="android:textColor">@android:color/white</item>
+       <item name="android:textColor">@color/white</item>
        <item name="android:textSize">@dimen/text_size_big</item>
        <item name="android:textStyle">bold</item>
        <!--
@@ -31,8 +31,30 @@
    </style>
    
     <!-- SalesGridActivity Button Style. -->
+    <style name="buttonNewSale">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/bg_button_sale_grid_new_sale</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="buttonSegmentedStatusSale">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/bg_button_sale_grid_new_sale</item>
+        <item name="android:minHeight">33dp</item>
+        <item name="android:minWidth">70dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+    </style>
+
     <style name="buttonSaleGrid">
-       <item name="android:text">@android:color/white</item>
+       <item name="android:text">@color/white</item>
        <item name="android:textSize">@dimen/text_size_medium</item>
        <item name="android:textStyle">bold</item>
        <item name="android:background">@drawable/bg_button_sale_grid</item>
@@ -40,8 +62,8 @@
        <item name="android:clickable">true</item>
    </style>
 
-    <style name="searchView" parent="Widget.AppCompat.Light.SearchView">
-        <item name="android:text">@android:color/white</item>
+    <style name="searchView" parent="Base.Widget.AppCompat.SearchView">
+        <item name="android:text">@color/white</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textStyle">bold</item>
         <item name="android:background">@drawable/bg_search_view</item>
@@ -50,7 +72,7 @@
     </style>
    
     <style name="buttonNoCornerMedium" parent="@android:style/Widget.Button">
-       <item name="android:text">@android:color/white</item>
+       <item name="android:text">@color/white</item>
        <item name="android:textSize">@dimen/text_size_medium</item>
        <item name="android:textStyle">bold</item>
        <item name="android:background">@drawable/bg_button_no_corner</item>
@@ -60,7 +82,7 @@
    
     <!-- Products Button Style. -->
     <style name="buttonProduct" parent="@android:style/Widget.Button">
-       <item name="android:text">@android:color/white</item>
+       <item name="android:text">@color/white</item>
        <item name="android:textSize">@dimen/text_size_medium</item>
        <item name="android:textStyle">bold</item>
        <item name="android:background">@drawable/bg_button_product</item>
@@ -69,7 +91,7 @@
    </style>
    
     <style name="buttonProductDecrement" parent="@android:style/Widget.Button">
-       <item name="android:text">@android:color/white</item>
+       <item name="android:text">@color/white</item>
        <item name="android:textSize">@dimen/text_size_big</item>
        <item name="android:textStyle">bold</item>
        <item name="android:background">@drawable/bg_button_product_decrement</item>
@@ -78,7 +100,7 @@
    </style>
    
     <style name="buttonProductIncrement" parent="@android:style/Widget.Button">
-       <item name="android:text">@android:color/white</item>
+       <item name="android:text">@color/white</item>
        <item name="android:textSize">@dimen/text_size_big</item>
        <item name="android:textStyle">bold</item>
        <item name="android:background">@drawable/bg_button_product_increment</item>
@@ -88,28 +110,28 @@
    
     <!-- Products Large TextView Style. -->
     <style name="textProductLarge" parent="android:TextAppearance.DeviceDefault.Large">
-       <item name="android:textColor">@android:color/white</item>
+       <item name="android:textColor">@color/white</item>
        <item name="android:textSize">@dimen/text_size_large</item>
        <item name="android:textStyle">bold</item>
    </style>
 
     <!-- Products Medium TextView Style. -->
     <style name="textProductMedium" parent="android:TextAppearance.DeviceDefault.Medium">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <!-- Products Medium TextView Style. -->
     <style name="textProductSmall" parent="android:TextAppearance.DeviceDefault.Small">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:textStyle">bold</item>
     </style>
    
     <!-- Button Pagar Venda Style. -->
     <style name="buttonSalePay" parent="@android:style/Widget.Button">
-       <item name="android:textColor">@android:color/white</item>
+       <item name="android:textColor">@color/white</item>
        <item name="android:textSize">@dimen/text_size_big</item>
        <item name="android:textStyle">bold</item>
        <item name="android:background">@drawable/bg_button_sale_pay</item>
@@ -119,7 +141,7 @@
    
     <!-- Button Voltar. -->
     <style name="buttonVoltar" parent="@android:style/Widget.Button">
-       <item name="android:textColor">@android:color/white</item>
+       <item name="android:textColor">@color/white</item>
        <item name="android:textSize">@dimen/text_size_big</item>
        <item name="android:textStyle">bold</item>
        <item name="android:background">@drawable/bg_button_voltar</item>
@@ -129,7 +151,7 @@
    
     <!-- Button Cancelar Venda Style. -->
     <style name="buttonSaleCancel" parent="@android:style/Widget.Button">
-       <item name="android:textColor">@android:color/white</item>
+       <item name="android:textColor">@color/white</item>
        <item name="android:textSize">@dimen/text_size_big</item>
        <item name="android:textStyle">bold</item>
        <item name="android:background">@drawable/bg_button_sale_cancel</item>
@@ -139,7 +161,7 @@
    
     <!-- Button Limpar Venda Style. -->
     <style name="buttonSaleClean" parent="@android:style/Widget.Button">
-       <item name="android:textColor">@android:color/white</item>
+       <item name="android:textColor">@color/white</item>
        <item name="android:textSize">@dimen/text_size_big</item>
        <item name="android:textStyle">bold</item>
        <item name="android:background">@drawable/bg_button_sale_clean</item>
@@ -149,7 +171,7 @@
    
     <!-- BG ListView Produtos Vendas Style. -->
     <style name="listSaleProducts" parent="@android:style/Widget.ListView">
-       <item name="android:textColor">@android:color/white</item>
+       <item name="android:textColor">@color/white</item>
        <item name="android:background">@color/blue</item>
        <item name="android:clickable">true</item>
    </style>

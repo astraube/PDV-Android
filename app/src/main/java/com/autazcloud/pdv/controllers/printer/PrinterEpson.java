@@ -1,6 +1,7 @@
 package com.autazcloud.pdv.controllers.printer;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.autazcloud.pdv.R;
 import com.autazcloud.pdv.helpers.ShowMsg;
@@ -50,6 +51,7 @@ public class PrinterEpson {
 		
 		try {
 			instancePrint = new Print(context);
+			Log.v("PrinterEpson", "mDeviceAddress: " + mDeviceAddress);
 			instancePrint.openPrinter(mDeviceType, mDeviceAddress, Print.FALSE, 1000, Print.PARAM_DEFAULT);
 		} catch (EposException e) {
 			e.printStackTrace();

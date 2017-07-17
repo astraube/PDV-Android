@@ -2,6 +2,7 @@ package com.autazcloud.pdv.controllers.printer;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -9,8 +10,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.autazcloud.pdv.R;
-import com.autazcloud.pdv.ui.base.BaseActivity;
 import com.autazcloud.pdv.helpers.ShowMsg;
+import com.autazcloud.pdv.ui.base.BaseActivity;
 import com.epson.eposprint.BatteryStatusChangeEventListener;
 import com.epson.eposprint.Print;
 import com.epson.eposprint.StatusChangeEventListener;
@@ -111,6 +112,10 @@ public class DiscoverPrinterActivity extends BaseActivity implements OnItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     	HashMap<String, String> item  = printerList.get(position);
+
+        Log.v(getClass().getSimpleName(), "Address: " + item.get("Address"));
+        Log.v(getClass().getSimpleName(), "Address: " + item.keySet().toString());
+        Log.v(getClass().getSimpleName(), "Address: " + item.values().toString());
     	
     	//PrinterEpson.openPrinter(this, Print.DEVTYPE_USB, item.get("Address"), true, 1000);
     	

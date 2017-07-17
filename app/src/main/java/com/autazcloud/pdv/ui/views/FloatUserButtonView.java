@@ -3,20 +3,16 @@ package com.autazcloud.pdv.ui.views;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.widget.TintTypedArray;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.autazcloud.pdv.R;
 import com.autazcloud.pdv.data.local.PreferencesRepository;
 import com.autazcloud.pdv.domain.constants.AuthAttr;
 import com.autazcloud.pdv.ui.dialog.FloatMenuDialog;
-
-import com.autazcloud.pdv.R;
 
 public class FloatUserButtonView extends RelativeLayout {
 

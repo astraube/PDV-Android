@@ -10,9 +10,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.autazcloud.pdv.R;
+import com.autazcloud.pdv.data.local.PreferencesRepository;
+import com.autazcloud.pdv.data.remote.subscribers.SubscriberInterface;
 import com.autazcloud.pdv.domain.constants.AuthAttr;
 import com.autazcloud.pdv.domain.interfaces.LoginInterface;
-import com.autazcloud.pdv.data.local.PreferencesRepository;
 
 import butterknife.ButterKnife;
 
@@ -55,7 +56,7 @@ public class LoginDialog extends AlertDialog.Builder {
                 if (!owner.onLogin(username, password)) {
 					String msg = owner.getContext().getString(R.string.err_login_msg);
 
-					owner.getSubscriberInterface().onSubscriberError(new Throwable(msg), owner.getContext().getString(R.string.err_login_title), msg);
+					((SubscriberInterface)owner).onSubscriberError(new Throwable(msg), owner.getContext().getString(R.string.err_login_title), msg);
 				}
 			}
 		});

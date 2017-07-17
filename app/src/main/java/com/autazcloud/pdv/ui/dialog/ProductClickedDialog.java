@@ -10,8 +10,10 @@ import android.widget.LinearLayout;
 import com.autazcloud.pdv.R;
 import com.autazcloud.pdv.domain.interfaces.ProductControllerInterface;
 import com.autazcloud.pdv.domain.models.Product;
+import com.autazcloud.pdv.ui.base.BaseActivity;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+
 
 public class ProductClickedDialog extends AlertDialog.Builder {
 	
@@ -19,10 +21,10 @@ public class ProductClickedDialog extends AlertDialog.Builder {
 	private AlertDialog mDialog;
 
 	public ProductClickedDialog(ProductControllerInterface controller, final Product product) {
-		super((Activity) controller.getContext());
+		super((BaseActivity) controller.getContext());
 		mController = controller;
 
-		LayoutInflater layoutInflater = LayoutInflater.from((Activity) mController.getContext());
+		LayoutInflater layoutInflater = LayoutInflater.from((BaseActivity) mController.getContext());
 		final LinearLayout layout = (LinearLayout) layoutInflater.inflate(R.layout.dialog_layout_product_clicked, null);
 		
 		layout.findViewById(R.id.btnEdit).setOnClickListener(new Button.OnClickListener() {
@@ -51,7 +53,8 @@ public class ProductClickedDialog extends AlertDialog.Builder {
 							}
 						});
 				sad.setCancelable(false);
-				sad.show();
+
+				((BaseActivity) mController.getContext()).setSweetDialog(sad);
 			}
 		});
 		

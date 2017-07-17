@@ -58,7 +58,7 @@
         </activity>
 
         <activity
-            android:name="com.autazcloud.pdv.SettingsActivity"
+            android:name="com.autazcloud.pdv.PreferenceActivity"
             android:configChanges="keyboard"
             android:hardwareAccelerated="false"
             android:label="@string/title_activity_settings"

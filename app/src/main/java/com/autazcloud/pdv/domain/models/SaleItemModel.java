@@ -1,6 +1,5 @@
 package com.autazcloud.pdv.domain.models;
 
-import com.autazcloud.pdv.domain.interfaces.ProductInterface;
 import com.autazcloud.pdv.domain.interfaces.SaleProductItemInterface;
 import com.autazcloud.pdv.helpers.MathUtils;
 import com.autazcloud.pdv.helpers.ObjectUtil;

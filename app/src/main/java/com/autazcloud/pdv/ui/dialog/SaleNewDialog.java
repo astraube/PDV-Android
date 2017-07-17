@@ -11,10 +11,10 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.autazcloud.pdv.R;
+import com.autazcloud.pdv.data.local.PreferencesRepository;
 import com.autazcloud.pdv.domain.interfaces.SaleControllerInterface;
 import com.autazcloud.pdv.domain.models.Client;
 import com.autazcloud.pdv.domain.models.SaleModel;
-import com.autazcloud.pdv.data.local.PreferencesRepository;
 
 public class SaleNewDialog extends AlertDialog.Builder {
 	

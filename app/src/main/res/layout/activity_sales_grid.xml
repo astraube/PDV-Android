@@ -30,10 +30,8 @@
         android:layout_height="100dp"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        style="@style/buttonSaleGrid"
+        style="@style/buttonNewSale"
         android:text="@string/action_sale_new"
-        android:textColor="@android:color/white"
-        android:background="@drawable/bg_button_sale_grid_new_sale"
         android:layout_marginBottom="@dimen/vertical_padding_textView"
         tools:ignore="RtlHardcoded" />
 
@@ -48,9 +46,9 @@
         android:layout_alignBottom="@+id/btNewSale"
         android:gravity="top|left"
         app:sc_border_width="2dp"
-        app:sc_corner_radius="@dimen/corner_button_product"
-        app:sc_tint_color="@color/yellow"
-        app:sc_checked_text_color="@color/orange">
+        app:sc_corner_radius="@dimen/corner_button"
+        app:sc_tint_color="@color/white"
+        app:sc_checked_text_color="@color/black">
 
 
         <RadioButton

@@ -3,8 +3,6 @@ package com.autazcloud.pdv.domain.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import io.realm.RealmObject;
 
 public class Category extends RealmObject {

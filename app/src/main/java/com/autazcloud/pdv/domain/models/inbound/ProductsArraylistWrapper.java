@@ -1,7 +1,7 @@
 package com.autazcloud.pdv.domain.models.inbound;
 
-import com.autazcloud.pdv.domain.models.Product;
 import com.autazcloud.pdv.data.remote.ResultStatusDefault;
+import com.autazcloud.pdv.domain.models.Product;
 
 import java.util.List;
 

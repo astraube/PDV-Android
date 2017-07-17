@@ -116,6 +116,12 @@ public class Product extends RealmObject implements ProductInterface {
     @Expose
     private Category category;
 
+
+    @Since(0.1)
+    @SerializedName("pivot")
+    @Expose
+    private ProductSalePivot pivot;
+
     /**
      * No args constructor for use in serialization
      *
@@ -334,7 +340,15 @@ public class Product extends RealmObject implements ProductInterface {
      * @return
      */
     public String getStringSearch() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.NO_FIELD_NAMES_STYLE);
+        String code = "" +
+                getName() +
+                getDescription() +
+                getPriceResale() +
+                getCodeCorporate() +
+                getCodeEan();
+
+        return code;
+        //return ToStringBuilder.reflectionToString(this, ToStringStyle.NO_FIELD_NAMES_STYLE);
     }
 
     /*@Override

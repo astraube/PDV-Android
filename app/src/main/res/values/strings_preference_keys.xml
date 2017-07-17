@@ -15,4 +15,5 @@
     <string name="pref_key_display_dialog_new_sale">isShowDialogNewSale</string>
     <string name="pref_key_display_dialog_scc">isShowSccDialog</string>
     <string name="pref_key_show_flake_anime">isShowFlakeAnime</string>
+
 </resources>

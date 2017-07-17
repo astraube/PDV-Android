@@ -13,10 +13,10 @@ import android.view.WindowManager;
 import com.autazcloud.pdv.R;
 import com.autazcloud.pdv.data.remote.service.ApiService;
 import com.autazcloud.pdv.data.remote.subscribers.SubscriberInterface;
-import com.autazcloud.pdv.ui.base.CustomApplication;
 import com.autazcloud.pdv.ui.views.BaseViewInterface;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+
 
 public class BaseActivity extends Activity implements BaseViewInterface, SubscriberInterface {
 	
@@ -62,7 +62,7 @@ public class BaseActivity extends Activity implements BaseViewInterface, Subscri
 		return this;
 	}
 
-
+	@Override
 	public SweetAlertDialog getSweetDialog() {
 		return this.sweetDialog;
 	}
@@ -77,8 +77,12 @@ public class BaseActivity extends Activity implements BaseViewInterface, Subscri
 	}
 
 	public void hideDialog() {
-		if (this.sweetDialog != null)
+		if (this.sweetDialog != null) {
+			this.sweetDialog.hide();
 			this.sweetDialog.dismiss();
+			this.sweetDialog.cancel();
+			this.sweetDialog = null;
+		}
 	}
 
 
@@ -98,23 +102,31 @@ public class BaseActivity extends Activity implements BaseViewInterface, Subscri
 		/*if (e != null) {
 			Log.e(TAG, "onSubscriberError - " + e.getMessage());
 		}*/
+		final String _title;
+		final String _msg;
+
 		if (!title.isEmpty() && !msg.isEmpty()) {
-			try {
-				runOnUiThread(new Runnable() {
-					public void run() {
-						SweetAlertDialog d = new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE)
-								.setTitleText(title)
-								.setContentText(msg)
-								.setConfirmText(getContext().getString(R.string.action_try_again));
+			_title = getContext().getString(R.string.err_oops);
+			_msg = getContext().getString(R.string.err_try_again);
+		} else {
+			_title = title;
+			_msg = msg;
+		}
+		try {
+			runOnUiThread(new Runnable() {
+				public void run() {
+					SweetAlertDialog d = new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE)
+							.setTitleText(title)
+							.setContentText(msg)
+							.setConfirmText(getContext().getString(R.string.action_try_again));
 
-						setSweetDialog(d);
-					}
-				});
+					setSweetDialog(d);
+				}
+			});
 
-			} catch (Exception ex) {
-				hideDialog();
-				ex.printStackTrace();
-			}
+		} catch (Exception ex) {
+			hideDialog();
+			ex.printStackTrace();
 		}
 	}
 
@@ -138,15 +150,5 @@ public class BaseActivity extends Activity implements BaseViewInterface, Subscri
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
     	Log.v("BaseActivity", "onWindowFocusChanged - " + hasFocus);
-
-	    if (hasFocus) {
-	    	getWindow().getDecorView().setSystemUiVisibility(
-	                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-	                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-	                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-	                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-	                | View.SYSTEM_UI_FLAG_FULLSCREEN
-	                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-	    }
 	}
 }

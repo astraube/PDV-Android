@@ -14,9 +14,11 @@ import com.autazcloud.pdv.R;
 import com.autazcloud.pdv.domain.interfaces.ProductControllerInterface;
 import com.autazcloud.pdv.domain.models.Product;
 import com.autazcloud.pdv.helpers.FormatUtil;
+import com.autazcloud.pdv.ui.base.BaseActivity;
 
 import java.text.ParseException;
 import java.util.Date;
+
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import faranjit.currency.edittext.CurrencyEditText;
@@ -30,7 +32,7 @@ public class ProductEditDialog extends AlertDialog.Builder {
 		this(controller, null);
 	}
 	public ProductEditDialog(final ProductControllerInterface controller, final Product product) {
-		super((Activity) controller.getContext());
+		super((BaseActivity) controller.getContext());
 		mController = controller;
 		
 		LayoutInflater layoutInflater = LayoutInflater.from(controller.getContext());
@@ -82,7 +84,7 @@ public class ProductEditDialog extends AlertDialog.Builder {
 						.setTitleText(getContext().getString(R.string.txt_form_incomplete))
 						.setContentText(getContext().getString(R.string.txt_form_fill));
 				sad.setCancelable(false);
-				sad.show();
+				((BaseActivity) controller.getContext()).setSweetDialog(sad);
 			}
 		});
 		

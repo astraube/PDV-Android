@@ -8,12 +8,11 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.autazcloud.pdv.BuildConfig;
 import com.autazcloud.pdv.R;
+import com.autazcloud.pdv.data.local.PreferencesRepository;
 import com.autazcloud.pdv.data.remote.service.ApiService;
-import com.autazcloud.pdv.domain.models.SaleModel;
 import com.autazcloud.pdv.executor.receivers.SampleAlarmReceiver;
 import com.autazcloud.pdv.helpers.FormatUtil;
 import com.autazcloud.pdv.helpers.IDManagement;
-import com.autazcloud.pdv.data.local.PreferencesRepository;
 import com.autazcloud.pdv.injection.NetworkModule;
 
 import butterknife.ButterKnife;
