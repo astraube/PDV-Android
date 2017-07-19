@@ -3,7 +3,6 @@ package com.autazcloud.pdv.ui.adapters;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.autazcloud.pdv.R;
 import com.autazcloud.pdv.domain.interfaces.ProductControllerInterface;

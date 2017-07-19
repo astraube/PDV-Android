@@ -3,7 +3,7 @@ package com.autazcloud.pdv.domain.models;
 /**
  * Created by aStraube on 13/07/2017.
  */
-import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.annotations.Since;

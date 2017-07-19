@@ -1,18 +1,12 @@
 package com.autazcloud.pdv.data.remote.repositoryes;
 
-import android.graphics.Color;
-
-import com.autazcloud.pdv.R;
 import com.autazcloud.pdv.data.local.PreferencesRepository;
 import com.autazcloud.pdv.data.local.ProductsRealmRepository;
 import com.autazcloud.pdv.data.remote.subscribers.DefaultSubscriber;
 import com.autazcloud.pdv.data.remote.subscribers.SubscriberInterface;
 import com.autazcloud.pdv.domain.constants.AuthAttr;
 import com.autazcloud.pdv.domain.models.inbound.ProductsArraylistWrapper;
-import com.autazcloud.pdv.ui.base.BaseActivity;
 
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import rx.schedulers.Schedulers;
 
 /**
@@ -38,7 +32,7 @@ public class ProductsRepository {
             return;
         }
 
-        if (_owner.getContext() instanceof BaseActivity) {
+        /*if (_owner.getContext() instanceof BaseActivity) {
             try {
                 BaseActivity act = (BaseActivity)_owner.getContext();
                 SweetAlertDialog pDialog = new SweetAlertDialog(act, SweetAlertDialog.PROGRESS_TYPE);
@@ -51,7 +45,7 @@ public class ProductsRepository {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        }*/
 
         try {
             _owner.getApiService().getProducts(apiToken, publicToken)

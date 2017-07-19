@@ -9,6 +9,7 @@ import com.epson.epsonio.IoStatus;
 
 
 public class MsgMaker {
+
     private static final int BATTERY_NEAR_END = 0x3131;
     private static final int BATTERY_REAL_END = 0x3130;
 

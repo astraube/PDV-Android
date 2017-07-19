@@ -1,5 +1,7 @@
 package com.autazcloud.pdv.domain.interfaces;
 
+import android.view.View;
+
 import com.autazcloud.pdv.domain.enums.PaymentMethodEnum;
 import com.autazcloud.pdv.domain.models.Client;
 import com.autazcloud.pdv.domain.models.SaleItemModel;
@@ -14,7 +16,7 @@ public interface SaleControllerInterface {
 	public void onChangeInfoSale(SaleModel sale);
 	public void onOpenSale(SaleModel sale);
 	public void onCleanListSale(SaleModel sale);
-	public void onPrintCupom();
+	public void onPrintCupom(View v);
 	public void onCancelSale(SaleModel sale);
 	public void onPayTotalSale(SaleModel sale, PaymentMethodEnum method);
 	public void onPayPartiallySale(SaleModel sale, double amountPaid, PaymentMethodEnum method);

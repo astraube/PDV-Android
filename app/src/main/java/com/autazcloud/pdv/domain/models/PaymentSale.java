@@ -3,8 +3,10 @@ package com.autazcloud.pdv.domain.models;
 /**
  * Created by aStraube on 15/07/2017.
  */
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import io.realm.RealmObject;

@@ -42,10 +42,10 @@ public class SaleModel extends RealmObject {
 	//@Ignore
 	//private HashMap<String, SaleItemModel> itemListMap;
 	private RealmList<SaleItemModel> itemList;
-	private String clientName;
-	private String clientEmail;
-	private String clientCpf;
-	private String codeControll; // Codigo da venda para controle particular do estabelecimento. EX: Numero da mesa
+	private String clientName = "";
+	private String clientEmail = "";
+	private String clientCpf = "";
+	private String codeControll = ""; // Codigo da venda para controle particular do estabelecimento. EX: Numero da mesa
 	private String saller; // Vendedor
 	private String status = SaleStatusEnum.OPEN.toString();
 	private double discount = 0;
@@ -53,6 +53,8 @@ public class SaleModel extends RealmObject {
 	private double totalPaid = 0;
 	private Date dateCreated;
 	private Date dateUpdated;
+
+	private String orderCodeWait; // Codigo de espera do pedido
 
 	public SaleModel () {
 		itemList = new RealmList<SaleItemModel>();
@@ -385,6 +387,17 @@ public class SaleModel extends RealmObject {
 		}
 		return null;
 	}
+
+	public boolean existsOrderCodeWait() {
+		return (this.orderCodeWait != null && !this.orderCodeWait.isEmpty());
+	}
+	public String getOrderCodeWait() { return this.orderCodeWait; }
+	public void setOrderCodeWait(String orderCodeWait) {
+		Realm _realm = Realm.getDefaultInstance();
+		_realm.beginTransaction();
+		this.orderCodeWait = orderCodeWait;
+		_realm.commitTransaction();
+	}
 	
 	
 	private static String generateCodeSale() {
@@ -405,10 +418,10 @@ public class SaleModel extends RealmObject {
 	 * @param product
 	 * @return
 	 */
-	public void setIncrement(Product product) {
-		setIncrement(new SaleItemModel(product));
+	public SaleItemModel setIncrement(Product product) {
+		return setIncrement(new SaleItemModel(product));
 	}
-	public void setIncrement(SaleItemModel saleItem) {
+	public SaleItemModel setIncrement(SaleItemModel saleItem) {
 		SaleItemModel item = this.getExistsProduct(saleItem);
 
 		if (item == null) {
@@ -416,6 +429,8 @@ public class SaleModel extends RealmObject {
 			_realm.beginTransaction();
 			itemList.add(saleItem);
 			_realm.commitTransaction();
+
+			return saleItem;
 		} else {
 			if (!saleItem.isJockerProduct()) {
 				item.setAddItem();
@@ -424,6 +439,7 @@ public class SaleModel extends RealmObject {
 				double curPrice = item.getPriceResale();
 				item.setPriceResale(curPrice + newPrice);
 			}
+			return item;
 		}
 	}
 	
@@ -446,6 +462,19 @@ public class SaleModel extends RealmObject {
 			_realm.beginTransaction();
 			if (item.getQuantityItem() < 1) {
 				itemList.remove(item);
+
+				// Caso for um produto que precisa de senha de pedido, verifica se pode remover a senha atual
+				if (item.isRequestPass()) {
+					String currentOrderCodeWait = getOrderCodeWait();
+					for (SaleItemModel si : itemList) {
+						currentOrderCodeWait = null;
+						if (si.isRequestPass()) {
+							currentOrderCodeWait = getOrderCodeWait();
+							break;
+						}
+					}
+					orderCodeWait = currentOrderCodeWait;
+				}
 			}
 			_realm.commitTransaction();
 			//Log.v("@@@", "decrement: unidades - " + item.getQuantityItem());

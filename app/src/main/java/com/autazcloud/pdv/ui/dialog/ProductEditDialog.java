@@ -1,6 +1,5 @@
 package com.autazcloud.pdv.ui.dialog;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -18,7 +17,6 @@ import com.autazcloud.pdv.ui.base.BaseActivity;
 
 import java.text.ParseException;
 import java.util.Date;
-
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import faranjit.currency.edittext.CurrencyEditText;

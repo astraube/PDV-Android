@@ -2,9 +2,9 @@ package com.autazcloud.pdv.controllers;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 
 import com.autazcloud.pdv.R;
-import com.autazcloud.pdv.controllers.printer.Cupom;
 import com.autazcloud.pdv.data.local.ProductsRealmRepository;
 import com.autazcloud.pdv.data.local.SalesRealmRepository;
 import com.autazcloud.pdv.domain.enums.PaymentMethodEnum;
@@ -72,6 +72,11 @@ public abstract class SaleController implements SaleControllerInterface {
 	public void onSaleItemClick(SaleItemModel saleItem) {
 		// Code Default
 	}
+
+	@Override
+	public void onPrintCupom(View v) {
+		// Code Default
+	}
 	
 	@Override
 	public void onChangeInfoSale(SaleModel sale) {
@@ -96,12 +101,6 @@ public abstract class SaleController implements SaleControllerInterface {
 		// Code Default
 		sale.setClear();
 		onSyncSale(sale);
-	}
-
-	@Override
-	public void onPrintCupom() {
-		// Imprime o Cupom com aparece o troco
-		Cupom.getInstance(getContext()).runPrintSequence(getCurrentSale(), null, 0, 0);
 	}
 
 	@Override

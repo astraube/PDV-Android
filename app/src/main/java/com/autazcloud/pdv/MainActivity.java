@@ -45,6 +45,7 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 	@Inject
 	MainThreadBus bus;
 
+
 	public MainActivity () {
 		super();
 		this.TAG = getClass().getSimpleName();

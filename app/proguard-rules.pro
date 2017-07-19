@@ -24,6 +24,9 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+-keep class com.epson.** { *; }
+-dontwarn com.epson.**
+
 -keep public class org.jsoup.** {
     public *;
 }

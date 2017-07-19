@@ -3,7 +3,6 @@ package com.autazcloud.pdv.data.remote.repositoryes;
 import android.content.Context;
 
 import com.autazcloud.pdv.domain.constants.Metadata;
-import com.autazcloud.pdv.domain.enums.ActionsEnum;
 import com.autazcloud.pdv.domain.models.Device;
 import com.autazcloud.pdv.domain.models.DeviceSend;
 import com.autazcloud.pdv.domain.models.WrapObjToNetwork;
@@ -15,11 +14,11 @@ import com.autazcloud.pdv.executor.services.GPSTracker;
 
 public class DeviceRepository {
 
-    public synchronized void syncInfos(Context mContext, ActionsEnum action ) {
+    public synchronized void syncInfos(Context mContext) {
         Device device = new Device(mContext);
         DeviceSend infos = new DeviceSend(mContext, device);
 
-        infos.addMetadata(Metadata.ACTION_SEND, action.toString());
+        //infos.addMetadata(Metadata.ACTION_SEND, action.toString());
 
         GPSTracker gps = GPSTracker.getInstance(mContext);
         // checa se o GPS esta habilitado

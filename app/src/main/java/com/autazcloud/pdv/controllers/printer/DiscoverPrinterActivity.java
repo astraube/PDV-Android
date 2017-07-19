@@ -2,7 +2,6 @@ package com.autazcloud.pdv.controllers.printer;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -10,10 +9,10 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.autazcloud.pdv.R;
+import com.autazcloud.pdv.data.local.PreferencesRepository;
 import com.autazcloud.pdv.helpers.ShowMsg;
 import com.autazcloud.pdv.ui.base.BaseActivity;
 import com.epson.eposprint.BatteryStatusChangeEventListener;
-import com.epson.eposprint.Print;
 import com.epson.eposprint.StatusChangeEventListener;
 import com.epson.epsonio.DevType;
 import com.epson.epsonio.DeviceInfo;
@@ -38,8 +37,8 @@ public class DiscoverPrinterActivity extends BaseActivity implements OnItemClick
     ScheduledExecutorService scheduler;
     ScheduledFuture<?> future;
     Handler handler = new Handler();
-    
-    
+
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,11 +46,11 @@ public class DiscoverPrinterActivity extends BaseActivity implements OnItemClick
 		fullScreen();
         setContentView(R.layout.activity_discover_printer);
 
-        Print printer = PrinterEpson.getPrinter(this);
+        /*Print printer = PrinterEpson.getPrinter(this);
         if(printer != null){
             printer.setStatusChangeEventCallback(this);
             printer.setBatteryStatusChangeEventCallback(this);
-        }
+        }*/
 
         //init printer list control
         printerList = new ArrayList<HashMap<String, String>>();
@@ -61,7 +60,7 @@ public class DiscoverPrinterActivity extends BaseActivity implements OnItemClick
         ListView list = (ListView)findViewById(R.id.listView_printerlist);
         list.setAdapter(printerListAdapter);
         list.setOnItemClickListener(this);
-        
+
 
         //start find thread scheduler
         scheduler = Executors.newSingleThreadScheduledExecutor();
@@ -102,7 +101,7 @@ public class DiscoverPrinterActivity extends BaseActivity implements OnItemClick
             }
         }
     }
-    
+
     /*private void selectDevice(String printerName, String printerAddress, int printerType) {
     	PrinterEpson.mDeviceName = printerName;
     	PrinterEpson.openPrinter(this, printerType, printerAddress, true, 1000);
@@ -112,23 +111,20 @@ public class DiscoverPrinterActivity extends BaseActivity implements OnItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     	HashMap<String, String> item  = printerList.get(position);
+        String target = item.get(PrinterEpson.TARGET);
 
-        Log.v(getClass().getSimpleName(), "Address: " + item.get("Address"));
-        Log.v(getClass().getSimpleName(), "Address: " + item.keySet().toString());
-        Log.v(getClass().getSimpleName(), "Address: " + item.values().toString());
-    	
     	//PrinterEpson.openPrinter(this, Print.DEVTYPE_USB, item.get("Address"), true, 1000);
-    	
-    	PrinterEpson.mDeviceAddress = item.get("Address");
-    	PrinterEpson.mDeviceType = Print.DEVTYPE_USB;
-        
+
+        PrinterEpson.PRINTER_TARGET = target;
+    	//PrinterEpson.mDeviceType = Print.DEVTYPE_USB;
+
         finish();
     }
 
     @Override
     //find thread
     public synchronized void run() {
-        class UpdateListThread extends Thread{
+        class UpdateListThread extends Thread {
             DeviceInfo[] list;
             public UpdateListThread(DeviceInfo[] listDevices) {
                 list = listDevices;
@@ -148,7 +144,7 @@ public class DiscoverPrinterActivity extends BaseActivity implements OnItemClick
                     for(int i=0; i<list.length; i++){
                         name = list[i].getPrinterName();
                         address = list[i].getDeviceName();
-                        
+
                         HashMap<String, String> item = new HashMap<String, String>();
                         item.put("PrinterName", name);
                         item.put("Address", address);

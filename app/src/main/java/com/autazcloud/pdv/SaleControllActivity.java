@@ -9,25 +9,24 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 
 import com.autazcloud.pdv.controllers.SaleController;
 import com.autazcloud.pdv.controllers.printer.Cupom;
+import com.autazcloud.pdv.controllers.printer.PrinterEpson;
+import com.autazcloud.pdv.controllers.printer2.EpsonReceiveListener;
+import com.autazcloud.pdv.controllers.printer2.ShowMsg;
 import com.autazcloud.pdv.data.local.ProductsRealmRepository;
 import com.autazcloud.pdv.domain.constants.Constants;
 import com.autazcloud.pdv.domain.enums.PaymentMethodEnum;
@@ -37,9 +36,10 @@ import com.autazcloud.pdv.domain.models.CallbackModel;
 import com.autazcloud.pdv.domain.models.Product;
 import com.autazcloud.pdv.domain.models.SaleItemModel;
 import com.autazcloud.pdv.domain.models.SaleModel;
+import com.autazcloud.pdv.helpers.FormatUtil;
+import com.autazcloud.pdv.helpers.OrderCodeUtil;
 import com.autazcloud.pdv.ui.adapters.ProductsGridAdapter;
 import com.autazcloud.pdv.ui.adapters.SaleItensAdapter;
-import com.autazcloud.pdv.helpers.FormatUtil;
 import com.autazcloud.pdv.ui.base.BaseActivity;
 import com.autazcloud.pdv.ui.dialog.DialogUtil;
 import com.autazcloud.pdv.ui.dialog.ProductChangePriceDialog;
@@ -47,6 +47,9 @@ import com.autazcloud.pdv.ui.dialog.SaleCloseDialog;
 import com.autazcloud.pdv.ui.dialog.SaleItemEditDialog;
 import com.autazcloud.pdv.ui.dialog.SaleNewDialog;
 import com.autazcloud.pdv.ui.dialog.SalePayDialog;
+import com.epson.epos2.printer.Printer;
+import com.epson.epos2.printer.PrinterStatusInfo;
+import com.github.pierry.simpletoast.SimpleToast;
 
 import org.fabiomsr.moneytextview.MoneyTextView;
 
@@ -54,12 +57,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 
-public class SaleControllActivity extends BaseActivity {
+public class SaleControllActivity extends BaseActivity implements EpsonReceiveListener {
 
 	private final String TAG;
 
@@ -86,6 +88,7 @@ public class SaleControllActivity extends BaseActivity {
 	@BindView(R.id.lineTxtTotalInit) View lineTxtTotalInit;
 
 
+	private PrinterEpson printerEpson = null;
 	private Realm realm;
 	private SaleCtrl mSaleCtrl;
 	private ProductsGridAdapter mProductsAdapter;
@@ -117,9 +120,11 @@ public class SaleControllActivity extends BaseActivity {
 
 		this.setDefaultKeyMode(Activity.DEFAULT_KEYS_SEARCH_LOCAL);
 
-        realm = Realm.getDefaultInstance();
+		this.realm = Realm.getDefaultInstance();
 
-		mSaleCtrl = new SaleCtrl(this);
+		this.printerEpson = new PrinterEpson(this);
+
+		this.mSaleCtrl = new SaleCtrl(this);
 
         // Buscar Produtos no DB Realm
 		this.productsList = ProductsRealmRepository.getAll();
@@ -219,6 +224,15 @@ public class SaleControllActivity extends BaseActivity {
 		} catch (Exception e) {}
 	}
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.v(TAG, "SaleControllActivity onPause");
+
+        mSaleCtrl.onSyncSale(mSaleCtrl.getCurrentSale());
+    }
+
 	@Override
 	public void onStop() {
 		super.onStop();
@@ -292,7 +306,8 @@ public class SaleControllActivity extends BaseActivity {
         new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SaleControllActivity.this.mSaleCtrl.onClickPrintCupom();
+
+                SaleControllActivity.this.mSaleCtrl.onClickPrintCupom(v);
             }
         };
 
@@ -501,6 +516,14 @@ public class SaleControllActivity extends BaseActivity {
 						this);
 				return;
 			}
+
+			// Gerar senha de pedido
+			if (!getCurrentSale().existsOrderCodeWait() && product.isRequestPass()) {
+				String code = OrderCodeUtil.nextCode(getContext());
+				getCurrentSale().setOrderCodeWait(code);
+				Log.v(TAG, "OrderCodeWait --> " + getCurrentSale().getOrderCodeWait());
+			}
+
 			//gridViewProducts.clearTextFilter();
 			mSearchView.onActionViewCollapsed();
 			getCurrentSale().setIncrement((Product) product);
@@ -521,35 +544,64 @@ public class SaleControllActivity extends BaseActivity {
 			super.onCleanListSale(sale);
 		}
 
-		public void onClickPrintCupom() {
-            setSweetDialog(new SweetAlertDialog(SaleControllActivity.this, SweetAlertDialog.WARNING_TYPE)
+
+
+		public void onClickPrintCupom(final View v) {
+			setSweetDialog(new SweetAlertDialog(SaleControllActivity.this, SweetAlertDialog.WARNING_TYPE)
 					.setTitleText(getResources().getString(R.string.dialog_print_title))
 					.setContentText(getResources().getString(R.string.dialog_print_msg))
 					.setConfirmText(getResources().getString(R.string.action_yes_print))
 					.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
 						@Override
 						public void onClick(SweetAlertDialog sDialog) {
-							SaleCtrl.this.onPrintCupom();
+							SaleCtrl.this.onPrintCupom(v);
 							sDialog.dismissWithAnimation();
 						}
 					}));
+		}
 
-        }
+		@Override
+		public void onPrintCupom(final View v) {
+			// Imprime o Cupom sem aparecer o troco
+
+			// Desativar temporariamente este botao
+			/*if (v != null) {
+				SaleControllActivity.this.printerEpson.updateViewState(v);
+			}*/
+
+			// Imprime Cupom
+			onPrintCupom2(null, 0, 0);
+		}
+
+		private void onPrintCupom2(final PaymentMethodEnum method, final double value, final double troco) {
+			// Imprime Cupom
+			Cupom cupom = new Cupom();
+			cupom.setSale(getCurrentSale());
+			cupom.setMethod(method);
+			cupom.setAmountPaid(value);
+			cupom.setTroco(troco);
+			cupom.setCorporateName("Arca do Sabor");
+			//cupom.setCorporatePhone("(41) 988558596");
+			//cupom.setCorporateSocialmedia("#ArcaDoSabor");
+			//cupom.setCorporateImage(getResources(), R.drawable.ic_action_add_alarm);
+
+			if (PrinterEpson.PRINTER_TARGET != null && !SaleControllActivity.this.printerEpson.runPrintReceiptSequence(cupom)) {
+                SimpleToast.error(SaleControllActivity.this, "Não foi possivel imprimir o cupom");
+			}
+			finish();
+		}
 		
 		@Override
-		public void onPaymentMethod(SaleModel sale, PaymentMethodEnum method, double value) {
+		public void onPaymentMethod(SaleModel sale, final PaymentMethodEnum method, final double value) {
 			Log.w(TAG, "TIPO PAGAMENTO - " + method.name());
 			Log.w(TAG, "Valor - " + value);
 
-			double troco = 0;
 
 			// Pagamento total
 			if (value >= getCurrentSale().getTotalRestPay()) {
-				troco = value - getCurrentSale().getTotalRestPay();
+				final double troco = value - getCurrentSale().getTotalRestPay();
 				
 				super.onPayTotalSale(getCurrentSale(), method);
-
-				this.onPrintCupom();
 
 				// Se existe troco, aparece na tela o valor.
 				// Apenas para pagamento em dinheiro
@@ -569,24 +621,51 @@ public class SaleControllActivity extends BaseActivity {
 							.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
 								@Override
 								public void onClick(SweetAlertDialog sDialog) {
-									finish();
+									// Imprime Cupom
+									onPrintCupom2(method, value, troco);
 								}
 							})
 							.show();
 
 				} else {
-					finish();
+					// Imprime Cupom
+					onPrintCupom2(method, value, 0);
 				}
 				
 			} else {
 				// Pagamento Parcial
 				super.onPayPartiallySale(getCurrentSale(), value, method);
 				
-				// Imprime o Cupom
-				Cupom.getInstance(getContext()).runPrintSequence(sale, method, value, 0);
-				
-				finish();
+				// Imprime Cupom
+				onPrintCupom2(method, value, 0);
 			}
 		}
+	}
+
+	@Override
+	public Activity getActivity() {
+		return this;
+	}
+
+	@Override
+	public void onPtrReceive(final Printer printerObj, final int code, final PrinterStatusInfo status, final String printJobId) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public synchronized void run() {
+
+				if (PrinterEpson.PRINTER_TARGET != null) {
+					ShowMsg.showResult(code, printerEpson.makeErrorMessage(status), getActivity());
+
+					printerEpson.dispPrinterWarnings(status);
+
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							printerEpson.disconnectPrinter();
+						}
+					}).start();
+				}
+			}
+		});
 	}
 }

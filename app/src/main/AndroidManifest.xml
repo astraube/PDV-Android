@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.autazcloud.pdv">
 
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -39,23 +41,29 @@
                 <category android:name="android.intent.category.MONKEY" />
             </intent-filter>
         </activity>
+
         <activity
+            android:name="com.autazcloud.pdv.controllers.printer2.DiscoveryActivity"
+            android:label="@string/app_title"
+            android:screenOrientation="portrait" >
+
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+            <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/device_filter" />
+        </activity>
+        <!--<activity
             android:name=".controllers.printer.DiscoverPrinterActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
             </intent-filter>
-
             <meta-data
                 android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
                 android:resource="@xml/device_filter" />
-        </activity>
-        <activity android:name=".customkeyboard.ImePreferences" android:label="@string/settings_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-            </intent-filter>
-        </activity>
+        </activity>-->
 
         <activity
             android:name="com.autazcloud.pdv.PreferenceActivity"
@@ -97,7 +105,6 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
             <meta-data
                 android:name="android.hardware.usb.action.USB_DEVICE_DETACHED"
                 android:resource="@xml/device_filter" />

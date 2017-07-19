@@ -6,6 +6,8 @@ import com.autazcloud.pdv.domain.constants.ServerConstants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -23,14 +25,17 @@ public class NetworkModule {
     @Provides
     public ApiService provideApiService() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .addInterceptor(logging);
 
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .create();
 
-        httpClient.addInterceptor(logging);
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

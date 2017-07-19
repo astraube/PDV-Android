@@ -53,7 +53,7 @@ public class CustomApplication extends Application {
 			@Override
 			public void handleError(Throwable e) {
 				super.handleError(e);
-				Log.e("CustomApplication", e.toString());
+				Log.e("CustomApplication", "handleError: " + e.toString());
 			}
 		});
 

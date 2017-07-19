@@ -6,7 +6,6 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -23,6 +22,8 @@ public class BaseActivity extends Activity implements BaseViewInterface, Subscri
 	private final String TAG;
 	private CustomApplication app;
 	private SweetAlertDialog sweetDialog = null;
+	//private PrinterEpson printerEpson = null;
+
 
 	public BaseActivity () {
 		this.TAG = getClass().getSimpleName();
@@ -31,6 +32,10 @@ public class BaseActivity extends Activity implements BaseViewInterface, Subscri
 	public CustomApplication getApp() {
 		return (this.app);
 	}
+
+	/*public PrinterEpson getPrinterEpson() {
+		return (this.printerEpson);
+	}*/
 
 	public void fullScreen() {
 		Window w = getWindow();
@@ -43,6 +48,7 @@ public class BaseActivity extends Activity implements BaseViewInterface, Subscri
 	protected void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 		this.app = ((CustomApplication) getApplicationContext());
+		//this.printerEpson = new PrinterEpson(this);
 	}
 	
 	@Override

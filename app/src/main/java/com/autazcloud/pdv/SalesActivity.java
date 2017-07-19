@@ -18,8 +18,8 @@ import com.autazcloud.pdv.domain.enums.SaleStatusEnum;
 import com.autazcloud.pdv.domain.interfaces.SaleTaskInterface;
 import com.autazcloud.pdv.domain.models.Payment;
 import com.autazcloud.pdv.domain.models.SaleModel;
-import com.autazcloud.pdv.ui.adapters.SalesAllListAdapter;
 import com.autazcloud.pdv.helpers.FormatUtil;
+import com.autazcloud.pdv.ui.adapters.SalesAllListAdapter;
 import com.autazcloud.pdv.ui.base.BaseActivity;
 import com.autazcloud.pdv.ui.dialog.CalendarDialog;
 import com.autazcloud.pdv.ui.dialog.CalendarDialog.CalendarDialogInterface;
@@ -136,25 +136,25 @@ public class SalesActivity extends BaseActivity implements SaleTaskInterface, Ca
 		// Valores de pagamento dinheir/credito/...
 		if (mTotalPayMethods.get(PaymentMethodEnum.MONEY) != null) {
 			tableLayoutDetails.addView(rowMoney);
-			rowMoney.setText1(getString(R.string.txt_payments_with, getString(R.string.sale_pay_type_money)));
+			rowMoney.setText1(getString(R.string.txt_payments_with, getString(PaymentMethodEnum.MONEY.getResourceId())));
 			rowMoney.setText2(FormatUtil.toMoneyFormat(mTotalPayMethods.get(PaymentMethodEnum.MONEY)));
 		}
 		
 		if (mTotalPayMethods.get(PaymentMethodEnum.DEBT) != null) {
 			tableLayoutDetails.addView(rowDebt);
-			rowDebt.setText1(getString(R.string.txt_payments_with, getString(R.string.sale_pay_type_debt)));
+			rowDebt.setText1(getString(R.string.txt_payments_with, getString(PaymentMethodEnum.DEBT.getResourceId())));
 			rowDebt.setText2(FormatUtil.toMoneyFormat(mTotalPayMethods.get(PaymentMethodEnum.DEBT)));
 		}
 		
 		if (mTotalPayMethods.get(PaymentMethodEnum.CREDIT) != null) {
 			tableLayoutDetails.addView(rowCredit);
-			rowCredit.setText1(getString(R.string.txt_payments_with, getString(R.string.sale_pay_type_credit)));
+			rowCredit.setText1(getString(R.string.txt_payments_with, getString(PaymentMethodEnum.CREDIT.getResourceId())));
 			rowCredit.setText2(FormatUtil.toMoneyFormat(mTotalPayMethods.get(PaymentMethodEnum.CREDIT)));
 		}
 
 		if (mTotalPayMethods.get(PaymentMethodEnum.VOUCHER) != null) {
 			tableLayoutDetails.addView(rowVoucher);
-			rowVoucher.setText1(getString(R.string.txt_payments_with, getString(R.string.sale_pay_type_voucher)));
+			rowVoucher.setText1(getString(R.string.txt_payments_with, getString(PaymentMethodEnum.VOUCHER.getResourceId())));
 			rowVoucher.setText2(FormatUtil.toMoneyFormat(mTotalPayMethods.get(PaymentMethodEnum.VOUCHER)));
 		}
 	}

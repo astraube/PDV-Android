@@ -29,17 +29,17 @@ allprojects {
     }
 }
 
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
-
-/*task copyJniLibs(type: Copy) {
+/*
+task copyJniLibs(type: Copy) {
     from 'libs/armeabi'
     into 'src/main/jniLibs/armeabi'
 }
 tasks.withType(JavaCompile) {
     compileTask -> compileTask.dependsOn(copyJniLibs)
-}
-clean.dependsOn 'cleanCopyJniLibs'*/
+}*/
+//clean.dependsOn 'cleanCopyJniLibs'
 
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

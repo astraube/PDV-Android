@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +17,7 @@ import com.autazcloud.pdv.PreferenceActivity;
 import com.autazcloud.pdv.ProductsActivity;
 import com.autazcloud.pdv.R;
 import com.autazcloud.pdv.SalesActivity;
-import com.autazcloud.pdv.controllers.printer.DiscoverPrinterActivity;
+import com.autazcloud.pdv.controllers.printer2.DiscoveryActivity;
 import com.autazcloud.pdv.ui.views.ImageTextView;
 
 public class FloatMenuDialog extends Dialog implements View.OnClickListener {
@@ -86,7 +85,7 @@ public class FloatMenuDialog extends Dialog implements View.OnClickListener {
 			
 		} else if (tag.equals(mActivity.getString(R.string.float_menu_item_printer))) {
 			// Assistende da impressora
-			intent = new Intent(mActivity, DiscoverPrinterActivity.class);
+			intent = new Intent(mActivity, DiscoveryActivity.class);
 			mActivity.startActivityForResult(intent, 0);
 			return;
 		}

@@ -22,7 +22,7 @@ public class BitmapUtils {
 	 * int h = imageView.getHeight();
 	 * bm =  BitmapUtils.getToundBitmap(bitmap, w);
 	 * </pre>
-	 * @param bmp
+	 * @param bm
 	 * @param radius
 	 * @return
 	 */

@@ -13,6 +13,7 @@ public enum SaleStatusEnum {
     CANCELED ("Cancelada");
 
     private final String _label;
+
     SaleStatusEnum(String label) {
         this._label = label;
     }

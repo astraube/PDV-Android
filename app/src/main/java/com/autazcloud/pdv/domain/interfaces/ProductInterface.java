@@ -26,6 +26,7 @@ public interface ProductInterface {
 	public void setStockCurrent(int value);
 	public int getStockCurrent();
 
+	public boolean isRequestPass();
 	public int getRequestPass();
 	public void setRequestPass(int value);
 }
