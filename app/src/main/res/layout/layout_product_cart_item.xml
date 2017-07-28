@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:paddingTop="5dp"
+    android:paddingLeft="@dimen/horizontal_padding_textView"
+    android:paddingRight="@dimen/horizontal_padding_textView">
+
+    <TextView
+        android:id="@+id/txtNome"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/txtPriceFinal"
+        android:layout_below="@+id/txtQuantity"
+        android:layout_marginRight="@dimen/horizontal_padding_textView"
+        android:layout_marginBottom="15dp"
+        android:gravity="top|left"
+        android:maxLines="1"
+        android:textAppearance="@style/textProductMedium"
+        android:lines="2"/>
+
+    <TextView
+        android:id="@+id/txtQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:gravity="top|right"
+        android:maxLines="1"
+        android:textColor="@color/gray"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size_small"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/txtPriceUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/txtQuantity"
+        android:layout_toStartOf="@+id/txtQuantity"
+        android:layout_marginRight="@dimen/horizontal_padding_textView"
+        android:gravity="top|right"
+        android:maxLines="1"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/text_size_small"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/txtPriceInit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/txtPriceUnit"
+        android:layout_toStartOf="@+id/txtPriceUnit"
+        android:layout_marginRight="@dimen/horizontal_padding_textView"
+        android:gravity="top|right"
+        android:maxLines="1"
+        android:textSize="@dimen/text_size_small"
+        android:textColor="@color/red"
+        android:visibility="gone"/>
+
+    <org.fabiomsr.moneytextview.MoneyTextView
+        android:id="@+id/txtPriceFinal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/txtNome"
+        android:layout_below="@+id/txtQuantity"
+        android:gravity="top|right"
+        android:maxLines="1"
+        android:textStyle="bold"
+        app:symbol=""
+        app:baseTextSize="24sp"
+        app:baseTextColor="#FBFFE3"
+        app:decimalDigitsTextSize="16sp"
+        app:decimalMargin="3dp"
+        app:decimalSeparator=","
+        app:decimalTextColor="#FBFFE3"
+        app:includeDecimalSeparator="true"
+        tools:ignore="RtlHardcoded" />
+
+</RelativeLayout>

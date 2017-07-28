@@ -1,69 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+	android:paddingTop="@dimen/vertical_padding_textView"
     android:paddingLeft="@dimen/horizontal_padding_textView"
+	android:paddingRight="@dimen/horizontal_padding_textView"
+	android:paddingBottom="@dimen/vertical_padding_textView"
     android:clickable="true">
 
-    <TextView
-        android:id="@+id/txtDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/container1"
-        android:singleLine="true"
-		android:paddingTop="@dimen/horizontal_padding_textView"
-		android:paddingBottom="@dimen/vertical_padding_textView"
-        android:textAppearance="@style/textProductMedium"
-        android:textColor="@color/gray" />
-    
-    <TableRow
-        android:id="@+id/container1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-		android:paddingBottom="@dimen/horizontal_padding_textView"
-        android:gravity="center_vertical|center_horizontal" >
+	<TextView
+		android:text="sdsd"
+		android:id="@+id/txtClient"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:gravity="center_vertical|left"
+		android:lines="1"
+		android:textAppearance="@style/textProductMedium"
+		android:textColor="@android:color/black"/>
 
-        <TextView
-	        android:id="@+id/txt1"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:gravity="center"
-	        android:singleLine="true"
-	        android:paddingRight="@dimen/horizontal_padding_textView"
-	        android:textAppearance="@style/textProductMedium"
-	        android:textColor="@android:color/black"/>
-        
-        <Space
-             android:layout_width="0dp"
-             android:layout_height="wrap_content" 
-             android:layout_weight="0.3"/>
-	    
-	    <TextView
-	        android:id="@+id/txt2"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:gravity="center"
-	        android:singleLine="true"
-	        android:paddingRight="@dimen/horizontal_padding_textView"
-	        android:textAppearance="@style/textProductLarge"
-	        android:textColor="@android:color/black"/>
-        
-        <Space
-             android:layout_width="0dp"
-             android:layout_height="wrap_content" 
-             android:layout_weight="1"/>
-	
-	    <TextView
-	        android:id="@+id/txt3"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:gravity="center"
-	        android:singleLine="true"
-	        android:paddingRight="@dimen/horizontal_padding_textView"
-	        android:textAppearance="@style/textProductMedium"
-	        android:textColor="@android:color/black"/>
-    </TableRow>
+	<TextView
+		android:text="sdsd"
+		android:id="@+id/txtTotal"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_centerVertical="true"
+		android:gravity="center_vertical|left"
+		android:lines="1"
+		android:textAppearance="@style/textProductSmall"
+		android:textColor="@android:color/black"/>
+
+	<TextView
+		android:text="sdsd"
+		android:id="@+id/txtStatus"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerVertical="true"
+		android:layout_alignParentRight="true"
+		android:gravity="center_vertical|left"
+		android:lines="1"
+		android:textAppearance="@style/textProductMedium"
+		android:textColor="@android:color/black"/>
+
+	<TextView
+		android:text="sdsd"
+		android:id="@+id/txtDate"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@+id/txtClient"
+		android:layout_marginTop="20dp"
+		android:gravity="center_vertical|left"
+		android:lines="1"
+		android:textSize="@dimen/text_size_small"
+		android:textColor="@color/gray" />
+
+	<TextView
+		android:text="sdsd"
+		android:id="@+id/txtCode"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_below="@+id/txtClient"
+		android:layout_marginTop="20dp"
+		android:gravity="center_vertical|left"
+		android:lines="1"
+		android:textSize="@dimen/text_size_small"
+		android:textColor="@color/gray" />
+
 </RelativeLayout>

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <item name="databaseVersion" format="integer" type="string">32</item>
-
     <string name="app_name">Vendas</string>
     <string name="app_site">www.autaz.me</string>
     <string name="app_description">Automação de A a Z</string>
@@ -12,9 +9,9 @@
     <string name="title_activity_sales">SalesActivity</string>
     <string name="title_dialog_new_sale">Informações da Venda</string>
     <string name="title_dialog_sale_pay_type">Como você gostaria de pagar?</string>
-    <string name="title_dialog_suggestion">Envie uma Sugestão</string>
     <string name="title_dialog_product">Adicionar/Editar Produto</string>
     <string name="title_dialog_product_clicked">Editar/Remover Produto</string>
+    <string name="title_dialog_select_date">Alterar data de consulta</string>
     <string name="title_activity_layout">Layout do Sistema para seu Estabelecimento</string>
     <string name="title_activity_sales_sync">Vendas efetuadas neste ponto</string>
     <string name="title_activity_products_sync">Produtos</string>
@@ -23,6 +20,10 @@
     <string name="dialog_sale_item_edit_obs_sub_title">a observação aparecerrá no cupom impresso</string>
     <string name="dialog_sale_item_edit_obs_hint">Observações sobre o item...</string>
     <string name="dialog_sale_item_edit_save">Salvar observação</string>
+    <string name="dialog_suggestion_title">Envie uma Sugestão</string>
+    <string name="dialog_suggestion_content">Ajude-nos a melhorar. O que você acha que pode ser mudado neste aplicativo?</string>
+    <string name="dialog_suggestion_hint">Sugiro uma melhoria em...</string>
+    <string name="dialog_syncing">Sincronizando dados...</string>
 
     <!-- Strings SaleControllActivity -->
     <string name="txt_total_sale">Total:</string>
@@ -39,6 +40,7 @@
     <string name="txt_bt_sale_code_controll">Controle: %1$s</string>
     <string name="txt_bt_sale_num_item">%1$s item</string>
     <string name="txt_bt_sale_num_items">%1$s itens</string>
+    <string name="code_wait">Senha de espera: %1$s</string>
 
     <!-- Strings SalesSyncActivity -->
     <string name="txt_total_saled">Total vendido no dia %1$s.\n Toque aqui para alterar a data</string>
@@ -64,9 +66,11 @@
     <string name="action_remove">Remover</string>
     <string name="action_yes_remove">Sim, remover!</string>
     <string name="action_try_again">Tentar novament</string>
+    <string name="action_save">Salvar</string>
 
     <!-- Strings Dialog New Sale -->
-    <string name="txt_no_show_dialog_new_sale">Não exibir novamente essa caixa, ao clicar em \"Nova Venda\". Altere isso também em \"Ajustes\".</string>
+    <string name="txt_no_show_dialog_new_sale">Não exibir novamente essa caixa, ao clicar em \"Nova Venda\". Altere isso em \"Ajustes\".</string>
+    <string name="txt_no_show_dialog_new_sale_alert">Atenção, essa caixa de dialogo não aparecerá novamente. Altere isso em \"Ajustes\".</string>
     <string name="txt_client">Nome do Cliente</string>
     <string name="txt_client_email">E-mail do Cliente</string>
     <string name="txt_client_cpf">CPF do Cliente</string>
@@ -84,7 +88,8 @@
 
 
     <!-- Strings Dialog Ajustes -->
-    <string name="float_menu_item_my_profile">Meu Perfil</string>
+    <string name="float_menu_item_sync">Sincronizar \n Dados</string>
+    <string name="float_menu_item_my_profile">Meu \nPerfil</string>
     <string name="float_menu_item_style">Estilo</string>
     <string name="float_menu_item_help">Socorro</string>
     <string name="float_menu_item_calc">Calculadora</string>
@@ -93,7 +98,7 @@
     <string name="float_menu_item_layout">Layout</string>
     <string name="float_menu_item_adjustments">Ajustes</string>
     <string name="float_menu_item_suggestion">Sugestões</string>
-    <string name="float_menu_item_printer">Impressora</string>
+    <string name="float_menu_item_printer">Configurar \nImpressora</string>
 
     <!-- Strings SaleCloseDialog -->
     <string name="txt_empty_list">A lista de compra está vazia, deseja cancelar a venda?</string>
@@ -119,14 +124,15 @@
 
     <!-- Strings de Formularios -->
     <string name="txt_form_incomplete">Formulário Incompleto</string>
-    <string name="txt_form_fill">Preencha corretamente todos os dados</string>
+    <string name="txt_form_fill">Preencha corretamente todos os campos</string>
     <string name="txt_login">Faça login para começar a utilizar</string>
     <string name="txt_login_success">Login efetuado com sucesso</string>
-    <string name="txt_input_pass">Digite a Senha</string>
+    <string name="txt_input_pass">Digite a senha</string>
     <string name="txt_sugestion_subject">Assunto</string>
-    <string name="txt_sugestion_text">Digite sua Sugestão</string>
-    <string name="txt_product_name">Nome do Produto</string>
-    <string name="txt_product_price">Preço do Produto</string>
+    <string name="txt_sugestion_text">Digite sua sugestão</string>
+    <string name="txt_product_name">Nome do produto</string>
+    <string name="txt_product_price_coast">Preço de custo</string>
+    <string name="txt_product_price_resalle">Preço de revenda</string>
 
     <!-- Mensagens -->
     <string name="txt_title_remove_entry">Remover Registro</string>
@@ -137,6 +143,7 @@
     <string name="process_download_data_account">Estamos baixando os dados da sua conta.</string>
 
     <string name="err_oops">Ooops...</string>
+    <string name="err_internal_error">Ocorreu um erro interno</string>
     <string name="err_try_again">Por favor, tente novamente mais tarde.</string>
     <string name="err_working_offline_title">Você esta trabalhando off-line</string>
     <string name="err_working_offline_msg">Tudo que você vender ou editar no programa ficará salvo apenas neste equipamento!</string>

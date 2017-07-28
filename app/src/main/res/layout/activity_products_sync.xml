@@ -27,7 +27,7 @@
         fab:fab_colorPressed="#E75043"
         fab:fab_colorRipple="#99FFFFFF"/>
     
-    <com.autazcloud.pdv.ui.views.FloatUserButtonView
+    <br.com.i9algo.autaz.pdv.ui.views.FloatUserButtonView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

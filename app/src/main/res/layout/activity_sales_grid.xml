@@ -125,7 +125,7 @@
         android:layout_marginRight="85dp"
         android:background="@android:color/transparent"/>
 
-    <com.autazcloud.pdv.ui.views.FloatUserButtonView
+    <br.com.i9algo.autaz.pdv.ui.views.FloatUserButtonView
         android:id="@+id/btOperator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

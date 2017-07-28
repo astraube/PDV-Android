@@ -33,17 +33,6 @@
 			android:layout_height="match_parent"
 			android:scrollbars="vertical"/>
 
-        <!--<GridView
-	        android:id="@+id/gridView"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:gravity="center" 
-	        android:columnWidth="150dp"
-	        android:numColumns="auto_fit"
-	        android:stretchMode="columnWidth"
-	        android:horizontalSpacing="10dp"
-	        android:verticalSpacing="10dp" />-->
-
     </LinearLayout>
 
     <Button
@@ -71,70 +60,77 @@
 		android:src="@drawable/bg_button_print"
 		android:background="@android:color/transparent"/>
 
-    <RelativeLayout
-        android:id="@+id/viewRight"
-        android:layout_width="300dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true">
-        
-        <LinearLayout
-            android:id="@+id/containerInfoSale"
-	        android:layout_width="match_parent"
-	        android:layout_height="50dp"
-	        android:orientation="horizontal"
-	        android:gravity="center_vertical|right"
-            android:layout_alignParentTop="true"
-	        style="@style/buttonNoCornerMedium"
-	        android:clickable="true">
-            
-            <TextView
-		        android:id="@+id/txtSaleName"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:gravity="center"
-		        android:singleLine="false"
-		        android:paddingLeft="@dimen/horizontal_padding_textView"
-		        android:paddingTop="@dimen/vertical_padding_textView"
-		        android:paddingBottom="@dimen/vertical_padding_textView"
-		        android:textAppearance="@style/textProductMedium" />
-            
-            <TextView
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:textAppearance="@style/textProductMedium"  
-		        android:gravity="center"
-		        android:text=" - "/>
-            
-            <TextView
-		        android:id="@+id/txtSaleCode"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:gravity="center"
-		        android:singleLine="true"
-		        android:paddingRight="@dimen/horizontal_padding_textView"
-		        android:paddingTop="@dimen/vertical_padding_textView"
-		        android:paddingBottom="@dimen/vertical_padding_textView"
-		        android:textAppearance="@style/textProductMedium" />
-            
-            <ImageView
-	            android:id="@+id/imgEditInfoSale"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-		        android:paddingLeft="@dimen/horizontal_padding_textView"
-		        android:paddingRight="@dimen/horizontal_padding_textView"
-		        android:paddingTop="@dimen/vertical_padding_textView"
-		        android:paddingBottom="@dimen/vertical_padding_textView"
-	            android:src="@drawable/ic_action_edit" />
-	    </LinearLayout>
-	    
+	<RelativeLayout
+		android:id="@+id/containerInfoSale"
+		android:layout_width="@dimen/act_sale_ctrl_view_right"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentTop="true"
+		android:paddingLeft="@dimen/horizontal_padding_textView"
+		android:paddingRight="@dimen/horizontal_padding_textView"
+		android:paddingBottom="@dimen/vertical_padding_textView"
+		android:background="@drawable/bg_button_no_corner"
+		android:clickable="true"
+		android:focusable="true">
+
+		<ImageView
+			android:id="@+id/imgEditInfoSale"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/ic_mode_edit_white_36dp"
+			android:layout_alignParentTop="true"
+			android:layout_alignParentLeft="true"
+			android:layout_marginLeft="@dimen/horizontal_padding_textView"
+			android:layout_marginRight="@dimen/horizontal_padding_textView"
+			android:layout_marginTop="@dimen/vertical_padding_textView"
+			android:layout_marginBottom="@dimen/vertical_padding_textView" />
+
+		<TextView
+			android:id="@+id/txtSaleName"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentTop="true"
+			android:layout_toRightOf="@+id/imgEditInfoSale"
+			android:gravity="left|center_vertical"
+			android:lines="1"
+			android:textAppearance="@style/textProductMedium" />
+
+		<TextView
+			android:id="@+id/txtSaleControllCode"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@+id/imgEditInfoSale"
+			android:layout_below="@+id/txtSaleName"
+			android:gravity="left|center_vertical"
+			android:lines="1"
+			android:textAppearance="@style/textProductSmall" />
+
+		<TextView
+			android:id="@+id/txtSaleCode"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@+id/imgEditInfoSale"
+			android:layout_below="@+id/txtSaleControllCode"
+			android:gravity="left|center_vertical"
+			android:lines="1"
+			android:textAppearance="@style/textProductSmall" />
+
+	</RelativeLayout>
+
+	<RelativeLayout
+		android:id="@+id/viewRight"
+		android:layout_width="@dimen/act_sale_ctrl_view_right"
+		android:layout_height="match_parent"
+		android:layout_alignParentRight="true"
+		android:layout_below="@+id/containerInfoSale">
+
         <ListView
             android:id="@+id/listCartSale"
             style="@style/listSaleProducts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+			android:layout_alignParentTop="true"
             android:layout_above="@+id/btnPaySale"
-            android:layout_below="@+id/containerInfoSale"
             android:divider="@android:color/white"/>
 	    
         <Button
@@ -176,7 +172,7 @@
                 android:layout_marginRight="@dimen/horizontal_padding_textView"
                 android:layout_toLeftOf="@+id/txtTotalFinal"
                 android:gravity="center_vertical|right"
-                android:singleLine="true"
+				android:lines="1"
                 android:textAppearance="@style/textProductMedium"
                 android:textColor="@color/red"/>
             
@@ -219,6 +215,7 @@
                 app:decimalSeparator=","
 				app:decimalTextColor="#FBFFE3"
                 app:includeDecimalSeparator="true"/>
+
         </RelativeLayout>
         
         <RelativeLayout
@@ -307,6 +304,15 @@
 	            android:text="@string/action_sale_clean"/>
         </LinearLayout>
 
-    </RelativeLayout>
+
+
+		<ImageView
+			android:id="@+id/imageView"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:visibility="gone"/>
+
+	</RelativeLayout>
 
 </RelativeLayout>

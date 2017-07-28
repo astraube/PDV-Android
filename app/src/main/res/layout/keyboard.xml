@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.autazcloud.pdv.customkeyboard.LatinKeyboardView
+<br.com.i9algo.autaz.pdv.customkeyboard.LatinKeyboardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/keyboard"
     android:layout_alignParentBottom="true"

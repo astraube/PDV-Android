@@ -15,7 +15,7 @@
         android:paddingTop="-10dp"
         android:paddingLeft="@dimen/horizontal_padding_textView"
         android:paddingRight="@dimen/horizontal_padding_textView"
-        android:textAppearance="@style/textProductSmall"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
         android:textColor="@color/gray"/>
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:lines="1"
-        android:paddingTop="@dimen/vertical_padding_textView"
+        android:paddingTop="5dp"
         android:paddingLeft="@dimen/horizontal_padding_textView"
         android:paddingRight="@dimen/horizontal_padding_textView"
         android:textAppearance="@style/textProductLarge"
@@ -36,11 +36,22 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:lines="1"
-        android:paddingBottom="@dimen/vertical_padding_textView"
+        android:paddingBottom="5dp"
         android:paddingLeft="@dimen/horizontal_padding_textView"
         android:paddingRight="@dimen/horizontal_padding_textView"
-        android:textAppearance="@style/textProductMedium"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
         android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/txtOrderCodeWait"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lines="1"
+        android:paddingLeft="@dimen/horizontal_padding_textView"
+        android:paddingRight="@dimen/horizontal_padding_textView"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+        android:textColor="@color/gray"/>
 
     <TextView
         android:id="@+id/txtQtdItems"

@@ -1,4 +1,4 @@
-package com.autazcloud.pdv;
+package br.com.i9algo.autaz.pdv;
 
 import org.junit.Test;
 

@@ -20,10 +20,12 @@
     <string name="errmsg_text_informe">informe este erro ao administrador</string>
     <string name="errmsg_text_print">Erro ao enviar dados de impressão!</string>
 
+    <string name="printer_series_select">Selecione o modelo CORRETO da sua impressora</string>
+    <string name="printer_series">Serie da Impressora</string>
+    <string name="printer_series_selected">Modelo %1$s selecionado</string>
 
     <string name="app_title">ePOS2 Printer</string>
     <string name="btn_discovery">Discovery</string>
-    <string name="title_printerseries">Serie da Impressora</string>
     <string name="title_lang">Lingua</string>
     <string name="btn_samplereceipt">Sample Receipt</string>
     <string name="btn_samplecoupon">Sample Coupon</string>

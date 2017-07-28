@@ -46,6 +46,7 @@
     </array>
      
 	<array name="arr_items_float_menu">
+        <item>float_menu_item_sync</item>
 		<!-- <item>float_menu_item_calc</item> -->
 		<item>float_menu_item_products</item>
 		<item>float_menu_item_sales</item>
@@ -57,15 +58,39 @@
         <item>float_menu_item_printer</item>
 	</array>
 	<array name="arr_icons_float_menu">
+        <item>ic_update_white_48dp</item>
         <!-- <item>ic_calc</item> -->
-        <item>ic_product</item>
-        <item>ic_launcher</item>
+        <item>ic_group_work_white_48dp</item>
+        <item>ic_trending_up_white_48dp</item>
         <!-- <item>ic_ladrao_off</item> -->
         <!-- <item>ic_layout</item> -->
         <!-- <item>ic_style</item> -->
-        <item>ic_settings</item>
-        <item>ic_suggestion</item>
-        <item>ic_printer</item>
+        <item>ic_settings_white_48dp</item>
+        <item>ic_insert_comment_white_48dp</item>
+        <item>ic_print_white_48dp</item>
     </array>
+
+
+    <string-array name="arr_printer_series">
+        <item name="printerseries_m10">TM-m10 Series</item>
+        <item name="printerseries_m30">TM-m30 Series</item>
+        <item name="printerseries_p20">TM-P20 Series</item>
+        <item name="printerseries_p60">TM-P60 Series</item>
+        <item name="printerseries_p60ii">TM-P60II Series</item>
+        <item name="printerseries_p80">TM-P80 Series</item>
+        <item name="printerseries_t20">TM-T20 Series (Mais usada)</item>
+        <item name="printerseries_t60">TM-T60 Series</item>
+        <item name="printerseries_t70">TM-T70 Series</item>
+        <item name="printerseries_t81">TM-T81 Series</item>
+        <item name="printerseries_t82">TM-T82 Series</item>
+        <item name="printerseries_t83">TM-T83 Series</item>
+        <item name="printerseries_t88">TM-T88 Series</item>
+        <item name="printerseries_t90">TM-T90 Series</item>
+        <item name="printerseries_t90kp">TM-T90KP Series</item>
+        <item name="printerseries_u220">TM-U220 Series</item>
+        <item name="printerseries_u330">TM-U330 Series</item>
+        <item name="printerseries_l90">TM-L90 Series</item>
+        <item name="printerseries_h6000">TM-H6000 Series</item>
+    </string-array>
 
 </resources>

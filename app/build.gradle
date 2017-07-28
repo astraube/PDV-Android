@@ -26,12 +26,15 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     useLibrary 'org.apache.http.legacy'
+    dataBinding {
+        enabled = true
+    }
     defaultConfig {
-        applicationId 'com.autazcloud.pdv'
+        applicationId 'br.com.i9algo.autaz.pdv'
         minSdkVersion 16
         targetSdkVersion 24
-        versionCode 3
-        versionName "1.2.2"
+        versionCode 6
+        versionName "1.6.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         /*ndk {
             abiFilters 'x86', 'x86_64', 'armeabi', 'armeabi-v7a', 'arm64-v8a'
@@ -154,7 +157,8 @@ dependencies {
     compile 'cn.pedant.sweetalert:library:1.3'
     // https://github.com/pedant/sweet-alert-dialog
 
-    //compile 'com.afollestad.material-dialogs:core:0.9.4.5' //https://github.com/afollestad/material-dialogs
+    compile 'com.afollestad.material-dialogs:core:0.9.4.5' //https://github.com/afollestad/material-dialogs
+    compile 'com.afollestad.material-dialogs:commons:0.9.4.5'
 
     //provided 'org.glassfish:javax.annotation:10.0-b28' // http://www.jsonschema2pojo.org/
 

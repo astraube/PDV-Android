@@ -1,8 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/yellow" android:state_pressed="true" />
-    <item android:drawable="@color/red" android:state_focused="true" />
-    <item android:drawable="@color/red" android:state_enabled="true" />
-    <item android:drawable="@color/white_opaque" android:state_enabled="false" />
-    <item android:drawable="@color/yellow" />
+
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle" >
+            <solid android:color="@color/yellow"/>
+            <corners android:topLeftRadius="@dimen/corner_button" />
+        </shape>
+    </item>
+
+    <item android:state_focused="true">
+        <shape android:shape="rectangle" >
+            <solid android:color="@color/red"/>
+            <corners android:topLeftRadius="@dimen/corner_button"/>
+        </shape>
+    </item>
+
+    <item android:state_enabled="true">
+        <shape android:shape="rectangle" >
+            <solid android:color="@color/red"/>
+            <corners android:topLeftRadius="@dimen/corner_button"/>
+        </shape>
+    </item>
+
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle" >
+            <solid android:color="@color/white_opaque"/>
+            <corners android:topLeftRadius="@dimen/corner_button"/>
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle" >
+            <solid android:color="@color/yellow"/>
+            <corners android:topLeftRadius="@dimen/corner_button"/>
+        </shape>
+    </item>
+
 </selector>
