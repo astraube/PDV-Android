@@ -1,22 +1,28 @@
 package br.com.i9algo.autaz.pdv;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+
 import br.com.i9algo.autaz.pdv.R;
+import br.com.i9algo.autaz.pdv.data.local.AccountRealmRepository;
 import br.com.i9algo.autaz.pdv.data.local.SalesRealmRepository;
 import br.com.i9algo.autaz.pdv.domain.constants.DateFormats;
 import br.com.i9algo.autaz.pdv.domain.enums.PaymentMethodEnum;
 import br.com.i9algo.autaz.pdv.domain.enums.SaleStatusEnum;
 import br.com.i9algo.autaz.pdv.domain.interfaces.SaleTaskInterface;
+import br.com.i9algo.autaz.pdv.domain.models.Account;
 import br.com.i9algo.autaz.pdv.domain.models.PaymentSale;
 import br.com.i9algo.autaz.pdv.domain.models.Sale;
 import br.com.i9algo.autaz.pdv.helpers.FormatUtil;
@@ -34,6 +40,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class SalesActivity extends BaseActivity implements SaleTaskInterface, CalendarDialogInterface, OnItemSelectedListener {
 	
@@ -45,6 +52,7 @@ public class SalesActivity extends BaseActivity implements SaleTaskInterface, Ca
 	@BindView(R.id.containerResume) LinearLayout containerResume;
 	@BindView(R.id.spinnerTipoRelatorio) Spinner spinnerTipoRelatorio;
 	@BindView(R.id.listView) ListView salesLstView;
+	@BindView(R.id.imageBlurBlockView) ImageView imageBlurBlockView;
 
 	private List<Sale> mSaleList;
 	private TableRowTextView rowMoney, rowDebt, rowCredit, rowVoucher, rowOpen, rowCanceled;
@@ -67,7 +75,55 @@ public class SalesActivity extends BaseActivity implements SaleTaskInterface, Ca
 	public SalesActivity() {
 		super();
 	}
-	
+
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+        startMixPanelApi(this);
+		fullScreen();
+		setContentView(R.layout.activity_sales_sync);
+		ButterKnife.bind(this);
+
+		Account account = AccountRealmRepository.getFirst();
+
+		if (account.getSignaturePlan() == null || !account.getSignaturePlan().hasExpired()) {
+
+			imageBlurBlockView.setVisibility(View.GONE);
+
+			this.mInitDate = (Calendar)Calendar.getInstance().clone();
+			this.mFinalDate = (Calendar)Calendar.getInstance().clone();
+
+			rowOpen = new TableRowTextView(this, "", "", 30);
+			rowCanceled = new TableRowTextView(this, "", "", 30);
+			rowMoney = new TableRowTextView(this, "", "", 30);
+			rowDebt = new TableRowTextView(this, "", "", 30);
+			rowCredit = new TableRowTextView(this, "", "", 30);
+			rowVoucher = new TableRowTextView(this, "", "", 30);
+
+			containerResume.setOnClickListener(mOnClickChangeDate);
+			spinnerTipoRelatorio.setOnItemSelectedListener(this);
+		} else {
+			Log.v(TAG, "------------> Periodo de teste expirou");
+			imageBlurBlockView.setVisibility(View.VISIBLE);
+
+			SweetAlertDialog pDialog = new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE);
+			pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+			pDialog.setTitle(getString(R.string.err_account_expired_title));
+			pDialog.setTitleText(getString(R.string.err_account_expired_title));
+			pDialog.setContentText(getString(R.string.err_account_expired_msg));
+			pDialog.setCancelable(false);
+			pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+				@Override
+				public void onClick(SweetAlertDialog sweetAlertDialog) {
+					sweetAlertDialog.dismiss();
+					SalesActivity.this.onBackPressed();
+				}
+			});
+			setSweetDialog(pDialog);
+		}
+	}
+
 	private void loadSales() {
 		mTotalDay = 0;
 		mTotalOpen = 0;
@@ -92,7 +148,7 @@ public class SalesActivity extends BaseActivity implements SaleTaskInterface, Ca
 		//Log.v("SalesAct", "---->init "+dInit);
 		//Log.v("SalesAct", "---->final "+dfinal);
 
-		onCompleteLoadSales(SalesRealmRepository.getSalesDate(dInit, dfinal));
+		onCompleteLoadSales(SalesRealmRepository.getByDate(dInit, dfinal));
 	}
 	
 	public void changeValuesTotal() {
@@ -169,27 +225,6 @@ public class SalesActivity extends BaseActivity implements SaleTaskInterface, Ca
 			rowVoucher.setText1(getString(R.string.txt_payments_with, getString(PaymentMethodEnum.VOUCHER.getResourceId())));
 			rowVoucher.setText2(FormatUtil.toMoneyFormat(mTotalPayMethods.get(PaymentMethodEnum.VOUCHER)));
 		}
-	}
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		fullScreen();
-		setContentView(R.layout.activity_sales_sync);
-		ButterKnife.bind(this);
-		
-		this.mInitDate = (Calendar)Calendar.getInstance().clone();
-		this.mFinalDate = (Calendar)Calendar.getInstance().clone();
-
-		rowOpen = new TableRowTextView(this, "", "", 30);
-		rowCanceled = new TableRowTextView(this, "", "", 30);
-		rowMoney = new TableRowTextView(this, "", "", 30);
-		rowDebt = new TableRowTextView(this, "", "", 30);
-		rowCredit = new TableRowTextView(this, "", "", 30);
-		rowVoucher = new TableRowTextView(this, "", "", 30);
-
-		containerResume.setOnClickListener(mOnClickChangeDate);
-		spinnerTipoRelatorio.setOnItemSelectedListener(this);
 	}
 	
 	@Override

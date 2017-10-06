@@ -46,7 +46,7 @@ public class ImageTextView extends LinearLayout {
 
 		// Create the caption view
 		this.mTextView = new TextView(getContext());
-		LayoutParams clp = new LayoutParams(200, LayoutParams.WRAP_CONTENT);
+		LayoutParams clp = new LayoutParams(getResources().getDimensionPixelOffset(R.dimen.image_text_view_width), LayoutParams.WRAP_CONTENT);
 		//clp.weight = 0;
 		clp.gravity = Gravity.CENTER_HORIZONTAL;
 		clp.topMargin = 10;

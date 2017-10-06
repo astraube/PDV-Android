@@ -50,7 +50,7 @@ public abstract class SaleController implements SaleControllerInterface {
 			client = new Client();
 		}
 		if (client.getName() == null || client.getName().isEmpty()) {
-			int count  = SalesRealmRepository.getSaleCount();
+			int count  = SalesRealmRepository.getCount();
 			client.setName(mContext.getResources().getString(R.string.txt_bt_sale_init_name, (count + 1)+""));
 		}
 

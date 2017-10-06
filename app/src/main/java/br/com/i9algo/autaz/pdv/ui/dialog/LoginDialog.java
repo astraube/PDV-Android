@@ -3,12 +3,14 @@ package br.com.i9algo.autaz.pdv.ui.dialog;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Debug;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import br.com.i9algo.autaz.pdv.BuildConfig;
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
 import br.com.i9algo.autaz.pdv.data.remote.subscribers.SubscriberInterface;
@@ -40,6 +42,7 @@ public class LoginDialog extends AlertDialog.Builder {
 		final EditText userView =  ButterKnife.findById(layout, R.id.txtUsername);
 		final EditText passView =  ButterKnife.findById(layout, R.id.txtPassword);
 
+		// Armazenar username em cache para exibir na tela de login posteriormente
 		String username = PreferencesRepository.getValue(AuthAttr.USERNAME);
 		userView.setText(username);
 
@@ -63,6 +66,12 @@ public class LoginDialog extends AlertDialog.Builder {
 				mDialog.dismiss();
 			}
 		});
+
+		// TODO - teste
+		if (BuildConfig.DEBUG) {
+			userView.setText("a.straube.m@gmail.com");
+			passView.setText("123456");
+		}
 		
 		setIcon(R.drawable.ic_action_accounts);
         setView(layout);

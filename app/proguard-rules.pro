@@ -24,6 +24,9 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+-keep class com.crashlytics.** { *; }
+-dontwarn com.crashlytics.**
+
 -keep class com.epson.** { *; }
 -dontwarn com.epson.**
 

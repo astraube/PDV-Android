@@ -55,17 +55,24 @@ public class Client extends RealmObject {
         this.modelImpl = new ClientImpl(this);
     }
 
+
+
+    public static String getRouteKeyName()
+    {
+        return "publicToken";
+    }
+
     public String getPublicToken() {
         return publicToken;
     }
-    public void setPublicToken(String publicToken) {
+    /*public void setPublicToken(String publicToken) {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
         this.publicToken = publicToken;
 
         _realm.commitTransaction();
-    }
+    }*/
 
     public String getCode() {
         return code;
@@ -130,25 +137,9 @@ public class Client extends RealmObject {
     public String getCreatedAt() {
         return createdAt;
     }
-    public void setCreatedAt(String createdAt) {
-        Realm _realm = Realm.getDefaultInstance();
-        _realm.beginTransaction();
-
-        this.createdAt = createdAt;
-
-        _realm.commitTransaction();
-    }
 
     public String getUpdatedAt() {
         return updatedAt;
-    }
-    public void setUpdatedAt(String updatedAt) {
-        Realm _realm = Realm.getDefaultInstance();
-        _realm.beginTransaction();
-
-        this.updatedAt = updatedAt;
-
-        _realm.commitTransaction();
     }
 
     @Override

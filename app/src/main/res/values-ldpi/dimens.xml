@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+         LDPI 0.75x
+    -->
+    <!-- Tamanho de fontes. -->
+    <dimen name="text_size_extra_big">20dip</dimen>
+    <dimen name="text_size_big">18dip</dimen>
+    <dimen name="text_size_large_medium">17dip</dimen>
+    <dimen name="text_size_large">15dip</dimen>
+    <dimen name="text_size_medium">14dip</dimen>
+    <dimen name="text_size_small">12dip</dimen>
+    <dimen name="text_size_small_small">10dip</dimen>
+    <dimen name="text_size_small_small_small">9dip</dimen>
+
+    <dimen name="activity_horizontal_margin">12dp</dimen>
+    <dimen name="activity_vertical_margin">12dp</dimen>
+
+    <dimen name="horizontal_padding_textView">7.5dp</dimen>
+    <dimen name="vertical_padding_textView">7.5dp</dimen>
+
+    <dimen name="padding_2">1.5dp</dimen>
+    <dimen name="padding_5">3.75dp</dimen>
+    <dimen name="padding_10">7.5dp</dimen>
+
+    <dimen name="height_search_view_product">52.5dp</dimen>
+
+    <dimen name="corner_button">6dp</dimen>
+
+    <dimen name="float_button_view_size_image">45dp</dimen>
+    <dimen name="float_button_view_horizontal_padding_textView">7.5dp</dimen>
+    <dimen name="float_button_view_vertical_padding_textView">3.75dp</dimen>
+    <dimen name="float_menu_button_view_size_image">52.5dp</dimen>
+
+    <dimen name="key_height">39dip</dimen>
+    <dimen name="candidate_font_height">11.25sp</dimen>
+    <dimen name="candidate_vertical_padding">12sp</dimen>
+
+    <dimen name="act_sale_ctrl_view_right">225dp</dimen>
+
+    <dimen name="act_sale_grid_btn_new_sale_width">180dp</dimen>
+    <dimen name="act_sale_grid_btn_new_sale_height">90dp</dimen>
+    <dimen name="act_sale_grid_segmented_btn_width">140dp</dimen>
+
+    <dimen name="grid_view_spacing_horizontal">7.5dp</dimen>
+    <dimen name="grid_view_spacing_vertical">7.5dp</dimen>
+    <dimen name="grid_view_columns_width">170dp</dimen>
+
+    <dimen name="list_view_activity_sales">300dp</dimen>
+
+    <dimen name="image_text_view_width">150dp</dimen>
+
+    <dimen name="card_view_card_elevation">3.75dp</dimen>
+</resources>

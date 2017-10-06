@@ -2,5 +2,5 @@
 <resources>
     <string name="intro_new_sale">Clique aqui para criar uma nova venda.</string>
     <string name="intro_menu_button">Aqui você tem a lista dos seus produtos, relatório básico de vendas, e configurações.</string>
-    <string name="intro_search_sale">Busque uma venda específica, a partir do nome do cliente, código da mesa ou do pedido, ou até mesmo digitando o valor da venda.</string>
+    <string name="intro_search_sale">Clique aqui para buscar uma venda específica a partir do código da mesa, código do pedido, valor da venda, data ou dados do cliente.</string>
 </resources>

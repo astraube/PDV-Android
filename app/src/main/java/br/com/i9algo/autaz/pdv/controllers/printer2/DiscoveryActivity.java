@@ -11,7 +11,9 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import br.com.i9algo.autaz.pdv.R;
+import io.fabric.sdk.android.Fabric;
 
+import com.crashlytics.android.Crashlytics;
 import com.epson.epos2.Epos2Exception;
 import com.epson.epos2.discovery.DeviceInfo;
 import com.epson.epos2.discovery.Discovery;

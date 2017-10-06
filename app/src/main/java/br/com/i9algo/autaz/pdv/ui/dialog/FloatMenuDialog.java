@@ -105,7 +105,7 @@ public class FloatMenuDialog extends Dialog implements View.OnClickListener {
 				//intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				mActivity.startActivity(intent);
 			} catch (ActivityNotFoundException e) {
-				Log.e(TAG, "Aplicativo calculadora n�o existe");
+				Log.e(TAG, "Aplicativo calculadora nao existe");
 				e.printStackTrace();
 			}
 		}
@@ -142,7 +142,10 @@ public class FloatMenuDialog extends Dialog implements View.OnClickListener {
 		helpBtn.setOwnerClickListener(this);
 		viewConfig.addView(helpBtn);
 		*/
-		
+
+		int sizeImage = getContext().getResources().getDimensionPixelSize(R.dimen.float_menu_button_view_size_image);
+		int wView = getContext().getResources().getDimensionPixelSize(R.dimen.act_sale_grid_btn_new_sale_height);
+
 		for (int i = 0; i < menuItems.length; i++) {
 			ImageTextView btn;
 			String text;
@@ -150,9 +153,9 @@ public class FloatMenuDialog extends Dialog implements View.OnClickListener {
 			
 			text = getContext().getString(getContext().getResources().getIdentifier(menuItems[i], "string", getContext().getPackageName()));
 			id_icon = getContext().getResources().getIdentifier(menuItemsIcon[i], "drawable", getContext().getPackageName());
-			btn = new ImageTextView(getContext(), 70);
+			btn = new ImageTextView(getContext(), sizeImage);
 			
-			LayoutParams lp = new LayoutParams(100, LayoutParams.WRAP_CONTENT);
+			LayoutParams lp = new LayoutParams(wView, LayoutParams.WRAP_CONTENT);
 			lp.setMargins(10, 10, 10, 10);
 			btn.setLayoutParams(lp);
 			btn.setImageResource(id_icon);

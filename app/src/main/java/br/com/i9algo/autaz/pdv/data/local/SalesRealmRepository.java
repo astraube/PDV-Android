@@ -22,18 +22,32 @@ public class SalesRealmRepository {
 		return (result != null);
 	}
 
-	public static int getSaleCount() {
+	public static int getCount() {
 		Realm realm = Realm.getDefaultInstance();
 		return realm.where(Sale.class).findAll().size();
 	}
 
-	public static Sale getSaleById(String token) {
+	public static List<Sale> getAll() {
+		Realm realm = Realm.getDefaultInstance();
+		RealmResults<Sale> result = realm.where(Sale.class).findAll();
+		result = result.sort("updatedAt"); // Sort ascending
+		return new ArrayList<Sale>(result);
+	}
+
+	public static List<Sale> getAllNotSynchronized() {
+		Realm realm = Realm.getDefaultInstance();
+		RealmResults<Sale> result = realm.where(Sale.class).equalTo("syncronized", false).findAll();
+		result = result.sort("updatedAt"); // Sort ascending
+		return new ArrayList<Sale>(result);
+	}
+
+	public static Sale getById(String token) {
 		Realm realm = Realm.getDefaultInstance();
 		Sale result = realm.where(Sale.class).equalTo(Sale.getRouteKeyName(), token).findFirst();
 		return result;
 	}
 	
-	public static List<Sale> getSalesByStatus(SaleStatusEnum status) {
+	public static List<Sale> getByStatus(SaleStatusEnum status) {
 		//Log.w(TAG, "getSalesByStatus()");
 
 		Realm realm = Realm.getDefaultInstance();
@@ -45,7 +59,7 @@ public class SalesRealmRepository {
 		return new ArrayList<Sale>(result);
 	}
 
-	public static List<Sale> getSalesOpenAndPartialpaid(SaleStatusEnum status) {
+	public static List<Sale> getOpenedAndPartialPaid(SaleStatusEnum status) {
 		//Log.w(TAG, "getSalesByStatus()");
 
 		Realm realm = Realm.getDefaultInstance();
@@ -57,7 +71,7 @@ public class SalesRealmRepository {
 		return new ArrayList<Sale>(result);
 	}
 	
-	public static List<Sale> getSalesDate(Date initDate, Date finalDate) {
+	public static List<Sale> getByDate(Date initDate, Date finalDate) {
 		//Log.w(TAG, "getSalesAll( " + initDate + ", " + finalDate + ")");
 
 		Realm realm = Realm.getDefaultInstance();
@@ -75,7 +89,10 @@ public class SalesRealmRepository {
 			realm.beginTransaction();
 			realm.insertOrUpdate(sale); // insere ou atualiza, sem esperar um retorno
 			realm.commitTransaction();
-		} finally {
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}  finally {
 			realm.close();
 		}
 	}
@@ -87,7 +104,10 @@ public class SalesRealmRepository {
 			List<Sale> pp = new ArrayList<Sale>((Collection<? extends Sale>) saleList);
 			realm.insertOrUpdate(pp);
 			realm.commitTransaction();
-		} finally {
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}  finally {
 			realm.close();
 		}
 	}
@@ -98,7 +118,10 @@ public class SalesRealmRepository {
 			realm.beginTransaction();
 			realm.insert(sale);
 			realm.commitTransaction();
-		} finally {
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}  finally {
 			realm.close();
 		}
 	}
@@ -110,7 +133,10 @@ public class SalesRealmRepository {
 			List<Sale> pp = new ArrayList<Sale>((Collection<? extends Sale>) saleList);
 			realm.insert(pp);
 			realm.commitTransaction();
-		} finally {
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}  finally {
 			realm.close();
 		}
 	}

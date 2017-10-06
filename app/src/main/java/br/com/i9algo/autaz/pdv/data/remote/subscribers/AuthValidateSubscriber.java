@@ -1,21 +1,20 @@
 package br.com.i9algo.autaz.pdv.data.remote.subscribers;
 
-import android.app.Activity;
-import android.graphics.Color;
 import android.util.Log;
 
-import br.com.i9algo.autaz.pdv.R;
-import br.com.i9algo.autaz.pdv.data.remote.ResultDefault;
-import br.com.i9algo.autaz.pdv.domain.interfaces.LoginInterface;
-import br.com.i9algo.autaz.pdv.ui.base.BaseActivity;
+import org.apache.commons.lang3.StringUtils;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
+import br.com.i9algo.autaz.pdv.R;
+import br.com.i9algo.autaz.pdv.data.local.UserRealmRepository;
+import br.com.i9algo.autaz.pdv.domain.models.inbound.ResultStatusDefault;
+import br.com.i9algo.autaz.pdv.domain.interfaces.LoginInterface;
+import br.com.i9algo.autaz.pdv.domain.models.inbound.UserWrapper;
 
 
 /**
  * Created by aStraube on 30/06/2017.
  */
-public class AuthValidateSubscriber extends DefaultSubscriber<ResultDefault> {
+public class AuthValidateSubscriber extends DefaultSubscriber<UserWrapper> {
 
     private final String TAG;
     private SubscriberInterface _owner;
@@ -24,47 +23,49 @@ public class AuthValidateSubscriber extends DefaultSubscriber<ResultDefault> {
         this._owner = owner;
         this.TAG = getClass().getSimpleName();
 
-
+        owner.setSweetProgress(owner.getContext().getString(R.string.process_login));
     }
 
     @Override
     public void onCompleted() {
         super.onCompleted();
+        Log.v(TAG, "API WEB - onCompleted");
+
+        //_owner.onSubscriberCompleted();
     }
 
     @Override
     public void onError(Throwable e) {
         super.onError(e);
+        Log.e(TAG, "API WEB - onError");
 
-        if (e != null)
-            Log.e(TAG, e.getMessage());
+        String msg = _owner.getContext().getString(R.string.err_working_offline_title);
+        msg += "\n" + _owner.getContext().getString(R.string.err_working_offline_msg);
 
-        //PreferencesRepository.setValue(AuthAttr.USER_API_TOKEN, "");
-        //PreferencesRepository.setValue(AuthAttr.USER_PUBLIC_TOKEN, "");
+        if (resultStatus != null) {
+            if (StringUtils.isEmpty(resultStatus.title))
+                resultStatus.title = _owner.getContext().getString(R.string.err_auth_invalid);
 
-        if (this._owner instanceof BaseActivity) {
-            ((Activity)_owner.getContext()).runOnUiThread(new Runnable() {
-                public void run() {
-                    SweetAlertDialog pDialog = new SweetAlertDialog(_owner.getContext(), SweetAlertDialog.ERROR_TYPE);
-                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-                    pDialog.setTitle(R.string.err_working_offline_title);
-                    pDialog.setTitleText(_owner.getContext().getString(R.string.err_working_offline_title));
-                    String msg = _owner.getContext().getString(R.string.err_auth_invalid);
-                    msg += "\n" + _owner.getContext().getString(R.string.err_working_offline_msg);
-                    pDialog.setContentText(msg);
-                    pDialog.setCancelable(false);
+            if (StringUtils.isEmpty(resultStatus.message))
+                resultStatus.message = msg;
 
-                    ((BaseActivity)_owner).setSweetDialog(pDialog);
-                }
-            });
-
+        } else {
+            resultStatus = new ResultStatusDefault();
+            resultStatus.title = _owner.getContext().getString(R.string.err_auth_invalid);
+            resultStatus.message = msg;
         }
+
+        if (this._owner instanceof LoginInterface)
+            ((LoginInterface)this._owner).onLoginError(resultStatus);
     }
 
     @Override
-    public void onNext(ResultDefault t) {
+    public void onNext(UserWrapper t) {
         super.onNext(t);
-        //Log.i("LoginSubscriber", "onLogin onNext");
+        Log.v(TAG, "API WEB - onNext");
+
+        UserRealmRepository.syncItem(t.getModel());
+
         if (this._owner instanceof LoginInterface)
             ((LoginInterface)this._owner).onLoginSuccess(t);
     }

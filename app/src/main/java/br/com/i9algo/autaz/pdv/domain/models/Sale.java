@@ -3,6 +3,9 @@ package br.com.i9algo.autaz.pdv.domain.models;
 /**
  * Created by aStraube on 13/07/2017.
  */
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.annotations.Since;
@@ -22,7 +25,7 @@ import io.realm.annotations.Ignore;
 import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
 
-public class Sale extends RealmObject {
+public class Sale extends RealmObject /*implements Parcelable*/ {
 
     public static final double CURRENT_VERSION = 0.1; // Apenas para conhecimento de versao
 
@@ -36,44 +39,30 @@ public class Sale extends RealmObject {
     @Ignore private volatile boolean existsProduct;
     @Ignore private volatile boolean addPayment;
     @Ignore private volatile boolean clear;
+    @Ignore private volatile String stringSearch;
 
 
-    @Since(0.1)
-    @SerializedName("id")
-    @Expose
+
+    private boolean syncronized = false; // indica que foi sincronizado com a API WEB
+
+    public boolean isSyncronized() { return this.syncronized; }
+    public void setSyncronized(boolean sync) {
+        Realm _realm = Realm.getDefaultInstance();
+        _realm.beginTransaction();
+
+        this.syncronized = sync;
+
+        _realm.commitTransaction();
+    }
+
     @Index
     @PrimaryKey
     private String id;
 
     @Since(0.1)
-    @SerializedName("created_at")
-    @Expose
-    private Date createdAt;
-
-    @Since(0.1)
-    @SerializedName("updated_at")
-    @Expose
-    private Date updatedAt;
-
-    @Since(0.1)
     @SerializedName("public_token")
     @Expose
     private String publicToken;
-
-    @Since(0.1)
-    @SerializedName("annotations")
-    @Expose
-    private String annotations;
-
-    @Since(0.1)
-    @SerializedName("corporate_id")
-    @Expose
-    private long corporateId;
-
-    @Since(0.1)
-    @SerializedName("id_bank_account")
-    @Expose
-    private long idBankAccount;
 
     @Since(0.1)
     @SerializedName("user_id")
@@ -86,14 +75,39 @@ public class Sale extends RealmObject {
     private long accountId;
 
     @Since(0.1)
-    @SerializedName("value_total")
+    @SerializedName("created_at")
     @Expose
-    private double valueTotal;
+    private Date createdAt;
+
+    @Since(0.1)
+    @SerializedName("updated_at")
+    @Expose
+    private Date updatedAt;
+
+    @Since(0.1)
+    @SerializedName("corporate_id")
+    @Expose
+    private long corporateId;
+
+    @Since(0.1)
+    @SerializedName("id_bank_account")
+    @Expose
+    private long idBankAccount;
+
+    //@Since(0.1)
+    //@SerializedName("value_total")
+    //@Expose
+    //private double valueTotal;
 
     @Since(0.1)
     @SerializedName("value_total_paid")
     @Expose
     private double valueTotalPaid;
+
+    @Since(0.1)
+    @SerializedName("annotations")
+    @Expose
+    private String annotations;
 
     @Since(0.1)
     @SerializedName("discount")
@@ -123,7 +137,7 @@ public class Sale extends RealmObject {
     @Since(0.1)
     @SerializedName("client")
     @Expose
-    private Client client;
+    private Client client = null;
 
     @Since(0.1)
     @SerializedName("products")
@@ -138,7 +152,27 @@ public class Sale extends RealmObject {
 
     public Sale() {
     }
-
+    public Sale(Sale sale) {
+        super();
+        this.id = sale.getId();
+        this.publicToken = sale.getPublicToken();
+        this.userId = sale.getUserId();
+        this.accountId = sale.getAccountId();
+        this.createdAt = sale.getCreatedAt();
+        this.updatedAt = sale.getUpdatedAt();
+        this.corporateId = sale.getCorporateId();
+        this.idBankAccount = sale.getIdBankAccount();
+        this.valueTotalPaid = sale.getValueTotalPaid();
+        this.annotations = sale.getAnnotations();
+        this.discount = sale.getDiscount();
+        this.status = sale.getStatus();
+        //this.paymentSale = sale.getPaymentSale();
+        this.codeControll = sale.getCodeControll();
+        this.saller = sale.getSaller();
+        //this.client = sale.getClient();
+        //this.products = sale.getProducts();
+        this.orderCodeWait = sale.getOrderCodeWait();
+    }
     public Sale (Client client) {
         products = new RealmList<ProductSale>();
         createdAt = new Date();
@@ -166,14 +200,6 @@ public class Sale extends RealmObject {
     }
 
     public Date getCreatedAt() { return createdAt; }
-    private void setCreatedAt(Date createdAt) {
-        Realm _realm = Realm.getDefaultInstance();
-        _realm.beginTransaction();
-
-        this.createdAt = createdAt;
-
-        _realm.commitTransaction();
-    }
 
     public Date getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(Date updatedAt) {
@@ -186,7 +212,7 @@ public class Sale extends RealmObject {
     }
 
     public String getPublicToken() { return publicToken; }
-    public void setPublicToken(String publicToken) {
+    private void setPublicToken(String publicToken) {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
@@ -194,6 +220,10 @@ public class Sale extends RealmObject {
 
         _realm.commitTransaction();
     }
+
+    public long getUserId() { return userId; }
+
+    public long getAccountId() { return accountId; }
 
     public String getAnnotations() { return annotations; }
     public void setAnnotations(String annotations) {
@@ -206,46 +236,26 @@ public class Sale extends RealmObject {
     }
 
     public long getCorporateId() { return corporateId; }
-    public void setCorporateId(long corporateId) {
+    /*public void setCorporateId(long corporateId) {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
         this.corporateId = corporateId;
 
         _realm.commitTransaction();
-    }
+    }*/
 
     public long getIdBankAccount() { return idBankAccount; }
-    public void setIdBankAccount(long idBankAccount) {
+    /*public void setIdBankAccount(long idBankAccount) {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
         this.idBankAccount = idBankAccount;
 
         _realm.commitTransaction();
-    }
+    }*/
 
-    public long getUserId() { return userId; }
-    public void setUserId(long userId) {
-        Realm _realm = Realm.getDefaultInstance();
-        _realm.beginTransaction();
-
-        this.userId = userId;
-
-        _realm.commitTransaction();
-    }
-
-    public long getAccountId() { return accountId; }
-    public void setAccountId(long accountId) {
-        Realm _realm = Realm.getDefaultInstance();
-        _realm.beginTransaction();
-
-        this.accountId = accountId;
-
-        _realm.commitTransaction();
-    }
-
-    public double getValueTotal() { return valueTotal; }
+    /*public double getValueTotal() { return valueTotal; }
     public void setValueTotal(double valueTotal) {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
@@ -253,7 +263,7 @@ public class Sale extends RealmObject {
         this.valueTotal = valueTotal;
 
         _realm.commitTransaction();
-    }
+    }*/
 
     public double getValueTotalPaid() { return valueTotalPaid; }
     public void setValueTotalPaid(double valueTotalPaid) {
@@ -365,7 +375,9 @@ public class Sale extends RealmObject {
     public void setOrderCodeWait(String orderCodeWait) {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
+
         this.orderCodeWait = orderCodeWait;
+
         _realm.commitTransaction();
     }
 
@@ -558,7 +570,7 @@ public class Sale extends RealmObject {
         _realm.beginTransaction();
         products.clear();
         orderCodeWait = null;
-        valueTotal = 0;
+        //valueTotal = 0; // TODO - valueTotal desabilitado
         valueTotalPaid = 0;
         discount = 0;
         _realm.commitTransaction();
@@ -569,4 +581,56 @@ public class Sale extends RealmObject {
         return ToStringBuilder.reflectionToString(this);
     }
 
+    /**
+     * Retorna uma string para busca organica no objeto
+     * @return
+     */
+    public String getStringSearch() {
+        String code = "" +
+                getOrderCodeWait() +
+                getTotalSale() +
+                getId() +
+                getSaller() +
+                DateFormats.formatDateCommercial(getCreatedAt());
+
+        if (getClient() != null) {
+            code += getClient().getName() +
+                    getClient().getCode() +
+                    getClient().getCpfCnpj() +
+                    getClient().getEmail() +
+                    getClient().getPhone();
+        }
+
+        return code;
+        //return ToStringBuilder.reflectionToString(this, ToStringStyle.NO_FIELD_NAMES_STYLE);
+    }
+
+
+
+    /// PARCELABLE
+    /*public Sale(Parcel parcel) {
+        setPublicToken(parcel.readString());
+        setValueTotalPaid(parcel.readDouble());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(getPublicToken());
+        dest.writeDouble(getValueTotalPaid());
+    }
+    public static final Parcelable.Creator<Sale> CREATOR = new Parcelable.Creator<Sale>(){
+        @Override
+        public Sale createFromParcel(Parcel source) {
+            return new Sale(source);
+        }
+        @Override
+        public Sale[] newArray(int size) {
+            return new Sale[size];
+        }
+    };*/
 }

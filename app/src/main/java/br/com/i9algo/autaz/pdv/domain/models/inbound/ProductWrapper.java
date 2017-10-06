@@ -8,6 +8,6 @@ public class ProductWrapper {
     public Object success;
     public Product data;
 
-    public Product getProduct() { return data; }
-    public void setProduct(Product data) { this.data = data; }
+    public Product getModel() { return data; }
+    public void setModel(Product data) { this.data = data; }
 }

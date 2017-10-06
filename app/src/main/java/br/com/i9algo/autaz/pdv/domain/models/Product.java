@@ -15,7 +15,7 @@ import io.realm.annotations.PrimaryKey;
  */
 public class Product extends RealmObject {
 
-    public static final double CURRENT_VERSION = 0.1; // Apenas para conhecimento de versao
+    public static final double CURRENT_VERSION = 0.1; // Apenas para conhecimento da versao atual da model na API WEB
 
     public static final String JOCKER_NAME = "Diversos";
     public static final String JOCKER_ID = "0";

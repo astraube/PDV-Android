@@ -50,6 +50,8 @@ import br.com.i9algo.autaz.pdv.ui.dialog.SaleCloseDialog;
 import br.com.i9algo.autaz.pdv.ui.dialog.SaleItemEditDialog;
 import br.com.i9algo.autaz.pdv.ui.dialog.SaleNewDialog;
 import br.com.i9algo.autaz.pdv.ui.dialog.SalePayDialog;
+
+import com.crashlytics.android.Crashlytics;
 import com.epson.epos2.printer.Printer;
 import com.epson.epos2.printer.PrinterStatusInfo;
 import com.github.pierry.simpletoast.SimpleToast;
@@ -62,6 +64,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 
@@ -117,6 +120,7 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        startMixPanelApi(this);
 		fullScreen();
 		setContentView(R.layout.activity_sale_controller);
 
@@ -197,7 +201,27 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 	        	
 	            mSearchView.setSearchableInfo(info);
 	        }
-			mSearchView.setOnQueryTextListener(new SearchListener());
+			mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+				@Override
+				public boolean onQueryTextSubmit(String query) {
+					//Log.w(TAG, "onQueryTextSubmit(" + query + ")");
+					return false;
+				}
+
+				@Override
+				public boolean onQueryTextChange(String newText) {
+					//Log.w(TAG, "onQueryTextChange(" + newText + ")");
+
+					mProductsAdapter.filter(newText);
+
+					/*if (TextUtils.isEmpty(newText)) {
+						gridViewProducts.clearTextFilter();
+					} else {
+						gridViewProducts.setFilterText(newText);
+					}*/
+					return true;
+				}
+			});
 	    }
 		mSearchView.onActionViewCollapsed();
 	}
@@ -272,7 +296,7 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 		Log.v(TAG, "SaleControllActivity onBackPressed");
 
 		boolean cancelSale = getIntent().getBooleanExtra(Constants.STRING_EXTRA_CANCEL_SALE, false);
-		if (cancelSale)
+		if (cancelSale && (mSaleCtrl.getCurrentSale().getStatus().equals(SaleStatusEnum.OPEN.toString())))
 			mSaleCtrl.onCancelSale(mSaleCtrl.getCurrentSale());
 	}
 
@@ -376,87 +400,43 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
         }
     }
 	
-	@Override 
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-        	onBack();
-			
-		} else {
-			mSearchView.onActionViewExpanded();
-			//searchView.performClick();
-		    //searchView.requestFocus();
-		}
-		return false;
-	}
-	
-	@Override 
+	@Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBack();
+
+        } else {
+            mSearchView.onActionViewExpanded();
+            //searchView.performClick();
+            //searchView.requestFocus();
+        }
+        return false;
+    }
+
+
+    @Override
     public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		Log.i(TAG, "onConfigurationChanged(" + newConfig.toString() + ")");
-		
-		if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO) {
-			DialogUtil.showMessageDialog(
-					this, 
-					R.string.txt_physical_device_conected, 
-					R.string.txt_disable_physical_keyboard, 
-					0,
-					new CallbackModel(getApp(), "callBack"),
-					false);
-			
-			newConfig.keyboard = Configuration.HARDKEYBOARDHIDDEN_NO;
-			newConfig.hardKeyboardHidden = Configuration.HARDKEYBOARDHIDDEN_YES;
-			showTheKeyboardWhenQWERTY(this, mSearchView);
-			
-		} else if (newConfig.hardKeyboardHidden > Configuration.HARDKEYBOARDHIDDEN_NO) {
-			
-			showTheKeyboardWhenQWERTY(this, mSearchView);
-		}
-	}
-	
-	/**
-     * Method for showing the Keyboard
-     * @param context The context of the activity
-     * @param editText The edit text for which we want to show the keyboard
-     */
-    public void showTheKeyboard(Context context, SearchView editText){
-        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+        super.onConfigurationChanged(newConfig);
+        Log.i(TAG, "onConfigurationChanged(" + newConfig.toString() + ")");
+
+        if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO) {
+            DialogUtil.showMessageDialog(
+                    this,
+                    R.string.txt_physical_device_conected,
+                    R.string.txt_disable_physical_keyboard,
+                    0,
+                    new CallbackModel(getApp(), "callBack"),
+                    false);
+
+            newConfig.keyboard = Configuration.HARDKEYBOARDHIDDEN_NO;
+            newConfig.hardKeyboardHidden = Configuration.HARDKEYBOARDHIDDEN_YES;
+            showTheKeyboardWhenQWERTY(this, mSearchView);
+
+        } else if (newConfig.hardKeyboardHidden > Configuration.HARDKEYBOARDHIDDEN_NO) {
+
+            showTheKeyboardWhenQWERTY(this, mSearchView);
+        }
     }
- 
-    /**
-     * Method for showing the Keyboard when a QWERTY (physical keyboard is enabled)
-     * @param context The context of the activity
-     * @param editText The edit text for which we want to show the keyboard
-     */
-    public void showTheKeyboardWhenQWERTY(Context context, SearchView editText){
-        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.RESULT_UNCHANGED_SHOWN, 0);
-    }
-
-
-	
-	class SearchListener implements  SearchView.OnQueryTextListener
-	{
-	    @Override
-	    public boolean onQueryTextSubmit(String query) {
-			//Log.w(TAG, "onQueryTextSubmit(" + query + ")");
-	        return false;
-	    }
-
-	    @Override
-	    public boolean onQueryTextChange(String newText) {
-			//Log.w(TAG, "onQueryTextChange(" + newText + ")");
-
-			mProductsAdapter.filter(newText);
-
-	        /*if (TextUtils.isEmpty(newText)) {
-	        	gridViewProducts.clearTextFilter();
-	        } else {
-	        	gridViewProducts.setFilterText(newText);
-	        }*/
-	        return true;
-	    }
-	};
 
 
 	class SaleCtrl extends SaleController {

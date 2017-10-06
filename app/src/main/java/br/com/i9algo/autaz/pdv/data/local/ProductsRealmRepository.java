@@ -4,6 +4,7 @@ import br.com.i9algo.autaz.pdv.domain.models.Product;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
@@ -25,23 +26,45 @@ public class ProductsRealmRepository {
 		return (result);
 	}
 
+	public static List<Product> getAll() {
+		Realm realm = Realm.getDefaultInstance();
+		RealmResults<Product> result = realm.where(Product.class).findAll();
+		result = result.sort("name"); // Sort ascending
+		return new ArrayList<Product>(result);
+	}
+
 	public static Product getById(String token) {
 		Realm realm = Realm.getDefaultInstance();
 		Product model = null;
 		try {
 			model = realm.where(Product.class).equalTo(Product.getRouteKeyName(), token).findFirst();
+		} catch (Exception e) {
+			e.printStackTrace();
+
 		} finally {
-			realm.close();
+			//realm.close();
 		}
 		return model;
 	}
-	
-	public static List<Product> getAll() {
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<Product> result = realm.where(Product.class).findAll();
-		result = result.sort("name"); // Sort ascending
-        return new ArrayList<Product>(result);
-	}
+
+	public static Product getLastUpdated() {
+		Realm realm = Realm.getDefaultInstance();
+        Product model = null;
+		try {
+			RealmResults<Product> result = realm.where(Product.class).findAllSorted("updatedAt");
+
+			if (result != null && result.size() > 0) {
+				model = result.get(result.size()-1);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			//realm.close();
+		}
+        return model;
+    }
 	
 	public static synchronized void syncItem(final Product product) {
 		Realm realm = Realm.getDefaultInstance();
@@ -49,6 +72,9 @@ public class ProductsRealmRepository {
 			realm.beginTransaction();
 			realm.insertOrUpdate(product); // insere ou atualiza, sem esperar um retorno
 			realm.commitTransaction();
+		} catch (Exception e) {
+			e.printStackTrace();
+
 		} finally {
 			realm.close();
 		}
@@ -63,6 +89,9 @@ public class ProductsRealmRepository {
 			List<Product> pp = new ArrayList<Product>((Collection<? extends Product>) productList);
 			realm.insertOrUpdate(pp);
 			realm.commitTransaction();
+		} catch (Exception e) {
+			e.printStackTrace();
+
 		} finally {
 			realm.close();
 		}
@@ -76,6 +105,9 @@ public class ProductsRealmRepository {
 			realm.beginTransaction();
 			realm.insert(product);
 			realm.commitTransaction();
+		} catch (Exception e) {
+			e.printStackTrace();
+
 		} finally {
 			realm.close();
 		}
@@ -88,6 +120,9 @@ public class ProductsRealmRepository {
 			List<Product> pp = new ArrayList<Product>((Collection<? extends Product>) productList);
 			realm.insert(pp);
 			realm.commitTransaction();
+		} catch (Exception e) {
+			e.printStackTrace();
+
 		} finally {
 			realm.close();
 		}
@@ -101,6 +136,9 @@ public class ProductsRealmRepository {
 			realm.beginTransaction();
 			product.deleteFromRealm();
 			realm.commitTransaction();
+		} catch (Exception e) {
+			e.printStackTrace();
+
 		} finally {
 			realm.close();
 		}

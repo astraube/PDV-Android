@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Vendas</string>
+    <string name="app_name">Autaz PDV</string>
     <string name="app_site">www.autaz.me</string>
     <string name="app_description">Automação de A a Z</string>
     <string name="app_catchphrase">Automação comercial inteligente</string>
@@ -67,6 +67,7 @@
     <string name="action_yes_remove">Sim, remover!</string>
     <string name="action_try_again">Tentar novament</string>
     <string name="action_save">Salvar</string>
+    <string name="action_add_product">Adicionar Produto</string>
 
     <!-- Strings Dialog New Sale -->
     <string name="txt_no_show_dialog_new_sale">Não exibir novamente essa caixa, ao clicar em \"Nova Venda\". Altere isso em \"Ajustes\".</string>
@@ -109,11 +110,12 @@
     <string name="txt_sale_open_2">Vendas em aberto</string>
     <string name="txt_sale_paid_partial">Pagamento Parcial</string>
     <string name="txt_sale_paid">Pagamento Total</string>
+    <string name="txt_sale_paid_discount">Pagamento com desconto</string>
     <string name="txt_sale_canceled">Cancelada</string>
     <string name="txt_sale_canceleds">Canceladas</string>
 
     <!-- Strings Diversos -->
-    <string name="txt_please_wait">Por Favor Aguarde....</string>
+    <string name="please_wait">Por Favor Aguarde....</string>
     <string name="txt_products_empty">Sua lista de produtos está vazia!</string>
     <string name="txt_not_display_again">Não exibir isso novamente!</string>
     <string name="txt_physical_device_conected">Periférico Conectado</string>
@@ -121,6 +123,17 @@
     <string name="txt_change_price_product">Alterar o Valor do Produto</string>
     <string name="txt_internet_off">Internet Offline.</string>
     <string name="txt_internet_necessary">Você precisa estar conectado na internet.</string>
+
+    <!-- Strings Updater Check -->
+    <string name="ok">OK</string>
+    <string name="yes">SIM</string>
+    <string name="no">NÃO</string>
+    <string name="loading">Carregando&#8230;</string>
+    <string name="update_test">Checando atualizações&#8230;</string>
+    <string name="you_are_updated_title">O aplicativo já está atualizado</string>
+    <string name="you_are_not_updated_title">O aplicativo não foi atualizado</string>
+    <string name="you_are_updated_message">Seu aplicativo já foi atualizado para a versão mais recente disponível.\nPressione OK para sair.</string>
+    <string name="you_are_not_updated_message">Pressione SIM para atualizar o aplicativo no Google Play, pressione NÂO para sair.</string>
 
     <!-- Strings de Formularios -->
     <string name="txt_form_incomplete">Formulário Incompleto</string>
@@ -145,13 +158,21 @@
     <string name="err_oops">Ooops...</string>
     <string name="err_internal_error">Ocorreu um erro interno</string>
     <string name="err_try_again">Por favor, tente novamente mais tarde.</string>
-    <string name="err_working_offline_title">Você esta trabalhando off-line</string>
-    <string name="err_working_offline_msg">Tudo que você vender ou editar no programa ficará salvo apenas neste equipamento!</string>
-    <string name="err_auth_invalid">Nossos servidores recusaram suas credenciais.</string>
-    <string name="err_login_title">Erro de credenciais</string>
+    <string name="err_working_offline_title">Você está trabalhando off-line.</string>
+    <string name="err_working_offline_msg">Tudo que você vender ou editar aqui, ficará salvo apenas neste equipamento!</string>
+    <string name="err_account_expired_title">Seu período de teste expirou!</string>
+    <string name="err_account_expired_msg">Acesse nosso site www.autaz.me, e escolha um de nossos planos.</string>
+    <string name="err_auth_invalid">Sem autorização</string>
+    <string name="err_login_title">Credenciais inválidas!</string>
     <string name="err_login_try_again">Efetue login novamente</string>
-    <string name="err_login_msg">Os dados inseridos não conferem com nossos registros.</string>
+    <string name="err_login_msg">Seu login e/ou sua senha estão incorretos.</string>
     <string name="err_download_products_account">Não conseguimos recuperar os produtos da sua conta!</string>
     <string name="err_download_data_account">Não conseguimos recuperar os dados da sua conta.</string>
+
+    <string name="com.crashlytics.CrashSubmissionPromptTitle">Send Crash Report?</string>
+    <string name="com.crashlytics.CrashSubmissionPromptMessage">Looks like we crashed! Please help us fix the problem by sending a crash report.</string>
+    <string name="com.crashlytics.CrashSubmissionSendTitle">Send</string>
+    <string name="com.crashlytics.CrashSubmissionAlwaysSendTitle">Always Send</string>
+    <string name="com.crashlytics.CrashSubmissionCancelTitle">Dont Send</string>
 
 </resources>

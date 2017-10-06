@@ -1,4 +1,4 @@
-package br.com.i9algo.autaz.pdv.data.remote;
+package br.com.i9algo.autaz.pdv.domain.models.inbound;
 
 
 /**

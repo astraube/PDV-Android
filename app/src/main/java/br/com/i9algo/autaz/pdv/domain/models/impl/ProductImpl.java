@@ -14,38 +14,21 @@ import io.realm.RealmObject;
  */
 public class ProductImpl {
 
-    private Product _product;
+    private Product _model;
     
-    public ProductImpl (Product product) {
-        this._product = product;
+    public ProductImpl (Product model) {
+        this._model = model;
     }
 
-    public void setProduct(Product product) { this._product = product; }
-    public Product getProduct() { return this._product; }
-    
-    public void setCreatedAt(String createdAt) {
-        Realm _realm = Realm.getDefaultInstance();
-        _realm.beginTransaction();
+    public void setModel(Product model) { this._model = model; }
+    public Product getModel() { return this._model; }
 
-        this._product.setCreatedAt(createdAt);
-
-        _realm.commitTransaction();
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        Realm _realm = Realm.getDefaultInstance();
-        _realm.beginTransaction();
-
-        this._product.setUpdatedAt(updatedAt);
-
-        _realm.commitTransaction();
-    }
-
+    // TODO - remover! o token deve ser criado pelo sistema WEB
     public void setPublicToken(String publicToken) {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        this._product.setPublicToken(publicToken);
+        this._model.setPublicToken(publicToken);
 
         _realm.commitTransaction();
     }
@@ -54,7 +37,7 @@ public class ProductImpl {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        this._product.setName(name);
+        this._model.setName(name);
 
         _realm.commitTransaction();
     }
@@ -63,7 +46,7 @@ public class ProductImpl {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        this._product.setDescription(description);
+        this._model.setDescription(description);
 
         _realm.commitTransaction();
     }
@@ -72,7 +55,7 @@ public class ProductImpl {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        this._product.setCodeCorporate(codeCorporate);
+        this._model.setCodeCorporate(codeCorporate);
 
         _realm.commitTransaction();
     }
@@ -81,7 +64,7 @@ public class ProductImpl {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        this._product.setCodeEan(codeEan);
+        this._model.setCodeEan(codeEan);
 
         _realm.commitTransaction();
     }
@@ -90,7 +73,7 @@ public class ProductImpl {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        this._product.setPriceCost(priceCost);
+        this._model.setPriceCost(priceCost);
 
         _realm.commitTransaction();
     }
@@ -99,7 +82,7 @@ public class ProductImpl {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        this._product.setPriceResale(priceResale);
+        this._model.setPriceResale(priceResale);
 
         _realm.commitTransaction();
     }
@@ -108,7 +91,7 @@ public class ProductImpl {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        this._product.setDiscount(value);
+        this._model.setDiscount(value);
 
         _realm.commitTransaction();
     }
@@ -117,7 +100,7 @@ public class ProductImpl {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        this._product.setRequestPass(requestPass);
+        this._model.setRequestPass(requestPass);
 
         _realm.commitTransaction();
     }
@@ -126,23 +109,23 @@ public class ProductImpl {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        this._product.setRequestPass((!value) ? 0 : 1);
+        this._model.setRequestPass((!value) ? 0 : 1);
 
         _realm.commitTransaction();
     }
 
     public boolean inStock() {
-        return (this._product.getStockCurrent() >= 1);
+        return (this._model.getStockCurrent() >= 1);
     }
     public boolean inStockLimit() {
-        return (this._product.getStockCurrent() <= this._product.getStockMin());
+        return (this._model.getStockCurrent() <= this._model.getStockMin());
     }
 
     public void setStockCurrent(int stockCurrent) {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        this._product.setStockCurrent(stockCurrent);
+        this._model.setStockCurrent(stockCurrent);
 
         _realm.commitTransaction();
     }
@@ -151,7 +134,7 @@ public class ProductImpl {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        this._product.setStockMin(stockMin);
+        this._model.setStockMin(stockMin);
 
         _realm.commitTransaction();
     }
@@ -160,7 +143,7 @@ public class ProductImpl {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        this._product.setStockMax(stockMax);
+        this._model.setStockMax(stockMax);
 
         _realm.commitTransaction();
     }
@@ -169,7 +152,7 @@ public class ProductImpl {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        this._product.setCategoryId(categoryId);
+        this._model.setCategoryId(categoryId);
 
         _realm.commitTransaction();
     }
@@ -178,7 +161,7 @@ public class ProductImpl {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        //this._product.setValues(values);
+        //this._model.setValues(values);
 
         _realm.commitTransaction();
     }
@@ -187,7 +170,7 @@ public class ProductImpl {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        this._product.setCategory(category);
+        this._model.setCategory(category);
 
         _realm.commitTransaction();
     }
@@ -200,10 +183,10 @@ public class ProductImpl {
      * Valor de venda do produto (com desconto)
      */
     public double getPriceDiscount() {
-        double price = this._product.getPriceResale();
+        double price = this._model.getPriceResale();
 
         if (price > 0)
-            price = (price - this._product.getDiscount());
+            price = (price - this._model.getDiscount());
 
         return (price);
     }
@@ -211,12 +194,12 @@ public class ProductImpl {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        double price = this._product.getPriceResale();
+        double price = this._model.getPriceResale();
 
         if (value < price)
-            this._product.setDiscount(price - value);
+            this._model.setDiscount(price - value);
 
-        this._product.setPriceResale(value);
+        this._model.setPriceResale(value);
 
         _realm.commitTransaction();
     }
@@ -226,8 +209,8 @@ public class ProductImpl {
      * @return
      */
     public double getDiscountPercent() {
-        if (this._product.getPriceResale() > 0 && this._product.getDiscount() > 0)
-            return MathUtils.valueToPercent(this._product.getPriceResale(), this._product.getDiscount());
+        if (this._model.getPriceResale() > 0 && this._model.getDiscount() > 0)
+            return MathUtils.valueToPercent(this._model.getPriceResale(), this._model.getDiscount());
         else
             return 0;
     }
@@ -237,11 +220,11 @@ public class ProductImpl {
         Realm _realm = Realm.getDefaultInstance();
         _realm.beginTransaction();
 
-        double price = this._product.getPriceResale();
+        double price = this._model.getPriceResale();
 
         if (price > 0 && value > 0) {
             double discount = MathUtils.percentToValue(price, value);
-            this._product.setDiscount(discount);
+            this._model.setDiscount(discount);
         }
 
         _realm.commitTransaction();

@@ -20,6 +20,7 @@ public class LayoutActivity extends BaseActivity implements ItemAdapterInterface
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        startMixPanelApi(this);
 		setContentView(R.layout.activity_layout);
 		
 		mLayoutSelected = PreferencesRepository.getLayout();

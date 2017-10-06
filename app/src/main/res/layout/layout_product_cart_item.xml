@@ -10,20 +10,6 @@
     android:paddingRight="@dimen/horizontal_padding_textView">
 
     <TextView
-        android:id="@+id/txtNome"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/txtPriceFinal"
-        android:layout_below="@+id/txtQuantity"
-        android:layout_marginRight="@dimen/horizontal_padding_textView"
-        android:layout_marginBottom="15dp"
-        android:gravity="top|left"
-        android:maxLines="1"
-        android:textAppearance="@style/textProductMedium"
-        android:lines="2"/>
-
-    <TextView
         android:id="@+id/txtQuantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,5 +67,19 @@
         app:decimalTextColor="#FBFFE3"
         app:includeDecimalSeparator="true"
         tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/txtNome"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/txtPriceFinal"
+        android:layout_below="@+id/txtQuantity"
+        android:layout_marginRight="@dimen/horizontal_padding_textView"
+        android:layout_marginBottom="15dp"
+        android:gravity="top|left"
+        android:maxLines="1"
+        android:textAppearance="@style/textProductMedium"
+        android:lines="2"/>
 
 </RelativeLayout>

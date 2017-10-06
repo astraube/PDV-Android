@@ -3,7 +3,6 @@
     <!--
          MDPI
     -->
-    
     <!-- Tamanho de fontes. -->
     <dimen name="text_size_extra_big">26dip</dimen>
     <dimen name="text_size_big">24dip</dimen>
@@ -13,22 +12,43 @@
     <dimen name="text_size_small">14dip</dimen>
     <dimen name="text_size_small_small">12dip</dimen>
     <dimen name="text_size_small_small_small">10dip</dimen>
-    
-    
-    <!-- Default screen margins, per the Android Design guidelines. -->
+
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     
     <dimen name="horizontal_padding_textView">10dp</dimen>
     <dimen name="vertical_padding_textView">10dp</dimen>
+
+    <dimen name="padding_2">2dp</dimen>
+    <dimen name="padding_5">5dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
     
     <dimen name="height_search_view_product">70dp</dimen>
     
     <dimen name="corner_button">8dp</dimen>
+
+    <dimen name="float_button_view_size_image">60dp</dimen>
+    <dimen name="float_button_view_horizontal_padding_textView">10dp</dimen>
+    <dimen name="float_button_view_vertical_padding_textView">5dp</dimen>
+    <dimen name="float_menu_button_view_size_image">70dp</dimen>
 
     <dimen name="key_height">52dip</dimen>
     <dimen name="candidate_font_height">20sp</dimen>
     <dimen name="candidate_vertical_padding">16sp</dimen>
 
     <dimen name="act_sale_ctrl_view_right">300dp</dimen>
+
+    <dimen name="act_sale_grid_btn_new_sale_width">240dp</dimen>
+    <dimen name="act_sale_grid_btn_new_sale_height">100dp</dimen>
+    <dimen name="act_sale_grid_segmented_btn_width">170dp</dimen>
+
+    <dimen name="grid_view_spacing_horizontal">10dp</dimen>
+    <dimen name="grid_view_spacing_vertical">10dp</dimen>
+    <dimen name="grid_view_columns_width">200dp</dimen>
+
+    <dimen name="list_view_activity_sales">400dp</dimen>
+
+    <dimen name="image_text_view_width">200dp</dimen>
+
+    <dimen name="card_view_card_elevation">5dp</dimen>
 </resources>

@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/gray_light">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -13,24 +14,28 @@
         android:listSelector="@drawable/item_list_selector"
         />
     
-    <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fabButton"
+    <Button
+        android:id="@+id/btNewProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_marginBottom="8dp"
-        android:layout_marginRight="8dp"
-        android:src="@drawable/ic_plus_circle_outline"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:padding="@dimen/padding_10"
+        android:drawableLeft="@drawable/ic_add_white_24dp"
+        android:text="@string/action_add_product"
+        android:background="@drawable/bg_corner_gray"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        fab:fab_colorNormal="#DA4336"
-        fab:fab_colorPressed="#E75043"
-        fab:fab_colorRipple="#99FFFFFF"/>
+        android:layout_alignParentLeft="true"
+        android:textColor="@color/white"/>
     
     <br.com.i9algo.autaz.pdv.ui.views.FloatUserButtonView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        tools:ignore="RtlHardcoded" />
     
 </RelativeLayout>

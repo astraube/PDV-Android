@@ -10,7 +10,7 @@
     card_view:cardBackgroundColor="@android:color/transparent"
 	card_view:cardUseCompatPadding="true"
 	card_view:cardCornerRadius="@dimen/corner_button"
-	card_view:cardElevation="5dp">
+	card_view:cardElevation="@dimen/card_view_card_elevation">
 
 	<LinearLayout
 		android:id="@+id/containerLayout"
@@ -57,9 +57,9 @@
 				android:layout_centerHorizontal="true"
 				android:layout_alignParentTop="true"
 				android:lines="1"
-				android:paddingTop="2dp"
-				android:paddingLeft="5dp"
-				android:paddingRight="5dp"
+				android:paddingTop="@dimen/padding_2"
+				android:paddingLeft="@dimen/padding_5"
+				android:paddingRight="@dimen/padding_5"
 				android:textAppearance="@style/textProductMedium"
 				android:textSize="@dimen/text_size_small_small"
 				android:textColor="@color/red"/>
@@ -70,8 +70,8 @@
 				android:layout_centerHorizontal="true"
 				android:layout_below="@+id/txtPriceInit"
 				android:lines="1"
-				android:paddingLeft="5dp"
-				android:paddingRight="5dp"
+				android:paddingLeft="@dimen/padding_5"
+				android:paddingRight="@dimen/padding_5"
 				android:textStyle="bold"
 				android:textAppearance="@style/textProductMedium"/>
 

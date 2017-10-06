@@ -71,11 +71,11 @@ public class CandidateView extends View {
 
         Resources r = context.getResources();
 
-        setBackgroundColor(r.getColor(R.color.candidate_background));
+        setBackgroundColor(r.getColor(R.color.background));
 
-        mColorNormal = r.getColor(R.color.candidate_normal);
-        mColorRecommended = r.getColor(R.color.candidate_recommended);
-        mColorOther = r.getColor(R.color.candidate_other);
+        mColorNormal = r.getColor(R.color.primary);
+        mColorRecommended = r.getColor(R.color.primary_dark);
+        mColorOther = r.getColor(R.color.accent);
         mVerticalPadding = r.getDimensionPixelSize(R.dimen.candidate_vertical_padding);
 
         mPaint = new Paint();

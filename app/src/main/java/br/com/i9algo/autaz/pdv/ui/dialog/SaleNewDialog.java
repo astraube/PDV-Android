@@ -32,7 +32,7 @@ public class SaleNewDialog extends MaterialDialog {
 
 		boolean showAgainDialog = PreferencesRepository.isShowDialogNewSale();
 
-		if (showAgainDialog) {
+		if (sale == null && showAgainDialog) {
 			mOwner.onAddNewSale(null, "", "");
 			return;
 		}

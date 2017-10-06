@@ -2,20 +2,34 @@ package br.com.i9algo.autaz.pdv.ui.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import br.com.i9algo.autaz.pdv.BuildConfig;
+import br.com.i9algo.autaz.pdv.MainActivity;
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
 import br.com.i9algo.autaz.pdv.data.remote.service.ApiService;
+import br.com.i9algo.autaz.pdv.domain.models.Account;
+import br.com.i9algo.autaz.pdv.domain.models.Corporate;
+import br.com.i9algo.autaz.pdv.domain.models.User;
 import br.com.i9algo.autaz.pdv.executor.receivers.SampleAlarmReceiver;
 import br.com.i9algo.autaz.pdv.helpers.FormatUtil;
 import br.com.i9algo.autaz.pdv.helpers.IDManagement;
 import br.com.i9algo.autaz.pdv.injection.NetworkModule;
 
 import butterknife.ButterKnife;
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.core.CrashlyticsCore;
+
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import rx.plugins.RxJavaErrorHandler;
@@ -25,6 +39,10 @@ public class CustomApplication extends Application {
 
 	private ApiService _apiService;
 	private SampleAlarmReceiver _alarm = new SampleAlarmReceiver();
+
+	//private Account _sessionAccount = null;
+	//private User _sessionUser = null;
+	//private Corporate _sessionCorporate = null;
 
 
 	public ApiService getApiService() {
@@ -49,13 +67,16 @@ public class CustomApplication extends Application {
 		FormatUtil.init(this);
 		PreferencesRepository.init(this);
 
-		RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
-			@Override
-			public void handleError(Throwable e) {
-				super.handleError(e);
-				Log.e("CustomApplication", "handleError: " + e.toString());
-			}
-		});
+
+		/**
+		 * Fabric Crashlytics
+		 */
+		Crashlytics crashlyticsKit = new Crashlytics.Builder()
+				//.core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+				.core(new CrashlyticsCore.Builder().build())
+				.build();
+		Fabric.with(this, crashlyticsKit, new Answers());
+
 
 		Realm.init(this);
 		// Enable full log output when debugging
@@ -90,7 +111,20 @@ public class CustomApplication extends Application {
 	    Log.e("CustomApplication", "cacheSize: " + cacheSize);
 	    mListSalesCache = new LruCache<String, SaleModel>(cacheSize) {};*/
 	}
-	
+
+	public void forceCrash(String msg) {
+		throw new RuntimeException(msg);
+	}
+
+	private void RestartApp() {
+		Intent i = new Intent(getApplicationContext(), MainActivity.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(i);
+
+		System.exit(1);
+	}
+
 	@Override
     public void onLowMemory() {
 		super.onLowMemory();

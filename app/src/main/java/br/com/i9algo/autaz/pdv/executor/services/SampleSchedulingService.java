@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import br.com.i9algo.autaz.pdv.data.local.ProductsRealmRepository;
 import br.com.i9algo.autaz.pdv.data.remote.repositoryes.ProductsRepository;
 import br.com.i9algo.autaz.pdv.data.remote.service.ApiService;
 import br.com.i9algo.autaz.pdv.data.remote.subscribers.SubscriberInterface;
+import br.com.i9algo.autaz.pdv.domain.models.Product;
 import br.com.i9algo.autaz.pdv.executor.receivers.SampleAlarmReceiver;
 import br.com.i9algo.autaz.pdv.ui.base.CustomApplication;
 
@@ -59,7 +61,20 @@ public class SampleSchedulingService extends IntentService implements Subscriber
         Log.i(TAG, TAG2 + " onHandleIntent: " + dataString);
         */
 
-        this.mProductsRepo.onLoadProducts();
+        /**
+         * Produtos - SYNC API WEB
+         */
+        String lastUpdatedAt = "";
+        Product p = ProductsRealmRepository.getLastUpdated();
+        if (p != null) {
+            lastUpdatedAt = p.getUpdatedAt();
+            //Log.v(TAG, "OkHttp API WEB - lastProductUpdated -" + p.getName());
+            //Log.v(TAG, "OkHttp API WEB - lastProductUpdated -" + lastUpdatedAt);
+        }
+        this.mProductsRepo.onLoadProducts(lastUpdatedAt);
+
+        /*************************************/
+
 
         Log.i(TAG, TAG2 + " onHandleIntent finish");
 
@@ -102,6 +117,16 @@ public class SampleSchedulingService extends IntentService implements Subscriber
 
     @Override
     public void setSweetDialog(SweetAlertDialog dialog) {
+
+    }
+
+    @Override
+    public void setSweetProgress(String message) {
+
+    }
+
+    @Override
+    public void setSweetProgress(String message, String title) {
 
     }
 

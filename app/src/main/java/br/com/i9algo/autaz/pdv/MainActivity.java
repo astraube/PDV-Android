@@ -9,25 +9,40 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import br.com.i9algo.autaz.pdv.data.local.AccountRealmRepository;
+import br.com.i9algo.autaz.pdv.data.local.DeviceRealmRepository;
 import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
-import br.com.i9algo.autaz.pdv.data.remote.ResultDefault;
+import br.com.i9algo.autaz.pdv.data.local.SalesRealmRepository;
+import br.com.i9algo.autaz.pdv.data.local.UserRealmRepository;
+import br.com.i9algo.autaz.pdv.data.remote.repositoryes.DeviceRepository;
+import br.com.i9algo.autaz.pdv.domain.models.Account;
 import br.com.i9algo.autaz.pdv.data.remote.repositoryes.AuthRepository;
 import br.com.i9algo.autaz.pdv.data.remote.service.ApiService;
 import br.com.i9algo.autaz.pdv.data.remote.subscribers.SubscriberInterface;
-import br.com.i9algo.autaz.pdv.domain.constants.AuthAttr;
 import br.com.i9algo.autaz.pdv.domain.interfaces.LoginInterface;
+import br.com.i9algo.autaz.pdv.domain.models.Device;
+import br.com.i9algo.autaz.pdv.domain.models.Sale;
+import br.com.i9algo.autaz.pdv.domain.models.User;
+import br.com.i9algo.autaz.pdv.domain.models.inbound.ResultStatusDefault;
+import br.com.i9algo.autaz.pdv.domain.models.inbound.UserWrapper;
 import br.com.i9algo.autaz.pdv.helpers.defaults.MainThreadBus;
 import br.com.i9algo.autaz.pdv.ui.base.BaseActivity;
 import br.com.i9algo.autaz.pdv.ui.dialog.LoginDialog;
+
+import com.crashlytics.android.Crashlytics;
 import com.github.pierry.simpletoast.SimpleToast;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
+
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
-import br.com.i9algo.autaz.pdv.SaleControllActivity;
-import br.com.i9algo.autaz.pdv.SalesGridActivity;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements LoginInterface, SubscriberInterface {
@@ -57,23 +72,29 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        startMixPanelApi(this);
 		fullScreen();
 		setContentView(R.layout.activity_main);
 		ButterKnife.bind(this);
-		//presenter.bindView(this);
-		//bus.register(this);
 
 		advService = getApp().getApiService();
 
 		this.mAuthRepo = new AuthRepository(this);
-		
+
+		// TODO verificar atualizacao por enquanto no servidor
+		//new UpdateRunnable(this, new Handler()).start();
+
+
 		/*
-		String deviceId = Settings.System.getString(getContentResolver(), Secure.ANDROID_ID);
-		DeviceUuidFactory device = new DeviceUuidFactory(this);
-		Log.i("TAG","android.os.Build.SERIAL: " + deviceId);
-		Log.i("TAG","device.getDeviceUuid(): " + device.getDeviceUuid());
-		*/
-		//Log.v(TAG, "onCreate");
+		GPSTracker gps = GPSTracker.getInstance(mContext);
+		// checa se o GPS esta habilitado
+		if(gps.canGetLocation()){
+			double latitude = gps.getLatitude();
+			double longitude = gps.getLongitude();
+
+			infos.setLatitude(latitude);
+			infos.setLongitude(longitude);
+		}*/
 	}
 
 	@Override
@@ -81,21 +102,83 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 		super.onStart();
 		//Log.v(TAG, "onStart");
 
-		//((CustomApplication)getApplication()).isFirstAcccess()
-
-		/*if (BuildConfig.DEBUG) {
-			onLoginDebug();
-			return;
-		}*/
-
-		if (PreferencesRepository.isValueEmpty(AuthAttr.USER_API_TOKEN) || PreferencesRepository.isValueEmpty(AuthAttr.ACCOUNT_PUBLIC_TOKEN)) {
-			showLoginView();
+		User model = UserRealmRepository.getFirst();
+		if (model != null && !StringUtils.isEmpty(model.getPublicToken()) && !StringUtils.isEmpty(model.getApiToken())) {
+			verifyCredentials();
 		} else {
-			initialize();
+			showLoginView();
 		}
 	}
-	
+
+	private void verifyCredentials() {
+		// API WEB - Repository "Auth"
+		this.mAuthRepo = new AuthRepository(this);
+
+		// API WEB - Verifica as credenciais do usuario
+		this.mAuthRepo.onValidateCredentialsUser(this);
+	}
+
 	public void initialize() {
+        User user = UserRealmRepository.getFirst();
+        Account account = AccountRealmRepository.getFirst();
+
+		// Cadastra Device
+		/* TODO - desabilidade temporariamente, esta com porblemas para editar no API WEB
+		DeviceRepository dRepo = new DeviceRepository(this);
+		try {
+			Device d = DeviceRealmRepository.getFirst();
+			if (d == null || StringUtils.isEmpty(d.getPublicToken()))
+                d = new Device(this);
+
+			dRepo.onDeviceStore(d);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
+
+        //String idUniq = IDManagement.getDeviceUuid().toString(); // TODO - enviar UUID para API WEB
+
+		/**
+		 * Crashlytics
+		 */
+		Crashlytics.setUserIdentifier(user.getPublicToken());
+		Crashlytics.setUserEmail(user.getEmail());
+		Crashlytics.setUserName(user.getName());
+
+		/****************************************************************
+		 * Mixpanel
+		 ****************************************************************/
+		final MixpanelAPI.People people = getMixpanel().getPeople();
+
+		people.set("$first_name", user.getName());
+		people.set("$last_name", "");
+		people.set("$email", user.getEmail());
+		people.set("$created", user.getCreatedAt());
+		people.set("$last_login", new Date()); // Ultimo login
+
+		if (account != null && account.getSignaturePlan() != null) {
+			people.set("expire_at", account.getSignaturePlan().getExpireAt());
+		}
+        //people.set("credits", name);
+        //people.set("gender", "Male");
+        //people.increment("Update Count", 1L);// Acompanhar quantas vezes o usuario atualizou seu perfil
+
+        try {
+            final JSONObject domainProperty = new JSONObject();
+            domainProperty.put("user domain", domainFromEmailAddress(user.getEmail()));
+            domainProperty.put("user_public_token", user.getPublicToken());
+            getMixpanel().registerSuperProperties(domainProperty);
+
+        } catch (JSONException e) {
+            throw new RuntimeException("Could not encode hour first viewed as JSON");
+        }
+        // New Line Activity Feed
+		getMixpanel().track("sessao iniciada", null);
+
+		/****************************************************************
+		 * End Mixpanel
+		 ****************************************************************/
+
 		hideLoginView();
 		hideDialog();
 
@@ -143,9 +226,6 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 			return;
 		}
 
-		// Armazenar username em cache
-		PreferencesRepository.setValue(AuthAttr.USERNAME, username);
-
 		try {
 			this.mAuthRepo.onLogin(username, password);
 
@@ -154,45 +234,29 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 		}
 	}
 
-	/**
-	 * Apenas para debug
-	 */
-	private void onLoginDebug() {
-		PreferencesRepository.setValue(AuthAttr.USER_NAME, "Andre Straube");
-		PreferencesRepository.setValue(AuthAttr.USER_EMAIL, "a.straube.m@gmail.com");
-		PreferencesRepository.setValue(AuthAttr.USER_API_TOKEN, "fc8425fdf0350941c9bff17a4b4e42bbaf45189df25b1142000c47f9e4752663");
-		PreferencesRepository.setValue(AuthAttr.USER_PUBLIC_TOKEN, "19dc8dd3cfe1cf9a08624a74c2de19f2");
+	@Override
+	public void onLoginSuccess(UserWrapper object) {
+		Log.i(TAG, "API WEB - onLoginSuccess - UserWrapper");
 
-		PreferencesRepository.setValue(AuthAttr.ACCOUNT_CLIENT_ID, "865f7ac2b211e5f6b8b88a15c6f73ca28abb3c34a1e39fa38663398b983e174c");
-		PreferencesRepository.setValue(AuthAttr.ACCOUNT_PUBLIC_TOKEN, "7c25b7f2be31e30bb96ed3097feec183");
+		// Adicionar o token do usuario como DistinctId no mixpanel
+		setMixpanelTrackingDistinctId(object.getModel().getPublicToken());
 
-		initialize();
-	}
-
-    @Override
-    public void onLoginSuccess(ResultDefault object) {
 		((Activity)getContext()).runOnUiThread(new Runnable() {
 			public void run() {
 				SimpleToast.info((MainActivity)getContext(), getContext().getString(R.string.txt_login_success), "{fa-user}");
 			}
 		});
 
-		Log.i(TAG, "onLoginSuccess");
-        Gson gson = new Gson();
-        JsonElement jsonElement = gson.toJsonTree(object.data);
-        JsonObject jsonObject = jsonElement.getAsJsonObject();
-
-        PreferencesRepository.setValue(AuthAttr.USER_NAME, jsonObject.get(AuthAttr.USER_NAME).getAsString());
-        PreferencesRepository.setValue(AuthAttr.USER_EMAIL, jsonObject.get(AuthAttr.USER_EMAIL).getAsString());
-        PreferencesRepository.setValue(AuthAttr.USER_API_TOKEN, jsonObject.get(AuthAttr.USER_API_TOKEN).getAsString());
-        PreferencesRepository.setValue(AuthAttr.USER_PUBLIC_TOKEN, jsonObject.get(AuthAttr.PUBLIC_TOKEN).getAsString());
-
-		JsonObject account = jsonObject.getAsJsonObject("account");
-		PreferencesRepository.setValue(AuthAttr.ACCOUNT_CLIENT_ID, account.get(AuthAttr.ACCOUNT_CLIENT_ID).getAsString());
-		PreferencesRepository.setValue(AuthAttr.ACCOUNT_PUBLIC_TOKEN, account.get(AuthAttr.PUBLIC_TOKEN).getAsString());
-
 		initialize();
-    }
+	}
+
+	@Override
+	public void onLoginError(ResultStatusDefault resultStatus) {
+		Log.e(TAG, "API WEB - onLoginError - UserWrapper");
+
+		showLoginView();
+		onSubscriberError(resultStatus.error, resultStatus.title, resultStatus.message);
+	}
 	
 	@Override
 	public void onLoginCancel() {

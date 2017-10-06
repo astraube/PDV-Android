@@ -9,7 +9,6 @@
     android:clickable="true">
 
 	<TextView
-		android:text="sdsd"
 		android:id="@+id/txtClient"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -21,7 +20,6 @@
 		android:textColor="@android:color/black"/>
 
 	<TextView
-		android:text="sdsd"
 		android:id="@+id/txtTotal"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -33,7 +31,6 @@
 		android:textColor="@android:color/black"/>
 
 	<TextView
-		android:text="sdsd"
 		android:id="@+id/txtStatus"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -45,7 +42,6 @@
 		android:textColor="@android:color/black"/>
 
 	<TextView
-		android:text="sdsd"
 		android:id="@+id/txtDate"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -58,7 +54,6 @@
 		android:textColor="@color/gray" />
 
 	<TextView
-		android:text="sdsd"
 		android:id="@+id/txtCode"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"

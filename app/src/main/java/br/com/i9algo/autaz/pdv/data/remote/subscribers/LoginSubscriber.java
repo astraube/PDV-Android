@@ -3,17 +3,20 @@ package br.com.i9algo.autaz.pdv.data.remote.subscribers;
 import android.graphics.Color;
 import android.util.Log;
 
+import org.apache.commons.lang3.StringUtils;
+
 import br.com.i9algo.autaz.pdv.R;
-import br.com.i9algo.autaz.pdv.data.remote.ResultDefault;
+import br.com.i9algo.autaz.pdv.data.local.UserRealmRepository;
+import br.com.i9algo.autaz.pdv.domain.models.inbound.ResultStatusDefault;
 import br.com.i9algo.autaz.pdv.domain.interfaces.LoginInterface;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
+import br.com.i9algo.autaz.pdv.domain.models.inbound.UserWrapper;
 
 /**
  * Created by aStraube on 30/06/2017.
  */
 
-public class LoginSubscriber extends DefaultSubscriber<ResultDefault> {
+public class LoginSubscriber extends DefaultSubscriber<UserWrapper> {
 
     private final String TAG;
     private SubscriberInterface _owner;
@@ -22,36 +25,44 @@ public class LoginSubscriber extends DefaultSubscriber<ResultDefault> {
         this._owner = owner;
         this.TAG = getClass().getSimpleName();
 
-        SweetAlertDialog pDialog = new SweetAlertDialog(owner.getContext(), SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        pDialog.setTitleText(owner.getContext().getString(R.string.txt_please_wait));
-        pDialog.setTitle(R.string.txt_please_wait);
-        pDialog.setContentText(owner.getContext().getString(R.string.process_login));
-        pDialog.setCancelable(false);
-        owner.setSweetDialog(pDialog);
+        owner.setSweetProgress(owner.getContext().getString(R.string.process_login));
     }
 
     @Override
     public void onCompleted() {
         super.onCompleted();
+        Log.v(TAG, "API WEB - onCompleted");
     }
 
     @Override
     public void onError(Throwable e) {
         super.onError(e);
-        if (e != null) {
-            Log.e(TAG, e.getMessage());
-            Log.e(TAG, e.getLocalizedMessage());
+        Log.e(TAG, "API WEB - onError");
+
+        if (resultStatus != null) {
+            if (StringUtils.isEmpty(resultStatus.title))
+                resultStatus.title = _owner.getContext().getString(R.string.err_login_title);
+
+            if (StringUtils.isEmpty(resultStatus.message))
+                resultStatus.message = _owner.getContext().getString(R.string.err_try_again);
+
+        } else {
+            resultStatus = new ResultStatusDefault();
+            resultStatus.title = _owner.getContext().getString(R.string.err_login_title);
+            resultStatus.message = _owner.getContext().getString(R.string.err_login_msg);
         }
-        _owner.onSubscriberError(e,
-                _owner.getContext().getString(R.string.err_login_title),
-                _owner.getContext().getString(R.string.err_login_msg));
+
+        if (this._owner instanceof LoginInterface)
+            ((LoginInterface)this._owner).onLoginError(resultStatus);
     }
 
     @Override
-    public void onNext(ResultDefault t) {
+    public void onNext(UserWrapper t) {
         super.onNext(t);
-        //Log.i("LoginSubscriber", "onLogin onNext");
+        Log.v(TAG, "API WEB - onNext");
+
+        UserRealmRepository.syncItem(t.getModel());
+
         if (this._owner instanceof LoginInterface)
             ((LoginInterface)this._owner).onLoginSuccess(t);
     }

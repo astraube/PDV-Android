@@ -22,4 +22,6 @@ public interface SubscriberInterface {
 
     public SweetAlertDialog getSweetDialog();
     public void setSweetDialog(SweetAlertDialog dialog);
+    public void setSweetProgress(String message);
+    public void setSweetProgress(String message, String title);
 }

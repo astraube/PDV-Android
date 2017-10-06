@@ -19,6 +19,11 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <permission android:name="br.com.i9algo.autaz.pdv.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="br.com.i9algo.autaz.pdv.permission.C2D_MESSAGE" />
 
     <application
         android:name=".ui.base.CustomApplication"
@@ -28,6 +33,43 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
+        <!--
+        ###########################################################
+                                 Mixpanel
+        ###########################################################
+        -->
+        <!-- to support 2.2 (Froyo) and older devices, your application should allow fallback
+             to HTTP if modern HTTPS certificates aren't supported. -->
+        <meta-data android:name="com.mixpanel.android.MPConfig.DisableFallback"
+            android:value="false" />
+
+        <!-- The Mixpanel library will automatically attempt to show available surveys or in
+             app notifications every time a new Activity is displayed. To disable this behavior,
+             add the following line. The default value for this option is set to true. -->
+        <!-- https://mixpanel.com/help/reference/android-inapp-messages -->
+        <meta-data android:name="com.mixpanel.android.MPConfig.AutoShowMixpanelUpdates"
+            android:value="true" />
+
+        <!-- If you wish to test receiving surveys or notifications multiple times, the following option
+             will prevent tracking that a survey or notification has been displayed to Mixpanel.
+             This will allow you to tweak your surveys or in app notifications without having to create
+             a new one each time. -->
+        <meta-data android:name="com.mixpanel.android.MPConfig.TestMode"
+            android:value="true" />
+
+        <!-- This will enable various debugging messages that shows communication between the Mixpanel
+             Android library and the Mixpanel API servers, which are useful for seeing when track requests
+             go out and when surveys and notifications are received. -->
+        <meta-data android:name="com.mixpanel.android.MPConfig.EnableDebugLogging"
+            android:value="true" />
+        <!--
+        ###########################################################
+                                 End Mixpanel
+        ###########################################################
+        -->
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -145,8 +187,84 @@
         </receiver>
         <service android:name=".executor.services.SampleSchedulingService" />
 
+        <!-- Firebase Cloud Msg -->
+        <service
+            android:name=".executor.services.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name=".executor.services.MyFirebaseInstanceIDService" android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <service android:name=".executor.services.MyJobService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+
+        <!-- Personalizar mensagem da barra de notificacao -->
+
+        <!--<meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/bg_corner_gray" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/accent" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel"
+            android:value="@string/action_add_product"/>
+            -->
+
+
+        <!--
+        ###########################################################
+                                 Mixpanel
+        ###########################################################
+        -->
+        <!-- This activity allows your application to show Mixpanel takeover in app notifications.
+             If you only wish to show mini in app notifications, you do not need to declare this Activity.
+             You may also specify a different theme to better fit the look and feel of your application. -->
+        <!--<activity android:name="com.mixpanel.android.takeoverinapp.TakeoverInAppActivity"
+            android:theme="@style/com_mixpanel_android_TakeoverInAppActivityTheme"/>-->
+
+        <!-- This receiver will allow your application to register for and receive Mixpanel push notifications -->
+        <!--<receiver android:name="com.mixpanel.android.mpmetrics.GCMReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="br.com.i9algo.autaz.pdv" />
+            </intent-filter>
+        </receiver>-->
+
+        <!-- This receiver will allow your application to record referrer parameters as super properties automatically -->
+        <receiver android:name="com.mixpanel.android.mpmetrics.InstallReferrerReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+        <!--
+        ###########################################################
+                                 End Mixpanel
+        ###########################################################
+        -->
+
+
         <receiver android:name=".executor.receivers.HelpReceiver" />
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="9e034767f20957ee4a3828932de2e8f82f832234" />
+
+        <!--
+        <meta-data
+            android:name="com.google.android.gms.API_KEY"
+            android:value="AIzaSyDIOO37kakkxKCCL397_AAAZNvIjM4M1vk"/>-->
     </application>
 
 </manifest>

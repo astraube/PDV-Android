@@ -2,8 +2,10 @@ package br.com.i9algo.autaz.pdv.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -20,7 +22,7 @@ public class DeviceUuidFactory {
         if (uuid == null) {
             synchronized (DeviceUuidFactory.class) {
                 if (uuid == null) {
-                    final SharedPreferences prefs = context.getSharedPreferences(PREFS_FILE, 0);
+                    final SharedPreferences prefs = context.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
                     final String id = prefs.getString(PREFS_DEVICE_ID, null);
                     if (id != null) {
                         // Use the ids previously computed and stored in the
@@ -42,6 +44,7 @@ public class DeviceUuidFactory {
                         } catch (UnsupportedEncodingException e) {
                             throw new RuntimeException(e);
                         }
+
                         // Write the value out to the prefs file
                         prefs.edit().putString(PREFS_DEVICE_ID, uuid.toString()).commit();
                     }

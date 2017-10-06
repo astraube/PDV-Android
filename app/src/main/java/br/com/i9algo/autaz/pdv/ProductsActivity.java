@@ -10,6 +10,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,15 +25,18 @@ import br.com.i9algo.autaz.pdv.ui.dialog.ProductEditDialog;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.github.clans.fab.FloatingActionButton;
+import com.crashlytics.android.Crashlytics;
 
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
+import br.com.i9algo.autaz.pdv.ui.dialog.SaleNewDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import faranjit.currency.edittext.CurrencyEditText;
+import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 
 public class ProductsActivity extends BaseActivity implements ProductControllerInterface {
@@ -42,8 +46,8 @@ public class ProductsActivity extends BaseActivity implements ProductControllerI
 	@BindView(R.id.recyclerView)
 	RecyclerView recyclerView;
 
-	@BindView(R.id.fabButton)
-	FloatingActionButton fabButton;
+	@BindView(R.id.btNewProduct)
+	Button btNewProduct;
 
 	private ProductsListAdapter mAdapter;
 	private Realm realm;
@@ -56,6 +60,7 @@ public class ProductsActivity extends BaseActivity implements ProductControllerI
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        startMixPanelApi(this);
 		fullScreen();
 		setContentView(R.layout.activity_products_sync);
 		ButterKnife.bind(this);
@@ -70,13 +75,11 @@ public class ProductsActivity extends BaseActivity implements ProductControllerI
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.setAdapter(mAdapter);
-		
-		fabButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				new ProductEditDialog(ProductsActivity.this);
-			}
-		});
+	}
+
+	@OnClick(R.id.btNewProduct)
+	public void onClickBtNewProduct() {
+		new ProductEditDialog(ProductsActivity.this);
 	}
 
 	@Override

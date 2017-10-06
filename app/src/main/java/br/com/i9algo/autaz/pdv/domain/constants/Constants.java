@@ -14,9 +14,12 @@ public class Constants {
 
 	public static final String BROADCAST_ACTION = "android.intent.action.BOOT_COMPLETED";
 
+	public static final String TOKEN_MIX_PANEL = "a838086ce2ce696897debbe6ad08be64";
+	public static final String GOOGLE_NOTIFICATION_SENDER_ID = "642970038240";
+
 
 	/**
-	 * C�digo tempor�rio
+	 * Codigo temporario
 	 */
 	public static final int CODE_OP = 1; // TODO C�digo do operador
 	public static final int CODE_PDV = 1; // TODO c�digo do ponto de venda do estabelecimento

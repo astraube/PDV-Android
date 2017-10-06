@@ -11,7 +11,9 @@ import android.widget.RelativeLayout;
 
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
+import br.com.i9algo.autaz.pdv.data.local.UserRealmRepository;
 import br.com.i9algo.autaz.pdv.domain.constants.AuthAttr;
+import br.com.i9algo.autaz.pdv.domain.models.User;
 import br.com.i9algo.autaz.pdv.ui.dialog.FloatMenuDialog;
 
 public class FloatUserButtonView extends RelativeLayout {
@@ -42,7 +44,9 @@ public class FloatUserButtonView extends RelativeLayout {
 		/**
 		 * Imagem Perfil
 		 */
-		int sizeImage = 60;
+		int sizeImage = getContext().getResources().getDimensionPixelSize(R.dimen.float_button_view_size_image);
+		int hPadding = getContext().getResources().getDimensionPixelSize(R.dimen.float_button_view_horizontal_padding_textView);
+		int vPadding = getContext().getResources().getDimensionPixelSize(R.dimen.float_button_view_vertical_padding_textView);
 
 		LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT | RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -53,8 +57,12 @@ public class FloatUserButtonView extends RelativeLayout {
 		Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.profile_avatar_4);
 		img.setImageBitmapRounded(bmp);
 		img.setOnClickListener(mImageOnClickListener);
-		img.setText(PreferencesRepository.getValue(AuthAttr.USER_NAME));
-		img.setBackgroundTextView(R.drawable.bg_corner_black_opaque, 10, 5);
+
+		User model = UserRealmRepository.getFirst();
+		String name = (model != null) ? model.getName() : "Operador";
+
+		img.setText(name);
+		img.setBackgroundTextView(R.drawable.bg_corner_black_opaque, hPadding, vPadding);
 		addView(img);
 	}
 }

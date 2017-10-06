@@ -1,12 +1,17 @@
 <resources>
+    <color name="primary">#9E9E9E</color>
+    <color name="primary_dark">#616161</color>
+    <color name="primary_light">#F5F5F5</color>
+    <color name="accent">#607D8B</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="icons">#212121</color>
+    <color name="divider">#BDBDBD</color>
+    <color name="background">#bbffffff</color>
 
-    <color name="colorPrimary">#3F51B5</color>
+    <!--<color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="candidate_normal">#FF000000</color>
-    <color name="candidate_recommended">#000000</color>
-    <color name="candidate_other">#ff808080</color>
-    <color name="candidate_background">#bbffffff</color>
+    <color name="colorAccent">#FF4081</color>-->
 
     <color name="purple">#FF524E96</color> <!-- roxo layout -->
     <color name="purple_dark">#FF474482</color>
@@ -16,6 +21,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="white_opaque">#26FFFFFF</color>
     <color name="gray">#757575</color>
+    <color name="gray_light">#CCCCCC</color>
     <color name="gray_opaque">#A6DEDEDE</color>
     <color name="black">#212121</color>
     <color name="black_opaque">#A6424242</color>

@@ -9,10 +9,10 @@ import android.content.pm.PackageManager;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
-import br.com.i9algo.autaz.pdv.executor.services.SampleSchedulingService;
-
 import java.util.Calendar;
 import java.util.Date;
+
+import br.com.i9algo.autaz.pdv.executor.services.SampleSchedulingService;
 
 /**
  * When the alarm fires, this WakefulBroadcastReceiver receives the broadcast Intent
