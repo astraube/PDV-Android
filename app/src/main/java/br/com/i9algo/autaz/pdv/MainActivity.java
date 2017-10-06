@@ -173,7 +173,7 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
             throw new RuntimeException("Could not encode hour first viewed as JSON");
         }
         // New Line Activity Feed
-		getMixpanel().track("sessao iniciada", null);
+		//getMixpanel().track("sessao iniciada", null);
 
 		/****************************************************************
 		 * End Mixpanel
