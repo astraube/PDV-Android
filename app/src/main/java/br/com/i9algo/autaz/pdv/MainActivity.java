@@ -232,6 +232,10 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 	public void onLoginSuccess(UserWrapper object) {
 		Log.i(TAG, "API WEB - onLoginSuccess - UserWrapper");
 
+		// Adicionar o UUID do device + o token do usuario como DistinctId no mixpanel
+		final String uuid = IDManagement.getDeviceUuid().toString();
+		setMixpanelTrackingDistinctId(uuid + "_" + object.getModel().getPublicToken());
+
 		((Activity)getContext()).runOnUiThread(new Runnable() {
 			public void run() {
 				SimpleToast.info((MainActivity)getContext(), getContext().getString(R.string.txt_login_success), "{fa-user}");

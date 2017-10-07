@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Window;
@@ -53,9 +54,10 @@ public class BaseActivity extends Activity implements BaseViewInterface, Subscri
 	}
 	public void startMixPanelApi(Context context) {
 		/**
-		 * - Quando o User logar vai criar um ID unico, cria um perfil no MixPanel
+		 * - Mixpanel identify = UUID device + token usuario
+		 * - Quando o User logar vai criar um ID unico e cria um perfil no MixPanel
 		 * - Se o User logar em outro Device, criará um novo perfil no MixPanel, com um ID novo
-		 * - Se outro usuario se logar no mesmo Device, vai subistituir os dados do antigo usuario, e Salvar os novos dados
+		 * - Se outro usuario se logar no mesmo Device, criar um ID unico e cria um perfil no MixPanel
 		 */
 		final String trackingDistinctId = getMixpanelTrackingDistinctId();
 
@@ -69,6 +71,19 @@ public class BaseActivity extends Activity implements BaseViewInterface, Subscri
 			mMixpanel.identify(trackingDistinctId); //this is the distinct_id value that
 			mMixpanel.getPeople().identify(trackingDistinctId);
 			mMixpanel.getPeople().initPushHandling(Constants.GOOGLE_NOTIFICATION_SENDER_ID);
+		}
+	}
+	public void setMixpanelTrackingDistinctId(@NonNull String trackingID) {
+		final SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+
+		String currentID = prefs.getString(MIXPANEL_DISTINCT_ID_NAME, null);
+
+		if (!currentID.equals(trackingID)) {
+			final SharedPreferences.Editor prefsEditor = prefs.edit();
+			prefsEditor.putString(MIXPANEL_DISTINCT_ID_NAME, trackingID);
+			prefsEditor.commit();
+
+			startMixPanelApi(this);
 		}
 	}
 	public String getMixpanelTrackingDistinctId() {

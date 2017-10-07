@@ -72,7 +72,7 @@ android {
         }
         release {
             //shrinkResources true // Reduzir seus recursos
-            minifyEnabled true
+            //minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //proguardFiles getDefaultProguardFile('proguard-android-optimize.tx'), 'proguard-rules.pro' // Reduzir ainda mais o codigo
 
