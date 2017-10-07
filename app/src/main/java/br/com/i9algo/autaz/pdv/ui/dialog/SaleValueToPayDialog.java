@@ -8,14 +8,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import java.text.ParseException;
+
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.domain.enums.PaymentMethodEnum;
 import br.com.i9algo.autaz.pdv.domain.interfaces.SaleControllerInterface;
 import br.com.i9algo.autaz.pdv.domain.models.Sale;
 import br.com.i9algo.autaz.pdv.helpers.FormatUtil;
-
-import java.text.ParseException;
-
 import faranjit.currency.edittext.CurrencyEditText;
 
 public class SaleValueToPayDialog extends AlertDialog.Builder {

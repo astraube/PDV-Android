@@ -3,13 +3,12 @@ package br.com.i9algo.autaz.pdv.controllers;
 import android.app.Activity;
 import android.view.View;
 
-import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
+import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
 import co.mobiwise.materialintro.animation.MaterialIntroListener;
 import co.mobiwise.materialintro.prefs.PreferencesManager;
 import co.mobiwise.materialintro.shape.Focus;

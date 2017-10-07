@@ -14,7 +14,6 @@ import br.com.i9algo.autaz.pdv.data.remote.subscribers.SubscriberInterface;
 import br.com.i9algo.autaz.pdv.domain.models.Product;
 import br.com.i9algo.autaz.pdv.executor.receivers.SampleAlarmReceiver;
 import br.com.i9algo.autaz.pdv.ui.base.CustomApplication;
-
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 

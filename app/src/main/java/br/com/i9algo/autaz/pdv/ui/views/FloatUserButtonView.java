@@ -10,9 +10,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import br.com.i9algo.autaz.pdv.R;
-import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
 import br.com.i9algo.autaz.pdv.data.local.UserRealmRepository;
-import br.com.i9algo.autaz.pdv.domain.constants.AuthAttr;
 import br.com.i9algo.autaz.pdv.domain.models.User;
 import br.com.i9algo.autaz.pdv.ui.dialog.FloatMenuDialog;
 

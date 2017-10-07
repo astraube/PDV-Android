@@ -9,29 +9,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
-import br.com.i9algo.autaz.pdv.data.local.AccountRealmRepository;
-import br.com.i9algo.autaz.pdv.data.local.DeviceRealmRepository;
-import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
-import br.com.i9algo.autaz.pdv.data.local.SalesRealmRepository;
-import br.com.i9algo.autaz.pdv.data.local.UserRealmRepository;
-import br.com.i9algo.autaz.pdv.data.remote.repositoryes.DeviceRepository;
-import br.com.i9algo.autaz.pdv.domain.models.Account;
-import br.com.i9algo.autaz.pdv.data.remote.repositoryes.AuthRepository;
-import br.com.i9algo.autaz.pdv.data.remote.service.ApiService;
-import br.com.i9algo.autaz.pdv.data.remote.subscribers.SubscriberInterface;
-import br.com.i9algo.autaz.pdv.domain.interfaces.LoginInterface;
-import br.com.i9algo.autaz.pdv.domain.models.Device;
-import br.com.i9algo.autaz.pdv.domain.models.Sale;
-import br.com.i9algo.autaz.pdv.domain.models.User;
-import br.com.i9algo.autaz.pdv.domain.models.inbound.ResultStatusDefault;
-import br.com.i9algo.autaz.pdv.domain.models.inbound.UserWrapper;
-import br.com.i9algo.autaz.pdv.helpers.defaults.MainThreadBus;
-import br.com.i9algo.autaz.pdv.ui.base.BaseActivity;
-import br.com.i9algo.autaz.pdv.ui.dialog.LoginDialog;
-
 import com.crashlytics.android.Crashlytics;
 import com.github.pierry.simpletoast.SimpleToast;
-import com.google.gson.Gson;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import org.apache.commons.lang3.StringUtils;
@@ -39,10 +18,24 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.inject.Inject;
 
+import br.com.i9algo.autaz.pdv.data.local.AccountRealmRepository;
+import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
+import br.com.i9algo.autaz.pdv.data.local.UserRealmRepository;
+import br.com.i9algo.autaz.pdv.data.remote.repositoryes.AuthRepository;
+import br.com.i9algo.autaz.pdv.data.remote.service.ApiService;
+import br.com.i9algo.autaz.pdv.data.remote.subscribers.SubscriberInterface;
+import br.com.i9algo.autaz.pdv.domain.interfaces.LoginInterface;
+import br.com.i9algo.autaz.pdv.domain.models.Account;
+import br.com.i9algo.autaz.pdv.domain.models.User;
+import br.com.i9algo.autaz.pdv.domain.models.inbound.ResultStatusDefault;
+import br.com.i9algo.autaz.pdv.domain.models.inbound.UserWrapper;
+import br.com.i9algo.autaz.pdv.helpers.IDManagement;
+import br.com.i9algo.autaz.pdv.helpers.defaults.MainThreadBus;
+import br.com.i9algo.autaz.pdv.ui.base.BaseActivity;
+import br.com.i9algo.autaz.pdv.ui.dialog.LoginDialog;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements LoginInterface, SubscriberInterface {
@@ -166,7 +159,8 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
         try {
             final JSONObject domainProperty = new JSONObject();
             domainProperty.put("user domain", domainFromEmailAddress(user.getEmail()));
-            domainProperty.put("user_public_token", user.getPublicToken());
+			domainProperty.put("user_public_token", user.getPublicToken());
+			domainProperty.put("device_uuid", IDManagement.getDeviceUuid().toString());
             getMixpanel().registerSuperProperties(domainProperty);
 
         } catch (JSONException e) {
@@ -237,9 +231,6 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 	@Override
 	public void onLoginSuccess(UserWrapper object) {
 		Log.i(TAG, "API WEB - onLoginSuccess - UserWrapper");
-
-		// Adicionar o token do usuario como DistinctId no mixpanel
-		setMixpanelTrackingDistinctId(object.getModel().getPublicToken());
 
 		((Activity)getContext()).runOnUiThread(new Runnable() {
 			public void run() {

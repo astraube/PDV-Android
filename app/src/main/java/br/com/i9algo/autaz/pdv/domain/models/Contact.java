@@ -2,12 +2,13 @@ package br.com.i9algo.autaz.pdv.domain.models;
 
 import android.text.TextUtils;
 
-import br.com.i9algo.autaz.pdv.domain.enums.ContactTypes;
 import com.google.gson.Gson;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import br.com.i9algo.autaz.pdv.domain.enums.ContactTypes;
 
 public class Contact {
 

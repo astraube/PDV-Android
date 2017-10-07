@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 

@@ -10,14 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
 import br.com.i9algo.autaz.pdv.domain.interfaces.SaleControllerInterface;
 import br.com.i9algo.autaz.pdv.domain.models.Product;
 import br.com.i9algo.autaz.pdv.ui.adapters.item_view.ProductGridView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import io.realm.Realm;
 
 @SuppressLint("ShowToast")

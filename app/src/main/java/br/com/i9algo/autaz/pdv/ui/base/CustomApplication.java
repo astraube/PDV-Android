@@ -5,35 +5,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.core.CrashlyticsCore;
 
 import br.com.i9algo.autaz.pdv.BuildConfig;
 import br.com.i9algo.autaz.pdv.MainActivity;
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
 import br.com.i9algo.autaz.pdv.data.remote.service.ApiService;
-import br.com.i9algo.autaz.pdv.domain.models.Account;
-import br.com.i9algo.autaz.pdv.domain.models.Corporate;
-import br.com.i9algo.autaz.pdv.domain.models.User;
 import br.com.i9algo.autaz.pdv.executor.receivers.SampleAlarmReceiver;
 import br.com.i9algo.autaz.pdv.helpers.FormatUtil;
 import br.com.i9algo.autaz.pdv.helpers.IDManagement;
 import br.com.i9algo.autaz.pdv.injection.NetworkModule;
-
 import butterknife.ButterKnife;
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.core.CrashlyticsCore;
-
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
 import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import rx.plugins.RxJavaErrorHandler;
-import rx.plugins.RxJavaPlugins;
 
 public class CustomApplication extends Application {
 

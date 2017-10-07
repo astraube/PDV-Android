@@ -2,10 +2,10 @@ package br.com.i9algo.autaz.pdv.helpers;
 
 import android.content.Context;
 
+import java.text.DecimalFormat;
+
 import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
 import br.com.i9algo.autaz.pdv.domain.constants.Constants;
-
-import java.text.DecimalFormat;
 
 /**
  * C�digo de pedido de venda

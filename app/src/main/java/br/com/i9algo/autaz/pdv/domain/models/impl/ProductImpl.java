@@ -3,7 +3,6 @@ package br.com.i9algo.autaz.pdv.domain.models.impl;
 import br.com.i9algo.autaz.pdv.domain.models.Category;
 import br.com.i9algo.autaz.pdv.domain.models.Product;
 import br.com.i9algo.autaz.pdv.helpers.MathUtils;
-
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;

@@ -1,8 +1,8 @@
 package br.com.i9algo.autaz.pdv.domain.models.inbound;
 
-import br.com.i9algo.autaz.pdv.domain.models.Product;
-
 import java.util.List;
+
+import br.com.i9algo.autaz.pdv.domain.models.Product;
 
 public class ProductsArraylistWrapper {
 

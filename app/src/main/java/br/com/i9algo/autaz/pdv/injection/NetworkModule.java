@@ -1,8 +1,6 @@
 package br.com.i9algo.autaz.pdv.injection;
 
 
-import br.com.i9algo.autaz.pdv.data.remote.service.ApiService;
-import br.com.i9algo.autaz.pdv.domain.constants.ServerConstants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -10,6 +8,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
+import br.com.i9algo.autaz.pdv.data.remote.service.ApiService;
+import br.com.i9algo.autaz.pdv.domain.constants.ServerConstants;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;

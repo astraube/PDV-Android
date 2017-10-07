@@ -1,42 +1,22 @@
 package br.com.i9algo.autaz.pdv;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import br.com.i9algo.autaz.pdv.R;
+import java.util.List;
+
 import br.com.i9algo.autaz.pdv.data.local.ProductsRealmRepository;
 import br.com.i9algo.autaz.pdv.domain.interfaces.ProductControllerInterface;
 import br.com.i9algo.autaz.pdv.domain.models.Product;
 import br.com.i9algo.autaz.pdv.ui.adapters.ProductsListAdapter;
 import br.com.i9algo.autaz.pdv.ui.base.BaseActivity;
 import br.com.i9algo.autaz.pdv.ui.dialog.ProductEditDialog;
-
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.crashlytics.android.Crashlytics;
-
-import java.text.ParseException;
-import java.util.Date;
-import java.util.List;
-
-import br.com.i9algo.autaz.pdv.ui.dialog.SaleNewDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import faranjit.currency.edittext.CurrencyEditText;
-import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 
 public class ProductsActivity extends BaseActivity implements ProductControllerInterface {

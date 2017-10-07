@@ -7,9 +7,9 @@ import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
-import br.com.i9algo.autaz.pdv.ui.views.HelpButtonView;
-
 import java.util.Calendar;
+
+import br.com.i9algo.autaz.pdv.ui.views.HelpButtonView;
 
 /**
  * <p>Botao do panico</p>

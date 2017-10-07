@@ -1,3 +1,6 @@
+# https://developer.android.com/studio/build/shrink-code.html
+# https://www.guardsquare.com/en/proguard/manual/usage
+
 # Add project specific ProGuard rules here.
 # By default, the flags in this file are appended to flags specified
 # in C:\Users\aStraube\AppData\Local\Android\sdk/tools/proguard/proguard-android.txt
@@ -23,6 +26,23 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# public static int e(...);
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static int v(...);
+    public static int i(...);
+    public static int w(...);
+    public static int d(...);
+    public static int e(...);
+    public static int wtf(...);
+}
+
+-keep class android.widget.IconTextView { *; }
+
+-keep class cn.pedant.SweetAlert.Rotate3dAnimation {
+   public <init>(...);
+}
 
 -keep class com.crashlytics.** { *; }
 -dontwarn com.crashlytics.**

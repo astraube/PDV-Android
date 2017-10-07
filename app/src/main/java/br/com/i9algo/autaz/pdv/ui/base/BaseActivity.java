@@ -4,14 +4,11 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.Base64;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -19,21 +16,13 @@ import android.widget.SearchView;
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.Random;
 
 import br.com.i9algo.autaz.pdv.R;
-import br.com.i9algo.autaz.pdv.data.local.UserRealmRepository;
 import br.com.i9algo.autaz.pdv.data.remote.service.ApiService;
 import br.com.i9algo.autaz.pdv.data.remote.subscribers.SubscriberInterface;
 import br.com.i9algo.autaz.pdv.domain.constants.Constants;
-import br.com.i9algo.autaz.pdv.domain.models.CallbackModel;
-import br.com.i9algo.autaz.pdv.domain.models.User;
-import br.com.i9algo.autaz.pdv.helpers.IDManagement;
-import br.com.i9algo.autaz.pdv.ui.dialog.DialogUtil;
 import br.com.i9algo.autaz.pdv.ui.views.BaseViewInterface;
-
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
@@ -43,8 +32,6 @@ public class BaseActivity extends Activity implements BaseViewInterface, Subscri
 	private final String TAG;
 	private CustomApplication app;
 	private SweetAlertDialog sweetDialog = null;
-
-	//private PrinterEpson printerEpson = null;
 
 	private MixpanelAPI mMixpanel = null;
 	private static final String MIXPANEL_DISTINCT_ID_NAME = "Mixpanel Example $distinctid";
@@ -65,11 +52,12 @@ public class BaseActivity extends Activity implements BaseViewInterface, Subscri
 		return (this.mMixpanel);
 	}
 	public void startMixPanelApi(Context context) {
-
-		// O problema disso é que se outro usuario logar nesse mesmo equipamento
-		// o perfil do usuario no mixpanel é atualizado com os dados do novo usuario
-		//final String trackingDistinctId = IDManagement.getDeviceUuid().toString();
-		String trackingDistinctId = getMixpanelTrackingDistinctId();
+		/**
+		 * - Quando o User logar vai criar um ID unico, cria um perfil no MixPanel
+		 * - Se o User logar em outro Device, criará um novo perfil no MixPanel, com um ID novo
+		 * - Se outro usuario se logar no mesmo Device, vai subistituir os dados do antigo usuario, e Salvar os novos dados
+		 */
+		final String trackingDistinctId = getMixpanelTrackingDistinctId();
 
 
 		// Initialize the Mixpanel library for tracking and push notifications.
@@ -82,20 +70,6 @@ public class BaseActivity extends Activity implements BaseViewInterface, Subscri
 			mMixpanel.getPeople().identify(trackingDistinctId);
 			mMixpanel.getPeople().initPushHandling(Constants.GOOGLE_NOTIFICATION_SENDER_ID);
 		}
-	}
-	public void setMixpanelTrackingDistinctId(@NonNull String trackingID) {
-		final SharedPreferences prefs = getPreferences(MODE_PRIVATE);
-
-		String currentID = prefs.getString(MIXPANEL_DISTINCT_ID_NAME, null);
-
-		if (!currentID.equals(trackingID)) {
-			final SharedPreferences.Editor prefsEditor = prefs.edit();
-			prefsEditor.putString(MIXPANEL_DISTINCT_ID_NAME, trackingID);
-			prefsEditor.commit();
-
-			startMixPanelApi(this);
-		}
-
 	}
 	public String getMixpanelTrackingDistinctId() {
 		final SharedPreferences prefs = getPreferences(MODE_PRIVATE);
@@ -139,9 +113,6 @@ public class BaseActivity extends Activity implements BaseViewInterface, Subscri
 	 * End Mixpanel
 	 ****************************************************************/
 
-	/*public PrinterEpson getPrinterEpson() {
-		return (this.printerEpson);
-	}*/
 
 	public void fullScreen() {
 		Window w = getWindow();

@@ -6,7 +6,6 @@ import android.app.SearchableInfo;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,10 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Trace;
 import android.support.annotation.IdRes;
-import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,28 +23,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
-import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.ContentViewEvent;
-import com.crashlytics.android.answers.CustomEvent;
-import com.crashlytics.android.answers.LoginEvent;
-import com.crashlytics.android.answers.PurchaseEvent;
-import com.crashlytics.android.answers.RatingEvent;
-import com.crashlytics.android.answers.ShareEvent;
-import com.google.gson.Gson;
-import com.mixpanel.android.mpmetrics.MixpanelAPI;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.controllers.MaterialIntroController;
 import br.com.i9algo.autaz.pdv.controllers.SaleController;
 import br.com.i9algo.autaz.pdv.data.local.ProductsRealmRepository;
 import br.com.i9algo.autaz.pdv.data.local.SalesRealmRepository;
-import br.com.i9algo.autaz.pdv.data.local.SignaturePlanRealmRepository;
 import br.com.i9algo.autaz.pdv.data.remote.repositoryes.AuthRepository;
 import br.com.i9algo.autaz.pdv.data.remote.repositoryes.ProductsRepository;
 import br.com.i9algo.autaz.pdv.data.remote.repositoryes.SaleRepository;
@@ -56,31 +40,17 @@ import br.com.i9algo.autaz.pdv.data.remote.subscribers.SubscriberInterface;
 import br.com.i9algo.autaz.pdv.domain.enums.SaleStatusEnum;
 import br.com.i9algo.autaz.pdv.domain.models.CallbackModel;
 import br.com.i9algo.autaz.pdv.domain.models.Client;
-import br.com.i9algo.autaz.pdv.domain.models.Product;
 import br.com.i9algo.autaz.pdv.domain.models.Sale;
-import br.com.i9algo.autaz.pdv.domain.models.SignaturePlan;
 import br.com.i9algo.autaz.pdv.domain.models.outbound.SaleApi;
 import br.com.i9algo.autaz.pdv.ui.adapters.SalesGridAdapter;
 import br.com.i9algo.autaz.pdv.ui.base.BaseActivity;
 import br.com.i9algo.autaz.pdv.ui.dialog.DialogUtil;
 import br.com.i9algo.autaz.pdv.ui.dialog.SaleNewDialog;
 import br.com.i9algo.autaz.pdv.ui.views.FloatUserButtonView;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Currency;
-import java.util.List;
-import java.util.Random;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import info.hoang8f.android.segmented.SegmentedGroup;
-import io.fabric.sdk.android.Fabric;
-import io.realm.RealmResults;
 
 
 public class SalesGridActivity extends BaseActivity implements SubscriberInterface {
@@ -165,11 +135,8 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 		//Trace myTrace = FirebasePerformance.getInstance().newTrace("test_trace");
 		//onCreateTrace.start();
 
-		// API WEB - Repository "Auth"
-		//this.mAuthRepo = new AuthRepository(this);
 
-		// API WEB - Verifica as credenciais do usuario
-		//this.mAuthRepo.onValidateCredentialsUser(this);
+		Log.wtf(TAG, "API WEB - onLoginSuccess - UserWrapper");
 
 		// API WEB - Repository "Products"
 		this.mProductsRepo = new ProductsRepository(this);

@@ -2,10 +2,10 @@ package br.com.i9algo.autaz.pdv.helpers;
 
 import android.content.Context;
 
+import java.text.DecimalFormat;
+
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.domain.constants.DateFormats;
-
-import java.text.DecimalFormat;
 
 public class FormatUtil {
 

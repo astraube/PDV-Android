@@ -5,11 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.crashlytics.android.Crashlytics;
-
-import br.com.i9algo.autaz.pdv.R;
-import io.fabric.sdk.android.Fabric;
-
 @TargetApi(Build.VERSION_CODES.GINGERBREAD_MR1)
 public class PreferenceActivity extends android.preference.PreferenceActivity /*implements SharedPreferences.OnSharedPreferenceChangeListener*/ {
 

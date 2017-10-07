@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ImageView;
@@ -14,8 +13,12 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.data.local.AccountRealmRepository;
 import br.com.i9algo.autaz.pdv.data.local.SalesRealmRepository;
 import br.com.i9algo.autaz.pdv.domain.constants.DateFormats;
@@ -31,13 +34,6 @@ import br.com.i9algo.autaz.pdv.ui.base.BaseActivity;
 import br.com.i9algo.autaz.pdv.ui.dialog.CalendarDialog;
 import br.com.i9algo.autaz.pdv.ui.dialog.CalendarDialog.CalendarDialogInterface;
 import br.com.i9algo.autaz.pdv.ui.views.TableRowTextView;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.pedant.SweetAlert.SweetAlertDialog;

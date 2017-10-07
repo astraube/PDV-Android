@@ -80,7 +80,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.MONKEY" />
+
+                <!-- Teste automatizado
+                adb shell monkey -p br.com.i9algo.autaz.pdv -v 500
+                -->
+                <!-- <category android:name="android.intent.category.MONKEY" /> -->
             </intent-filter>
         </activity>
 
@@ -255,7 +259,7 @@
         -->
 
 
-        <receiver android:name=".executor.receivers.HelpReceiver" />
+        <!--<receiver android:name=".executor.receivers.HelpReceiver" />-->
 
         <meta-data
             android:name="io.fabric.ApiKey"

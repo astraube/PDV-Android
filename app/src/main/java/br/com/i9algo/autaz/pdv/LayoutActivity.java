@@ -4,14 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.GridView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
 import br.com.i9algo.autaz.pdv.domain.interfaces.ItemAdapterInterface;
 import br.com.i9algo.autaz.pdv.domain.models.LayoutModel;
 import br.com.i9algo.autaz.pdv.ui.adapters.LayoutsGridAdapter;
 import br.com.i9algo.autaz.pdv.ui.base.BaseActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LayoutActivity extends BaseActivity implements ItemAdapterInterface {
 	

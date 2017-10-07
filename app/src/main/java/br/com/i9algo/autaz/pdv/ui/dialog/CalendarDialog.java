@@ -3,17 +3,15 @@ package br.com.i9algo.autaz.pdv.ui.dialog;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.LinearLayout;
 
-import br.com.i9algo.autaz.pdv.R;
-
 import java.util.Calendar;
-import java.util.Date;
+
+import br.com.i9algo.autaz.pdv.R;
 
 
 public class CalendarDialog extends AlertDialog.Builder {

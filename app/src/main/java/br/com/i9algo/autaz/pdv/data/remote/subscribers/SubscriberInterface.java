@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import br.com.i9algo.autaz.pdv.data.remote.service.ApiService;
-
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 

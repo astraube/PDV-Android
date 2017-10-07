@@ -11,7 +11,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Date;
 
-import br.com.i9algo.autaz.pdv.domain.constants.DateFormats;
 import br.com.i9algo.autaz.pdv.domain.enums.PaymentMethodEnum;
 import io.realm.RealmObject;
 

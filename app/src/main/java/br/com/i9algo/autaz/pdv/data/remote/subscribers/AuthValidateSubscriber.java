@@ -6,8 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.data.local.UserRealmRepository;
-import br.com.i9algo.autaz.pdv.domain.models.inbound.ResultStatusDefault;
 import br.com.i9algo.autaz.pdv.domain.interfaces.LoginInterface;
+import br.com.i9algo.autaz.pdv.domain.models.inbound.ResultStatusDefault;
 import br.com.i9algo.autaz.pdv.domain.models.inbound.UserWrapper;
 
 

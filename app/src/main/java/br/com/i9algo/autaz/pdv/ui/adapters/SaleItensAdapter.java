@@ -9,16 +9,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import org.fabiomsr.moneytextview.MoneyTextView;
+
+import java.util.List;
+
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.controllers.SaleController;
 import br.com.i9algo.autaz.pdv.domain.models.ProductSale;
 import br.com.i9algo.autaz.pdv.domain.models.Sale;
 import br.com.i9algo.autaz.pdv.helpers.FormatUtil;
-
-import org.fabiomsr.moneytextview.MoneyTextView;
-
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

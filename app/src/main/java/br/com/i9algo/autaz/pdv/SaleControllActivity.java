@@ -16,20 +16,26 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.epson.epos2.printer.Printer;
+import com.epson.epos2.printer.PrinterStatusInfo;
+import com.github.pierry.simpletoast.SimpleToast;
+
+import org.fabiomsr.moneytextview.MoneyTextView;
+
+import java.util.List;
+
 import br.com.i9algo.autaz.pdv.controllers.SaleController;
 import br.com.i9algo.autaz.pdv.controllers.printer2.Cupom;
-import br.com.i9algo.autaz.pdv.controllers.printer2.PrinterEpson;
 import br.com.i9algo.autaz.pdv.controllers.printer2.EpsonReceiveListener;
+import br.com.i9algo.autaz.pdv.controllers.printer2.PrinterEpson;
 import br.com.i9algo.autaz.pdv.controllers.printer2.ShowMsg;
 import br.com.i9algo.autaz.pdv.data.local.ProductsRealmRepository;
 import br.com.i9algo.autaz.pdv.domain.constants.Constants;
@@ -50,21 +56,10 @@ import br.com.i9algo.autaz.pdv.ui.dialog.SaleCloseDialog;
 import br.com.i9algo.autaz.pdv.ui.dialog.SaleItemEditDialog;
 import br.com.i9algo.autaz.pdv.ui.dialog.SaleNewDialog;
 import br.com.i9algo.autaz.pdv.ui.dialog.SalePayDialog;
-
-import com.crashlytics.android.Crashlytics;
-import com.epson.epos2.printer.Printer;
-import com.epson.epos2.printer.PrinterStatusInfo;
-import com.github.pierry.simpletoast.SimpleToast;
-
-import org.fabiomsr.moneytextview.MoneyTextView;
-
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 

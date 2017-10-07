@@ -1,11 +1,11 @@
 package br.com.i9algo.autaz.pdv.domain.models;
 
-import br.com.i9algo.autaz.pdv.domain.models.impl.ClientImpl;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import br.com.i9algo.autaz.pdv.domain.models.impl.ClientImpl;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;

@@ -1,13 +1,12 @@
 package br.com.i9algo.autaz.pdv.data.local;
 
-import br.com.i9algo.autaz.pdv.domain.enums.SaleStatusEnum;
-import br.com.i9algo.autaz.pdv.domain.models.Sale;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import br.com.i9algo.autaz.pdv.domain.enums.SaleStatusEnum;
+import br.com.i9algo.autaz.pdv.domain.models.Sale;
 import io.realm.Realm;
 import io.realm.RealmResults;
 

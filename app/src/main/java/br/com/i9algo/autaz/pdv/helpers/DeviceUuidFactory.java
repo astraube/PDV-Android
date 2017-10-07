@@ -2,10 +2,8 @@ package br.com.i9algo.autaz.pdv.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Random;
 import java.util.UUID;
 
 /**

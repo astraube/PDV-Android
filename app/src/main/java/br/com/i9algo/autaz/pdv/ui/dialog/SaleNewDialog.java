@@ -1,15 +1,11 @@
 package br.com.i9algo.autaz.pdv.ui.dialog;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -20,7 +16,6 @@ import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
 import br.com.i9algo.autaz.pdv.domain.interfaces.SaleControllerInterface;
 import br.com.i9algo.autaz.pdv.domain.models.Client;
 import br.com.i9algo.autaz.pdv.domain.models.Sale;
-import br.com.i9algo.autaz.pdv.ui.base.BaseActivity;
 
 public class SaleNewDialog extends MaterialDialog {
 

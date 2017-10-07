@@ -9,15 +9,14 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import java.text.ParseException;
+import java.util.Date;
+
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.domain.interfaces.ProductControllerInterface;
 import br.com.i9algo.autaz.pdv.domain.models.Product;
 import br.com.i9algo.autaz.pdv.helpers.FormatUtil;
 import br.com.i9algo.autaz.pdv.ui.base.BaseActivity;
-
-import java.text.ParseException;
-import java.util.Date;
-
 import faranjit.currency.edittext.CurrencyEditText;
 
 public class ProductEditDialog extends MaterialDialog {

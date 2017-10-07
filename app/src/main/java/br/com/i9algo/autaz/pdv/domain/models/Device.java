@@ -5,8 +5,16 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
-import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
-import br.com.i9algo.autaz.pdv.domain.constants.AuthAttr;
+import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.Since;
+
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import br.com.i9algo.autaz.pdv.domain.constants.Metadata;
 import br.com.i9algo.autaz.pdv.helpers.DeviceUuidFactory;
 import br.com.i9algo.autaz.pdv.helpers.IDManagement;
@@ -15,17 +23,6 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
-
-import com.google.gson.Gson;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.annotations.Since;
-
-
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Device extends RealmObject implements Parcelable {
 

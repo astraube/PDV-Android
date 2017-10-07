@@ -2,17 +2,12 @@ package br.com.i9algo.autaz.pdv.data.remote.repositoryes;
 
 import android.util.Log;
 
-import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
 import br.com.i9algo.autaz.pdv.data.local.ProductsRealmRepository;
 import br.com.i9algo.autaz.pdv.data.local.UserRealmRepository;
 import br.com.i9algo.autaz.pdv.data.remote.subscribers.DefaultSubscriber;
 import br.com.i9algo.autaz.pdv.data.remote.subscribers.SubscriberInterface;
-import br.com.i9algo.autaz.pdv.domain.constants.AuthAttr;
-import br.com.i9algo.autaz.pdv.domain.models.Product;
 import br.com.i9algo.autaz.pdv.domain.models.User;
 import br.com.i9algo.autaz.pdv.domain.models.inbound.ProductsArraylistWrapper;
-
-import io.realm.RealmResults;
 import rx.schedulers.Schedulers;
 
 /**

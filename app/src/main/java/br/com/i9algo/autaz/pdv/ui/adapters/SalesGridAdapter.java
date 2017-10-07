@@ -11,16 +11,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.domain.constants.DateFormats;
 import br.com.i9algo.autaz.pdv.domain.enums.SaleStatusEnum;
 import br.com.i9algo.autaz.pdv.domain.interfaces.SaleControllerInterface;
-import br.com.i9algo.autaz.pdv.domain.models.Product;
 import br.com.i9algo.autaz.pdv.domain.models.Sale;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

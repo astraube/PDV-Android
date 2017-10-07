@@ -4,9 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.pddstudio.preferences.encrypted.EncryptedPreferences;
+
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.domain.constants.AuthAttr;
-import com.pddstudio.preferences.encrypted.EncryptedPreferences;
 
 
 public class PreferencesRepository {

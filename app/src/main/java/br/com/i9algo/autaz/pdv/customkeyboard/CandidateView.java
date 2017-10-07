@@ -14,10 +14,10 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import br.com.i9algo.autaz.pdv.R;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.i9algo.autaz.pdv.R;
 
 public class CandidateView extends View {
 

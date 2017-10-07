@@ -2,13 +2,13 @@ package br.com.i9algo.autaz.pdv.domain.constants;
 
 import android.content.Context;
 
-import br.com.i9algo.autaz.pdv.R;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import br.com.i9algo.autaz.pdv.R;
 
 /**
  * Formatos de data

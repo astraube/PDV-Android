@@ -3,8 +3,6 @@ package br.com.i9algo.autaz.pdv.domain.models;
 /**
  * Created by aStraube on 13/07/2017.
  */
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

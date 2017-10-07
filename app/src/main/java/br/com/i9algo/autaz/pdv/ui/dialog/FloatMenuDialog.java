@@ -128,16 +128,13 @@ public class FloatMenuDialog extends Dialog implements View.OnClickListener {
 			mTrigger.setVisibility(View.VISIBLE);
 	}
 	
-	//private static List<ImageTextView> BUTTONS = null;
-	
 	private void createButtons() {
 		LinearLayout viewConfig = (LinearLayout)findViewById(R.id.viewConfig);
 		String [] menuItems = getContext().getResources().getStringArray(R.array.arr_items_float_menu);
 		String[] menuItemsIcon = getContext().getResources().getStringArray(R.array.arr_icons_float_menu);
 		
 		/*
-		// TODO
-		// Help Buttom
+		// TODO - Help Buttom
 		HelpButtonView helpBtn = new HelpButtonView(getContext(), 70);
 		helpBtn.setOwnerClickListener(this);
 		viewConfig.addView(helpBtn);
@@ -166,12 +163,6 @@ public class FloatMenuDialog extends Dialog implements View.OnClickListener {
 			
 			viewConfig.addView(btn);
 		}
-		
-		/*for (int i = 0; i < BUTTONS.size(); i++) {
-			ImageTextView b = BUTTONS.get(i);
-			b.setId(i);
-			viewConfig.addView(b);
-		}*/
 		
 		if (mTrigger != null)
 			mTrigger.setVisibility(View.GONE);

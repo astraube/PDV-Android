@@ -28,10 +28,10 @@ import android.view.textservice.SuggestionsInfo;
 import android.view.textservice.TextInfo;
 import android.view.textservice.TextServicesManager;
 
-import br.com.i9algo.autaz.pdv.R;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.i9algo.autaz.pdv.R;
 
 /**
  * Example of writing an input method for a soft keyboard.  This code is

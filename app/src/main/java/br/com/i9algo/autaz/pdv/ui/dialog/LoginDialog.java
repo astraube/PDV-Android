@@ -3,7 +3,6 @@ package br.com.i9algo.autaz.pdv.ui.dialog;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.Debug;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -13,10 +12,8 @@ import android.widget.LinearLayout;
 import br.com.i9algo.autaz.pdv.BuildConfig;
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
-import br.com.i9algo.autaz.pdv.data.remote.subscribers.SubscriberInterface;
 import br.com.i9algo.autaz.pdv.domain.constants.AuthAttr;
 import br.com.i9algo.autaz.pdv.domain.interfaces.LoginInterface;
-
 import butterknife.ButterKnife;
 
 public class LoginDialog extends AlertDialog.Builder {

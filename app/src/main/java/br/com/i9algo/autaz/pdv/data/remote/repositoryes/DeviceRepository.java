@@ -2,8 +2,6 @@ package br.com.i9algo.autaz.pdv.data.remote.repositoryes;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
-
 import br.com.i9algo.autaz.pdv.data.local.DeviceRealmRepository;
 import br.com.i9algo.autaz.pdv.data.local.UserRealmRepository;
 import br.com.i9algo.autaz.pdv.data.remote.subscribers.DefaultSubscriber;

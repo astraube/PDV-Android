@@ -5,7 +5,6 @@ import android.util.Log;
 import br.com.i9algo.autaz.pdv.data.local.UserRealmRepository;
 import br.com.i9algo.autaz.pdv.data.remote.subscribers.DefaultSubscriber;
 import br.com.i9algo.autaz.pdv.data.remote.subscribers.SubscriberInterface;
-import br.com.i9algo.autaz.pdv.domain.models.Sale;
 import br.com.i9algo.autaz.pdv.domain.models.User;
 import br.com.i9algo.autaz.pdv.domain.models.inbound.ResultDefault;
 import br.com.i9algo.autaz.pdv.domain.models.outbound.SaleApi;

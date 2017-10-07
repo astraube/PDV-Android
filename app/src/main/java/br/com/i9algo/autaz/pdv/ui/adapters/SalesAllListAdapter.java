@@ -7,15 +7,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.List;
+
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.domain.constants.DateFormats;
 import br.com.i9algo.autaz.pdv.domain.interfaces.SaleTaskInterface;
 import br.com.i9algo.autaz.pdv.domain.models.Sale;
 import br.com.i9algo.autaz.pdv.helpers.FormatUtil;
 import br.com.i9algo.autaz.pdv.helpers.SaleStatusUtil;
-
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

@@ -7,7 +7,6 @@ import br.com.i9algo.autaz.pdv.data.remote.subscribers.AuthValidateSubscriber;
 import br.com.i9algo.autaz.pdv.data.remote.subscribers.LoginSubscriber;
 import br.com.i9algo.autaz.pdv.data.remote.subscribers.SubscriberInterface;
 import br.com.i9algo.autaz.pdv.domain.constants.AuthAttr;
-
 import br.com.i9algo.autaz.pdv.domain.models.User;
 import rx.schedulers.Schedulers;
 

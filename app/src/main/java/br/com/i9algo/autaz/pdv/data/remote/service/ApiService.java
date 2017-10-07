@@ -1,16 +1,13 @@
 package br.com.i9algo.autaz.pdv.data.remote.service;
 
 
-
+import br.com.i9algo.autaz.pdv.domain.constants.AuthAttr;
 import br.com.i9algo.autaz.pdv.domain.models.Device;
-import br.com.i9algo.autaz.pdv.domain.models.Sale;
 import br.com.i9algo.autaz.pdv.domain.models.inbound.CorporateWrapper;
 import br.com.i9algo.autaz.pdv.domain.models.inbound.DeviceWrapper;
-import br.com.i9algo.autaz.pdv.domain.models.inbound.ResultDefault;
-import br.com.i9algo.autaz.pdv.domain.constants.AuthAttr;
 import br.com.i9algo.autaz.pdv.domain.models.inbound.ProductWrapper;
 import br.com.i9algo.autaz.pdv.domain.models.inbound.ProductsArraylistWrapper;
-
+import br.com.i9algo.autaz.pdv.domain.models.inbound.ResultDefault;
 import br.com.i9algo.autaz.pdv.domain.models.inbound.UserWrapper;
 import br.com.i9algo.autaz.pdv.domain.models.outbound.SaleApi;
 import retrofit2.http.Body;

@@ -8,11 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.domain.interfaces.ItemAdapterInterface;
 import br.com.i9algo.autaz.pdv.domain.models.LayoutModel;
-
-import java.util.List;
 
 public class LayoutsGridAdapter extends BaseAdapter {
 	

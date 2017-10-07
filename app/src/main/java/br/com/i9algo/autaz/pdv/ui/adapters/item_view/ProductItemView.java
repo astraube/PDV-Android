@@ -7,7 +7,6 @@ import android.widget.TextView;
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.domain.models.Product;
 import br.com.i9algo.autaz.pdv.helpers.FormatUtil;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

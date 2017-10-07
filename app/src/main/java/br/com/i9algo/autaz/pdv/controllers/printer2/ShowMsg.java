@@ -2,10 +2,11 @@ package br.com.i9algo.autaz.pdv.controllers.printer2;
 
 import android.content.Context;
 
-import br.com.i9algo.autaz.pdv.R;
 import com.epson.epos2.Epos2CallbackCode;
 import com.epson.epos2.Epos2Exception;
 import com.github.pierry.simpletoast.SimpleToast;
+
+import br.com.i9algo.autaz.pdv.R;
 
 public class ShowMsg {
     public static void showException(Exception e, String method, Context context) {

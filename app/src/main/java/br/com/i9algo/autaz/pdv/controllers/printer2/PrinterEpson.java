@@ -4,11 +4,6 @@ import android.app.Activity;
 import android.os.Handler;
 import android.view.View;
 
-import br.com.i9algo.autaz.pdv.R;
-import br.com.i9algo.autaz.pdv.domain.constants.DateFormats;
-import br.com.i9algo.autaz.pdv.domain.models.ProductSale;
-import br.com.i9algo.autaz.pdv.helpers.FormatUtil;
-
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.epson.epos2.Epos2Exception;
 import com.epson.epos2.Log;
@@ -17,6 +12,11 @@ import com.epson.epos2.printer.PrinterStatusInfo;
 import com.github.pierry.simpletoast.SimpleToast;
 
 import java.util.List;
+
+import br.com.i9algo.autaz.pdv.R;
+import br.com.i9algo.autaz.pdv.domain.constants.DateFormats;
+import br.com.i9algo.autaz.pdv.domain.models.ProductSale;
+import br.com.i9algo.autaz.pdv.helpers.FormatUtil;
 
 
 public class PrinterEpson {

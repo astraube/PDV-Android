@@ -7,12 +7,11 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.ParseException;
+
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.domain.interfaces.SaleControllerInterface;
 import br.com.i9algo.autaz.pdv.domain.models.Product;
-
-import java.text.ParseException;
-
 import faranjit.currency.edittext.CurrencyEditText;
 
 public class ProductChangePriceDialog extends AlertDialog.Builder {
