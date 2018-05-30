@@ -44,8 +44,8 @@
    public <init>(...);
 }
 
--keep class com.crashlytics.** { *; }
--dontwarn com.crashlytics.**
+#-keep class com.crashlytics.** { *; }
+#-dontwarn com.crashlytics.**
 
 -keep class com.epson.** { *; }
 -dontwarn com.epson.**

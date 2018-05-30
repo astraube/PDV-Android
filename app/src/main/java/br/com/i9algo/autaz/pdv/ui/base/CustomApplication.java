@@ -7,10 +7,10 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
-import com.crashlytics.android.Crashlytics;
+/*import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.core.CrashlyticsCore;
-
+*/
 import br.com.i9algo.autaz.pdv.BuildConfig;
 import br.com.i9algo.autaz.pdv.MainActivity;
 import br.com.i9algo.autaz.pdv.R;
@@ -21,14 +21,14 @@ import br.com.i9algo.autaz.pdv.helpers.FormatUtil;
 import br.com.i9algo.autaz.pdv.helpers.IDManagement;
 import br.com.i9algo.autaz.pdv.injection.NetworkModule;
 import butterknife.ButterKnife;
-import io.fabric.sdk.android.Fabric;
+//import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 public class CustomApplication extends Application {
 
 	private ApiService _apiService;
-	private SampleAlarmReceiver _alarm = new SampleAlarmReceiver();
+	private SampleAlarmReceiver _alarm = new SampleAlarmReceiver(); // TODO - desativar para teste
 
 	//private Account _sessionAccount = null;
 	//private User _sessionUser = null;
@@ -40,8 +40,9 @@ public class CustomApplication extends Application {
 	}
 
 	public void startAlarmReceiver() {
-		_alarm.setAlarm(this);
+		_alarm.setAlarm(this);// TODO - desativar para teste
 	}
+	// TODO - desativar para teste
 	public SampleAlarmReceiver getAlarmReceiver () {
 		return this._alarm;
 	}
@@ -61,11 +62,11 @@ public class CustomApplication extends Application {
 		/**
 		 * Fabric Crashlytics
 		 */
-		Crashlytics crashlyticsKit = new Crashlytics.Builder()
+		/*Crashlytics crashlyticsKit = new Crashlytics.Builder()
 				//.core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
 				.core(new CrashlyticsCore.Builder().build())
 				.build();
-		Fabric.with(this, crashlyticsKit, new Answers());
+		Fabric.with(this, crashlyticsKit, new Answers());*/
 
 
 		Realm.init(this);

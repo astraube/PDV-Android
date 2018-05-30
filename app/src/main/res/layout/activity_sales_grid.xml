@@ -147,6 +147,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="160dp"
-        android:layout_marginRight="85dp" />
+        android:layout_marginRight="85dp"
+        android:visibility="gone"/>
 
 </RelativeLayout>

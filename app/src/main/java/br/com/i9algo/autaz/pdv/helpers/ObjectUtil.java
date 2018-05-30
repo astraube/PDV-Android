@@ -26,15 +26,6 @@ public class ObjectUtil {
 	public static String ObjectToJson(Object obj) {
 		Gson gson = new Gson();
 		return gson.toJson(obj);
-		
-		/*
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			return mapper.writeValueAsString(obj);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}*/
 	}
 	
 	public static <T> Object JsonToObject(JSONObject jsonObject, Class<T> valueType) {
@@ -45,14 +36,6 @@ public class ObjectUtil {
 		
 		Gson gson = new Gson();
 		obj = gson.fromJson(jsonObject, valueType);
-		
-		/*
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			obj =  mapper.readValue(jsonObject, valueType);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
 		return obj;
 	}
 	
@@ -60,7 +43,7 @@ public class ObjectUtil {
 	 * Retorna uma String com os Valores de atributos
 	 * @return String
 	 */
-	public static String ObjectToStringAttributes(Object obj) {
+	/*public static String ObjectToStringAttributes(Object obj) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(obj.getClass().getName());
 		sb.append(": ");
@@ -75,13 +58,13 @@ public class ObjectUtil {
 			sb.append(", ");
 		}
 		return sb.toString();
-	}
+	}*/
 	
 	/**
 	 * Retorna uma String com os Valores de Geters
 	 * @return String
 	 */
-	public static String ObjectToStringGetters(Object obj) {
+	/*public static String ObjectToStringGetters(Object obj) {
 	    StringBuilder sb = new StringBuilder();
 	    try {
 	        Class<?> c = Class.forName(obj.getClass().getName());
@@ -98,5 +81,5 @@ public class ObjectUtil {
 	    	e.printStackTrace();
 	    }
 	    return sb.toString();
-	}
+	}*/
 }

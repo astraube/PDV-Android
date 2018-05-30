@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.crashlytics.android.Crashlytics;
+//import com.crashlytics.android.Crashlytics;
 import com.github.pierry.simpletoast.SimpleToast;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
@@ -72,7 +72,13 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 
 		advService = getApp().getApiService();
 
+		// TODO - desativar para teste
 		this.mAuthRepo = new AuthRepository(this);
+
+		// TODO - ativar para teste
+		//Intent intent = new Intent(MainActivity.this, SalesGridActivity.class);
+		//intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		//startActivity(intent);
 
 		// TODO verificar atualizacao por enquanto no servidor
 		//new UpdateRunnable(this, new Handler()).start();
@@ -93,8 +99,9 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 	@Override
 	public void onStart() {
 		super.onStart();
-		//Log.v(TAG, "onStart");
+		Log.v(TAG, "onStart");
 
+		// TODO - desativar para teste
 		User model = UserRealmRepository.getFirst();
 		if (model != null && !StringUtils.isEmpty(model.getPublicToken()) && !StringUtils.isEmpty(model.getApiToken())) {
 			verifyCredentials();
@@ -134,9 +141,9 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 		/**
 		 * Crashlytics
 		 */
-		Crashlytics.setUserIdentifier(user.getPublicToken());
-		Crashlytics.setUserEmail(user.getEmail());
-		Crashlytics.setUserName(user.getName());
+		//Crashlytics.setUserIdentifier(user.getPublicToken());
+		//Crashlytics.setUserEmail(user.getEmail());
+		//Crashlytics.setUserName(user.getName());
 
 		/****************************************************************
 		 * Mixpanel

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "WB Alcatra Bacon",
+    "price": 18.0
+  },
+  {
+    "name": "WB Alcatra Salada",
+    "price": 18.0
+  },
+  {
+    "name": "WB Costela",
+    "price": 23.0
+  },
+  {
+    "name": "Porção de Fritas",
+    "price": 15.0
+  },
+  {
+    "name": "Fritas pequena",
+    "price": 5.0
+  },
+  {
+    "name": "Refri",
+    "price": 5.0
+  },
+  {
+    "name": "DUPLO ALCATRA BACON",
+    "price": 30.0
+  },
+  {
+    "name": "Adicional",
+    "price": 2.0
+  },
+  {
+    "name": "Pão Carne e queijo fritas",
+    "price": 18.0
+  },
+  {
+    "name": "Água",
+    "price": 3.0
+  },
+  {
+    "name": "Cerveja",
+    "price": 5.0
+  },
+  {
+    "name": "WB Cordeiro",
+    "price": 25.0
+  },
+  {
+    "name": "WB Alcatra Onions Rings",
+    "price": 23.0
+  },
+  {
+    "name": "WB Pernil",
+    "price": 18.0
+  },
+  {
+    "name": "Onion Pq",
+    "price": 5.0
+  }
+]

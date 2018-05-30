@@ -2,46 +2,42 @@
 
 buildscript {
     repositories {
+        //google()
         jcenter()
         mavenCentral()
-        //google()
         maven { url "https://jitpack.io" }
         maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local' }
+        maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
         classpath 'com.google.gms:google-services:3.1.0'
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.6.0'
         classpath "io.realm:realm-gradle-plugin:3.5.0-SNAPSHOT"
+        //classpath 'io.fabric.tools:gradle:1.4.3'
     }
 }
 
 ext {
     compileSdkVersion = 25
     buildToolsVersion = "25.0.0"
-    applicationId = 'br.com.i9algo.autaz.pdv'
+    minSdkVersion = 16
+    targetSdkVersion = 24
+    supportLibrary = "26.1.0"
+    //butterknife = "8.8.1"
+    //applicationId = 'br.com.i9algo.autaz.pdv'
 }
 
 allprojects {
     repositories {
+        //google()
         jcenter()
         mavenCentral()
-        //google()
         maven { url "https://jitpack.io" }
         maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local' }
+        maven { url 'https://maven.fabric.io/public' }
     }
 }
-
-/*
-task copyJniLibs(type: Copy) {
-    from 'libs/armeabi'
-    into 'src/main/jniLibs/armeabi'
-}
-tasks.withType(JavaCompile) {
-    compileTask -> compileTask.dependsOn(copyJniLibs)
-}*/
-//clean.dependsOn 'cleanCopyJniLibs'
-
 
 task clean(type: Delete) {
     delete rootProject.buildDir

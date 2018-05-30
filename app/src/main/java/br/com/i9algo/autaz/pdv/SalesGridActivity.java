@@ -24,9 +24,16 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import br.com.i9algo.autaz.pdv.controllers.MaterialIntroController;
@@ -40,6 +47,7 @@ import br.com.i9algo.autaz.pdv.data.remote.subscribers.SubscriberInterface;
 import br.com.i9algo.autaz.pdv.domain.enums.SaleStatusEnum;
 import br.com.i9algo.autaz.pdv.domain.models.CallbackModel;
 import br.com.i9algo.autaz.pdv.domain.models.Client;
+import br.com.i9algo.autaz.pdv.domain.models.Product;
 import br.com.i9algo.autaz.pdv.domain.models.Sale;
 import br.com.i9algo.autaz.pdv.domain.models.outbound.SaleApi;
 import br.com.i9algo.autaz.pdv.ui.adapters.SalesGridAdapter;
@@ -138,9 +146,6 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 
 		Log.wtf(TAG, "API WEB - onLoginSuccess - UserWrapper");
 
-		// API WEB - Repository "Products"
-		this.mProductsRepo = new ProductsRepository(this);
-
 		
 		this.mCurrentSaleList = new ArrayList<Sale>();
 
@@ -180,10 +185,12 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 				Log.v(TAG, "TESTES - Sales isSyncronized- " + s.isSyncronized());
 			}
 
+			// TODO - desativar para teste
 			SaleRepository repoSale = new SaleRepository(this);
 			//Sale s = new Sale(sales.get(0));
 			SaleApi s = new SaleApi(sales.get(0));
 			repoSale.storeSale(s);
+
 		}
 
 	}
@@ -304,8 +311,17 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 
 		// Aqui só vai baixar os produtos se ainda nao sincronizou nenhum
 		// A sincronizacao convencional fica na classe "SampleSchedulingService"
-		if (ProductsRealmRepository.count() == 0)
+		if (ProductsRealmRepository.count() == 0) {
+			Log.v(TAG, "onStart - NAO TEM PRODUTO!!!");
+			// API WEB - Repository "Products"
+
+			// TODO - desativar para teste
+			this.mProductsRepo = new ProductsRepository(this);
 			this.mProductsRepo.onLoadProducts("");
+
+			// TODO - ativar para teste
+			//this.createProductsTest();
+		}
 
 		/*
 		// Cria adapter para o GridView e cria o botao "Nova Venda"
@@ -321,6 +337,52 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 		this.setCurrentStatus(this.currentStatus);
 
 		this.startIntro();
+	}
+
+
+	private void createProductsTest() {
+		try {
+			String json = loadJSONFromAsset("products.json");
+			Log.v(TAG, "createProductsTest - " + json);
+
+			List<Product> productList = new ArrayList<Product>();
+			JSONArray countries = new JSONArray(json);
+			for (int i=0;i<countries.length();i++){
+				JSONObject jsonObject = countries.getJSONObject(i);
+				String name = jsonObject.getString("name");
+				Double price = jsonObject.getDouble("price");
+
+				String token = Long.toHexString(Double.doubleToLongBits(Math.random()));
+
+				Product p = new Product();
+				p.setPublicToken(token);
+				p.setName(name);
+				p.setPriceResale(price);
+
+				productList.add(p);
+			}
+			ProductsRealmRepository.syncItems(productList);
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private String loadJSONFromAsset(String fileName) {
+		String json = null;
+		try {
+			InputStream is = getAssets().open(fileName);
+			int size = is.available();
+			byte[] buffer = new byte[size];
+			is.read(buffer);
+			is.close();
+			json = new String(buffer, "UTF-8");
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			return null;
+		}
+		return json;
 	}
 
 	@Override
