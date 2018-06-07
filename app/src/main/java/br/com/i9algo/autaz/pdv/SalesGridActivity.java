@@ -185,11 +185,12 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 				Log.v(TAG, "TESTES - Sales isSyncronized- " + s.isSyncronized());
 			}
 
-			// TODO - desativar para teste
-			SaleRepository repoSale = new SaleRepository(this);
-			//Sale s = new Sale(sales.get(0));
-			SaleApi s = new SaleApi(sales.get(0));
-			repoSale.storeSale(s);
+			if (BuildConfig.BACKEND_STATUS) {
+				SaleRepository repoSale = new SaleRepository(this);
+				//Sale s = new Sale(sales.get(0));
+				SaleApi s = new SaleApi(sales.get(0));
+				repoSale.storeSale(s);
+			}
 
 		}
 
@@ -315,12 +316,14 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 			Log.v(TAG, "onStart - NAO TEM PRODUTO!!!");
 			// API WEB - Repository "Products"
 
-			// TODO - desativar para teste
-			this.mProductsRepo = new ProductsRepository(this);
-			this.mProductsRepo.onLoadProducts("");
+			if (BuildConfig.BACKEND_STATUS) {
+				this.mProductsRepo = new ProductsRepository(this);
+				this.mProductsRepo.onLoadProducts("");
+			}
 
-			// TODO - ativar para teste
-			//this.createProductsTest();
+			if (BuildConfig.CREATE_PRODUCTS_TEST) {
+                this.createProductsTest();
+            }
 		}
 
 		/*

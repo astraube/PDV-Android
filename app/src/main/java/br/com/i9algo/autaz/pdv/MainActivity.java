@@ -72,13 +72,13 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 
 		advService = getApp().getApiService();
 
-		// TODO - desativar para teste
-		this.mAuthRepo = new AuthRepository(this);
-
-		// TODO - ativar para teste
-		//Intent intent = new Intent(MainActivity.this, SalesGridActivity.class);
-		//intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		//startActivity(intent);
+		if (BuildConfig.BACKEND_STATUS) {
+			this.mAuthRepo = new AuthRepository(this);
+		} else {
+			Intent intent = new Intent(MainActivity.this, SalesGridActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+		}
 
 		// TODO verificar atualizacao por enquanto no servidor
 		//new UpdateRunnable(this, new Handler()).start();
@@ -101,12 +101,13 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 		super.onStart();
 		Log.v(TAG, "onStart");
 
-		// TODO - desativar para teste
-		User model = UserRealmRepository.getFirst();
-		if (model != null && !StringUtils.isEmpty(model.getPublicToken()) && !StringUtils.isEmpty(model.getApiToken())) {
-			verifyCredentials();
-		} else {
-			showLoginView();
+		if (BuildConfig.BACKEND_STATUS) {
+			User model = UserRealmRepository.getFirst();
+			if (model != null && !StringUtils.isEmpty(model.getPublicToken()) && !StringUtils.isEmpty(model.getApiToken())) {
+				verifyCredentials();
+			} else {
+				showLoginView();
+			}
 		}
 	}
 

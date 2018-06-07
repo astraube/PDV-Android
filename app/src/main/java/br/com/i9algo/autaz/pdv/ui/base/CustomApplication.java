@@ -28,7 +28,7 @@ import io.realm.RealmConfiguration;
 public class CustomApplication extends Application {
 
 	private ApiService _apiService;
-	private SampleAlarmReceiver _alarm = new SampleAlarmReceiver(); // TODO - desativar para teste
+	private SampleAlarmReceiver _alarm;
 
 	//private Account _sessionAccount = null;
 	//private User _sessionUser = null;
@@ -40,9 +40,11 @@ public class CustomApplication extends Application {
 	}
 
 	public void startAlarmReceiver() {
-		_alarm.setAlarm(this);// TODO - desativar para teste
+		if (BuildConfig.BACKEND_STATUS) {
+			_alarm.setAlarm(this);
+		}
 	}
-	// TODO - desativar para teste
+
 	public SampleAlarmReceiver getAlarmReceiver () {
 		return this._alarm;
 	}
@@ -58,13 +60,17 @@ public class CustomApplication extends Application {
 		FormatUtil.init(this);
 		PreferencesRepository.init(this);
 
+		if (BuildConfig.BACKEND_STATUS) {
+			_alarm = new SampleAlarmReceiver();
+		}
+
 
 		/**
 		 * Fabric Crashlytics
 		 */
 		/*Crashlytics crashlyticsKit = new Crashlytics.Builder()
-				//.core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-				.core(new CrashlyticsCore.Builder().build())
+				.core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+				//.core(new CrashlyticsCore.Builder().build())
 				.build();
 		Fabric.with(this, crashlyticsKit, new Answers());*/
 

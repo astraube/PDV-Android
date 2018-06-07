@@ -76,6 +76,17 @@ android {
 
             buildConfigField "String", "SERVER_HOST", '"api.autaz.me"'
         }
+
+        buildTypes.each {
+            // Util para testes
+            // Se BACKEND_STATUS = true -> seta as configuracoes para utilizar o backend como provedor dos dados
+            // Se BACKEND_STATUS = false -> seta as configuracoes para trabalhar sem o backend
+            it.buildConfigField "boolean", "BACKEND_STATUS", 'false'
+            it.buildConfigField "boolean", "CREATE_PRODUCTS_TEST", 'true'
+
+            //it.buildConfigField 'String', 'APP_KEY_1', '"AppKey"' // Acessar -> BuildConfig.APP_KEY_1
+            //it.resValue 'string', 'APP_KEY_2', '"AppKey"' // Acessar -> R.string.APP_KEY_2
+        }
     }
     lintOptions {
         abortOnError false
