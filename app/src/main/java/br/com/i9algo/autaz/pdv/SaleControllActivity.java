@@ -592,9 +592,9 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 			cupom.setMethod(method);
 			cupom.setAmountPaid(value);
 			cupom.setTroco(troco);
-			cupom.setCorporateName("Arca do Sabor");
-			//cupom.setCorporatePhone("(41) 988558596");
-			//cupom.setCorporateSocialmedia("#ArcaDoSabor");
+			cupom.setCorporateName("Witt Burger"); // TODO - isso deve ser dinamico
+			//cupom.setCorporatePhone("(41) 988558596"); // TODO - isso deve ser dinamico
+			cupom.setCorporateSocialmedia("#WittBurger"); // TODO - isso deve ser dinamico
 			//cupom.setCorporateImage(getResources(), R.drawable.ic_action_add_alarm);
 
 			final PrinterEpson printerEpson = PrinterEpson.getInstance(SaleControllActivity.this);

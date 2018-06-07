@@ -14,6 +14,10 @@ import android.widget.RelativeLayout.LayoutParams;
 
 import com.github.pierry.simpletoast.SimpleToast;
 
+import java.util.Arrays;
+import java.util.List;
+
+import br.com.i9algo.autaz.pdv.BuildConfig;
 import br.com.i9algo.autaz.pdv.LayoutActivity;
 import br.com.i9algo.autaz.pdv.PreferenceActivity;
 import br.com.i9algo.autaz.pdv.ProductsActivity;
@@ -130,9 +134,10 @@ public class FloatMenuDialog extends Dialog implements View.OnClickListener {
 	
 	private void createButtons() {
 		LinearLayout viewConfig = (LinearLayout)findViewById(R.id.viewConfig);
-		String [] menuItems = getContext().getResources().getStringArray(R.array.arr_items_float_menu);
+
+		String[] menuItems = getContext().getResources().getStringArray(R.array.arr_items_float_menu);
 		String[] menuItemsIcon = getContext().getResources().getStringArray(R.array.arr_icons_float_menu);
-		
+
 		/*
 		// TODO - Help Buttom
 		HelpButtonView helpBtn = new HelpButtonView(getContext(), 70);
@@ -144,6 +149,11 @@ public class FloatMenuDialog extends Dialog implements View.OnClickListener {
 		int wView = getContext().getResources().getDimensionPixelSize(R.dimen.act_sale_grid_btn_new_sale_height);
 
 		for (int i = 0; i < menuItems.length; i++) {
+
+			if (!BuildConfig.BACKEND_STATUS && i == 0) {
+				// Nao adiciona os itens que necessitam do Back-End
+				continue;
+			}
 			ImageTextView btn;
 			String text;
 			int id_icon;

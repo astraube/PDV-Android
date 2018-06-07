@@ -83,7 +83,12 @@ public class SalesActivity extends BaseActivity implements SaleTaskInterface, Ca
 
 		Account account = AccountRealmRepository.getFirst();
 
-		if (account.getSignaturePlan() == null || !account.getSignaturePlan().hasExpired()) {
+		if (account == null) {
+			Log.e(TAG, "------------> Deu algum pau ao tentar criar o AccountRealmRepository");
+			return;
+		}
+
+		if ( account.getSignaturePlan() == null || !account.getSignaturePlan().hasExpired() ) {
 
 			imageBlurBlockView.setVisibility(View.GONE);
 
@@ -100,7 +105,7 @@ public class SalesActivity extends BaseActivity implements SaleTaskInterface, Ca
 			containerResume.setOnClickListener(mOnClickChangeDate);
 			spinnerTipoRelatorio.setOnItemSelectedListener(this);
 		} else {
-			Log.v(TAG, "------------> Periodo de teste expirou");
+			Log.e(TAG, "------------> Periodo de teste expirou");
 			imageBlurBlockView.setVisibility(View.VISIBLE);
 
 			SweetAlertDialog pDialog = new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE);
