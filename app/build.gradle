@@ -67,7 +67,7 @@ android {
             useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            buildConfigField "String", "SERVER_HOST", "\"${host}/Laravel_projects/autaz-pdv-web-admin/public\""
+            buildConfigField "String", "SERVER_HOST", "\"${host}/laravel_projects/autaz-pdv-web-admin/public\""
         }
         release {
             //shrinkResources true
