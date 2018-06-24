@@ -39,7 +39,7 @@ public class HelpReceiver extends WakefulBroadcastReceiver {
     }
 	
 	public static void startHelp(Context context) {
-    	long intervalo = 1000 * 5; // Intervalo de tempo em segundos. A cada 5 segundos envia informa��o ao servidor
+    	long intervalo = 1000 * 5; // Intervalo de tempo em segundos. A cada 5 segundos envia informacao ao servidor
     	
     	Calendar initCalendar = Calendar.getInstance();
     	//initCalendar.add(Calendar.SECOND, 5);

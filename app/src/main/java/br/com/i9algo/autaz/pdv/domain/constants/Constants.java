@@ -5,7 +5,7 @@ package br.com.i9algo.autaz.pdv.domain.constants;
 
 
 /**
- * Constantes globais da aplica��o
+ * Constantes globais da aplicacao
  * 
  * @author andre
  *
@@ -19,10 +19,17 @@ public class Constants {
 
 
 	/**
+	 * Request Codes para serem utilizados em "startActivityForResult" e "onActivityResult"
+	 */
+	public static final int REQ_COD_PHOTO_WAS_PICKED = 222;
+	public static final int REQ_COD_DISCOVERY_PRINTER = 333;
+
+
+	/**
 	 * Codigo temporario
 	 */
-	public static final int CODE_OP = 1; // TODO C�digo do operador
-	public static final int CODE_PDV = 1; // TODO c�digo do ponto de venda do estabelecimento
+	public static final int CODE_OP = 1; // TODO Codigo do operador
+	public static final int CODE_PDV = 1; // TODO codigo do ponto de venda do estabelecimento
 	
 	/**
 	 * <p>
@@ -36,17 +43,17 @@ public class Constants {
 	 * getIntent().getStringExtra(Constants.STRING_EXTRA_TITLE_VIEW);
 	 * </pre>
 	 */
-	public static final String STRING_EXTRA_TITLE_VIEW = "title_view";
-	public static final String STRING_EXTRA_CANCEL_SALE = "cancel_sale";
+	public static final String EXTRA_TITLE_VIEW = "title_view";
+	public static final String EXTRA_CANCEL_SALE = "cancel_sale";
 	
 	
 	// Nomes de atributos de requisi��es ao servidor (POST, PUT, GET...)
 	public static final String METHOD = "_METHOD";
-	public static final String METHOD_API = "_METHOD"; // Padr�o exigido pela api REST atual 2.0.0
+	public static final String METHOD_API = "_METHOD"; // Padrao exigido pela api REST atual 2.0.0
 
 	// TIMERS
-	public static final long INTERVAL_UPDATE_LOCATION = 1000*60*8; // Intervalo m�ximo para atualizar a localiza��o. Apenas com o APP aberto
-	public static final long INTERVAL_FASTEST_UPDATE_LOCATION = 1000*30*3; // Intervalo mais r�pido para atualizar a localiza��o. Apenas com o APP aberto
+	public static final long INTERVAL_UPDATE_LOCATION = 1000*60*8; // Intervalo maximo para atualizar a localizacao. Apenas com o APP aberto
+	public static final long INTERVAL_FASTEST_UPDATE_LOCATION = 1000*30*3; // Intervalo mais rapido para atualizar a localizacao. Apenas com o APP aberto
 
 	// ACCOUNT MANAGER
 	public static final String ACCOUNT_TYPE = "br.com.i9algo.taxiadv";

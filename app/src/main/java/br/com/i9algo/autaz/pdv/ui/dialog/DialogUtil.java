@@ -6,17 +6,17 @@ import android.content.DialogInterface;
 import android.util.Log;
 
 import br.com.i9algo.autaz.pdv.R;
-import br.com.i9algo.autaz.pdv.domain.models.CallbackModel;
+import br.com.i9algo.autaz.pdv.events.OnCallbackEvent;
 
 public class DialogUtil {
 	
 	private static final String TAG = "DialogUtil";
 	
-	public static final void showMessageDialog(final Activity activity, final int title, final int message, int icon, final CallbackModel callBack, boolean cancelable)
+	public static final void showMessageDialog(final Activity activity, final int title, final int message, int icon, final OnCallbackEvent callBack, boolean cancelable)
 	{
 		showMessageDialog(activity, activity.getString(title), activity.getString(message), icon, callBack, cancelable);
 	}
-	public static final void showMessageDialog(final Activity activity, final String title, final String message, int icon, final CallbackModel callBack, boolean cancelable)
+	public static final void showMessageDialog(final Activity activity, final String title, final String message, int icon, final OnCallbackEvent callBack, boolean cancelable)
     {
 		try {
 	        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -57,7 +57,7 @@ public class DialogUtil {
 		}
     }
 	
-	public static final void showActionDialog(final Activity activity, String title, String message, int btPositive, int btNegative, int icon, final CallbackModel callbackModel, boolean cancelable)
+	public static final void showActionDialog(final Activity activity, String title, String message, int btPositive, int btNegative, int icon, final OnCallbackEvent callbackModel, boolean cancelable)
     {
 		try {
 	        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -93,17 +93,17 @@ public class DialogUtil {
 		}
     }
 	
-	public static final void showActionDialog(final Activity activity, int title, int message, final CallbackModel callbackModel, boolean cancelable)
+	public static final void showActionDialog(final Activity activity, int title, int message, final OnCallbackEvent callbackModel, boolean cancelable)
 	{
 		showActionDialog(activity, activity.getString(title), activity.getString(message), R.string.action_yes, R.string.action_no, R.drawable.ic_action_about, callbackModel, cancelable);
 	}
 	
-	public static final void showActionDialog(final Activity activity, String title, String message, final CallbackModel callbackModel, boolean cancelable)
+	public static final void showActionDialog(final Activity activity, String title, String message, final OnCallbackEvent callbackModel, boolean cancelable)
 	{
 		showActionDialog(activity, title, message, R.string.action_yes, R.string.action_no, R.drawable.ic_action_about, callbackModel, cancelable);
 	}
 	
-	public static final void showErrorDialog(final Activity context, String title, String message, final CallbackModel callbackModel)
+	public static final void showErrorDialog(final Activity context, String title, String message, final OnCallbackEvent callbackModel)
     {
 		try {
 	        final AlertDialog.Builder builder = new AlertDialog.Builder(context);

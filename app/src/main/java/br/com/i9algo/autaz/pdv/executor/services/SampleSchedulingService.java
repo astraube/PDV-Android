@@ -133,7 +133,7 @@ public class SampleSchedulingService extends IntentService implements Subscriber
     /*private void sendNotification(String msg) {
         mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, SalesGridActivity.class), 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, SalesGridActivity.createIntent(), 0);
 
         if (mBuilder == null) {
             mBuilder = new NotificationCompat.Builder(this)

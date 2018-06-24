@@ -10,16 +10,19 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.epson.epos2.Epos2Exception;
 import com.epson.epos2.discovery.DeviceInfo;
 import com.epson.epos2.discovery.Discovery;
 import com.epson.epos2.discovery.DiscoveryListener;
 import com.epson.epos2.discovery.FilterOption;
+import com.github.pierry.simpletoast.SimpleToast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import br.com.i9algo.autaz.pdv.R;
+import br.com.i9algo.autaz.pdv.domain.constants.Constants;
 
 public class DiscoveryActivity extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
@@ -28,6 +31,14 @@ public class DiscoveryActivity extends Activity implements View.OnClickListener,
     private SimpleAdapter mPrinterListAdapter = null;
     private FilterOption mFilterOption = null;
 
+
+    public static Intent createIntent(Context context) {
+        return new Intent(context, DiscoveryActivity.class);
+    }
+    public static void startActivityResult(Activity activity) {
+        activity.startActivityForResult(DiscoveryActivity.createIntent(activity), Constants.REQ_COD_DISCOVERY_PRINTER);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +46,7 @@ public class DiscoveryActivity extends Activity implements View.OnClickListener,
 
         mContext = this;
 
-        PrinterEpson.getSelectSeries(this);
+        showDialodSeriesPrinter();
 
         Button button = (Button)findViewById(R.id.btnRestart);
         button.setOnClickListener(this);
@@ -57,6 +68,35 @@ public class DiscoveryActivity extends Activity implements View.OnClickListener,
         catch (Exception e) {
             ShowMsg.showException(e, "start", mContext);
         }
+    }
+
+    private void showDialodSeriesPrinter() {
+        // TODO - determina que a impressora eh o modelo TM-T20
+        // TODO - existe uma forma que quando a impressora eh plugada, recupera o nome do modelo
+        // VER APP - https://github.com/alt236/USB-Device-Info---Android
+        PrinterEpson.PRINTER_SERIES = 6;
+
+        /*
+        if (PrinterEpson.PRINTER_SERIES < 0) {
+
+            String[] series = PrinterEpson.getSelectSeries(this);
+
+            new MaterialDialog.Builder(this)
+                    .iconRes(R.drawable.ic_print_black_48dp)
+                    .title(R.string.printer_series_select)
+                    .items(series)
+                    .negativeText(R.string.action_cancel)
+                    .cancelable(false)
+                    .itemsCallback(new MaterialDialog.ListCallback() {
+                        @Override
+                        public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                            SimpleToast.info(DiscoveryActivity.this, DiscoveryActivity.this.getString(R.string.printer_series_selected, text.toString()));
+                            PrinterEpson.PRINTER_SERIES = which;
+                        }
+                    })
+                    .show();
+        }
+        */
     }
 
     @Override
@@ -98,6 +138,7 @@ public class DiscoveryActivity extends Activity implements View.OnClickListener,
         HashMap<String, String> item  = mPrinterList.get(position);
         String target = item.get(PrinterEpson.TARGET);
 
+        // TODO - Adaptacao
         PrinterEpson.PRINTER_TARGET = target;
 
         intent.putExtra(PrinterEpson.TARGET, target);
@@ -105,19 +146,19 @@ public class DiscoveryActivity extends Activity implements View.OnClickListener,
 
         finish();
     }
+
     /*
     // Essa parte do codigo deve estar na Activity para o caso de recuperar a impressora selecionada atraves de 'onActivityResult'
 
-    intent = new Intent(this, DiscoveryActivity.class);
-    startActivityForResult(intent, 0);
+    DiscoveryActivity.startActivityResult(this);
 
     @Override
     protected void onActivityResult(int requestCode, final int resultCode, final Intent data) {
         if (data != null && resultCode == RESULT_OK) {
-            String target = data.getStringExtra(getString(R.string.title_target));
-            if (target != null) {
-                PrinterEpson.mPrinterTarget = target;
-            }
+            String target = data.getStringExtra(PrinterEpson.TARGET);
+			if (target != null) {
+				PrinterEpson.PRINTER_TARGET = target;
+			}
         }
     }*/
 

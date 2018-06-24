@@ -21,7 +21,7 @@ public class SaleCloseDialog extends AlertDialog.Builder {
 		
 		if (PreferencesRepository.isShowDialogSaleCleanClose()) {
 			activity.onBackPressed();
-			activity.getIntent().putExtra(Constants.STRING_EXTRA_CANCEL_SALE, false);
+			activity.getIntent().putExtra(Constants.EXTRA_CANCEL_SALE, false);
 			return;
 		}
 		
@@ -40,7 +40,7 @@ public class SaleCloseDialog extends AlertDialog.Builder {
 		setPositiveButton(R.string.action_yes,
             new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
-                	activity.getIntent().putExtra(Constants.STRING_EXTRA_CANCEL_SALE, true);
+                	activity.getIntent().putExtra(Constants.EXTRA_CANCEL_SALE, true);
                 	activity.onBackPressed();
     				mDialog.dismiss();
                 }
@@ -49,7 +49,7 @@ public class SaleCloseDialog extends AlertDialog.Builder {
 		setNegativeButton(R.string.action_no,
             new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
-                	activity.getIntent().putExtra(Constants.STRING_EXTRA_CANCEL_SALE, false);
+                	activity.getIntent().putExtra(Constants.EXTRA_CANCEL_SALE, false);
                 	activity.onBackPressed();
     				mDialog.dismiss();
                 }

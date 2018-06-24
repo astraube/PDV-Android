@@ -2,26 +2,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.i9algo.autaz.pdv">
 
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USB_PERMISSION" />
 
     <uses-feature android:name="android.hardware.usb.accessory" />
     <uses-feature android:name="android.hardware.usb.host" />
 
-    <uses-permission android:name="android.permission.USB_PERMISSION" />
 
-    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <permission android:name="br.com.i9algo.autaz.pdv.permission.C2D_MESSAGE" android:protectionLevel="signature" />
@@ -79,27 +76,20 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
-
-                <!-- Teste automatizado
-                adb shell monkey -p br.com.i9algo.autaz.pdv -v 500
-                -->
-                <!-- <category android:name="android.intent.category.MONKEY" /> -->
             </intent-filter>
+            <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/device_filter" />
         </activity>
 
         <activity
             android:name=".controllers.printer2.DiscoveryActivity"
             android:label="@string/app_title"
             android:screenOrientation="portrait" >
-
-            <intent-filter>
-                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
-            </intent-filter>
-            <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
-                android:resource="@xml/device_filter" />
         </activity>
         <!--<activity
             android:name=".controllers.printer.DiscoverPrinterActivity"
@@ -137,7 +127,7 @@
             android:label="@string/title_activity_layout"
             android:screenOrientation="landscape"></activity>
         <activity
-            android:name=".SalesActivity"
+            android:name=".SalesListActivity"
             android:hardwareAccelerated="false"
             android:label="@string/title_activity_sales_sync"
             android:screenOrientation="landscape"></activity>

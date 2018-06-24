@@ -7,12 +7,14 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -38,14 +40,15 @@ import br.com.i9algo.autaz.pdv.controllers.printer2.EpsonReceiveListener;
 import br.com.i9algo.autaz.pdv.controllers.printer2.PrinterEpson;
 import br.com.i9algo.autaz.pdv.controllers.printer2.ShowMsg;
 import br.com.i9algo.autaz.pdv.data.local.ProductsRealmRepository;
+import br.com.i9algo.autaz.pdv.events.OnCallbackEvent;
 import br.com.i9algo.autaz.pdv.domain.constants.Constants;
 import br.com.i9algo.autaz.pdv.domain.enums.PaymentMethodEnum;
 import br.com.i9algo.autaz.pdv.domain.enums.SaleStatusEnum;
-import br.com.i9algo.autaz.pdv.domain.models.CallbackModel;
 import br.com.i9algo.autaz.pdv.domain.models.Product;
 import br.com.i9algo.autaz.pdv.domain.models.ProductSale;
 import br.com.i9algo.autaz.pdv.domain.models.Sale;
 import br.com.i9algo.autaz.pdv.helpers.FormatUtil;
+import br.com.i9algo.autaz.pdv.helpers.Logger;
 import br.com.i9algo.autaz.pdv.helpers.OrderCodeUtil;
 import br.com.i9algo.autaz.pdv.ui.adapters.ProductsGridAdapter;
 import br.com.i9algo.autaz.pdv.ui.adapters.SaleItensAdapter;
@@ -65,7 +68,8 @@ import io.realm.RealmChangeListener;
 
 public class SaleControllActivity extends BaseActivity implements EpsonReceiveListener {
 
-	private final String TAG;
+
+	private final String LOG_TAG = PrinterEpson.class.getSimpleName();
 
 
 	@BindView(R.id.gridView)
@@ -82,8 +86,8 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 	@BindView(R.id.containerTotalToPay) RelativeLayout containerTotalToPay;
 	@BindView(R.id.searchView) SearchView mSearchView;
 	@BindView(R.id.viewRight) RelativeLayout viewRight;
-	@BindView(R.id.btnPaySale) Button btnPaySale;
-	@BindView(R.id.btnPrint) ImageButton btnPrint;
+	@BindView(R.id.btnPrint) ImageButton btnPrint; // Botao Imprimir cupom
+	@BindView(R.id.btnPaySale) Button btnPaySale; // Botao Pagar compra
 	@BindView(R.id.btnCancelSale) Button btnCancelSale;
 	@BindView(R.id.btnCleanSale) Button btnCleanSale;
 	@BindView(R.id.listCartSale) ListView listCartSale;
@@ -97,6 +101,23 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 	private SaleItensAdapter saleListAdapter;
 	private List<Product> productsList;
 
+	private PrinterEpson mPrinterEpson;
+
+	private boolean isAutoClose = true;
+
+
+
+	public static Intent createIntent(Context context) {
+		return new Intent(context, SaleControllActivity.class)
+				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+				.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+	}
+	public static void startActivityIfDiff(Activity activity) {
+		if (!activity.getClass().getSimpleName().equals(SaleControllActivity.class.getSimpleName())){
+			activity.startActivity(createIntent(activity));
+		}
+	}
+
 
 	RealmChangeListener<Sale> listenerSaleModel = new RealmChangeListener<Sale>() {
 		@Override
@@ -107,10 +128,6 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 		}
 	};
 
-	public SaleControllActivity () {
-		super();
-		this.TAG = getClass().getSimpleName();
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +142,11 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 
 		this.realm = Realm.getDefaultInstance();
 
+		this.mPrinterEpson = new PrinterEpson(SaleControllActivity.this); // TODO - trabalhar com injectors
+
 		this.mSaleCtrl = new SaleCtrl(this);
+
+		updateButtonState(true);
 
         // Buscar Produtos no DB Realm
 		this.productsList = ProductsRealmRepository.getAll();
@@ -199,13 +220,13 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 			mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 				@Override
 				public boolean onQueryTextSubmit(String query) {
-					//Log.w(TAG, "onQueryTextSubmit(" + query + ")");
+					//Log.w(LOG_TAG, "onQueryTextSubmit(" + query + ")");
 					return false;
 				}
 
 				@Override
 				public boolean onQueryTextChange(String newText) {
-					//Log.w(TAG, "onQueryTextChange(" + newText + ")");
+					//Log.w(LOG_TAG, "onQueryTextChange(" + newText + ")");
 
 					mProductsAdapter.filter(newText);
 
@@ -230,7 +251,7 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.v(TAG, "SaleControllActivity onResume - Restaurar CurrentSaleModel");
+		Log.v(LOG_TAG, "SaleControllActivity onResume - Restaurar CurrentSaleModel");
 
 		try {
 			mSaleCtrl.getCurrentSale().addChangeListener(listenerSaleModel);
@@ -240,7 +261,7 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 	@Override
 	public void finish() {
 		super.finish();
-		Log.v(TAG, "SaleControllActivity finish");
+		Log.v(LOG_TAG, "SaleControllActivity finish");
 
 		try {
 			if (mSaleCtrl.getCurrentSale() != null)
@@ -252,7 +273,7 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
     @Override
     public void onPause() {
         super.onPause();
-        Log.v(TAG, "SaleControllActivity onPause");
+        Log.v(LOG_TAG, "SaleControllActivity onPause");
 
         mSaleCtrl.onSyncSale(mSaleCtrl.getCurrentSale());
     }
@@ -260,7 +281,7 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 	@Override
 	public void onStop() {
 		super.onStop();
-		Log.v(TAG, "SaleControllActivity onStop - Salvar CurrentSaleModel");
+		Log.v(LOG_TAG, "SaleControllActivity onStop - Salvar CurrentSaleModel");
 
 		mSaleCtrl.onSyncSale(mSaleCtrl.getCurrentSale());
 
@@ -277,7 +298,7 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		Log.w(TAG, "SaleControllActivity onDestroy");
+		Log.w(LOG_TAG, "SaleControllActivity onDestroy");
 
 		try {
 			if (mSaleCtrl.getCurrentSale() != null)
@@ -288,9 +309,9 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		Log.v(TAG, "SaleControllActivity onBackPressed");
+		Log.v(LOG_TAG, "SaleControllActivity onBackPressed");
 
-		boolean cancelSale = getIntent().getBooleanExtra(Constants.STRING_EXTRA_CANCEL_SALE, false);
+		boolean cancelSale = getIntent().getBooleanExtra(Constants.EXTRA_CANCEL_SALE, false);
 		if (cancelSale && (mSaleCtrl.getCurrentSale().getStatus().equals(SaleStatusEnum.OPEN.toString())))
 			mSaleCtrl.onCancelSale(mSaleCtrl.getCurrentSale());
 	}
@@ -302,18 +323,18 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 
 	@OnClick(R.id.btnCancelSale)
 	public void onClickBtnCancelSale() {
-		CallbackModel callback = new CallbackModel(SaleControllActivity.this, "onCallBackCancelSale");
+		OnCallbackEvent callback = new OnCallbackEvent(SaleControllActivity.this, "onCallBackCancelSale");
 		DialogUtil.showActionDialog(SaleControllActivity.this, R.string.txt_cancel_sale_title, R.string.txt_cancel_sale_text, callback, true);
 	}
 
 	@OnClick(R.id.btnCleanSale)
 	public void onClickBtnCleanSale() {
-		CallbackModel callback = new CallbackModel(SaleControllActivity.this, "onCallBackCleanSale");
+		OnCallbackEvent callback = new OnCallbackEvent(SaleControllActivity.this, "onCallBackCleanSale");
 		DialogUtil.showActionDialog(SaleControllActivity.this, R.string.txt_clean_sale_title, R.string.txt_clean_sale_text, callback, true);
 	}
 
 	@OnClick(R.id.btnPrint)
-	public void onClickBtnPrintSale() {
+	public void onClickBtnPrintSale(final View v) {
 
 		setSweetDialog(new SweetAlertDialog(SaleControllActivity.this, SweetAlertDialog.WARNING_TYPE)
 				.setTitleText(getResources().getString(R.string.dialog_print_title))
@@ -322,7 +343,10 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 				.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
 					@Override
 					public void onClick(SweetAlertDialog sDialog) {
-						mSaleCtrl.onPrintCupom(null);
+						// Imprime o Cupom sem aparecer o troco
+						isAutoClose = false;
+						mSaleCtrl.onPrintCupom(null, 0, 0);
+
 						sDialog.dismissWithAnimation();
 					}
 				}));
@@ -412,7 +436,7 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        Log.i(TAG, "onConfigurationChanged(" + newConfig.toString() + ")");
+        Log.i(LOG_TAG, "onConfigurationChanged(" + newConfig.toString() + ")");
 
         if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO) {
             DialogUtil.showMessageDialog(
@@ -420,7 +444,7 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
                     R.string.txt_physical_device_conected,
                     R.string.txt_disable_physical_keyboard,
                     0,
-                    new CallbackModel(getApp(), "callBack"),
+                    new OnCallbackEvent(getApp(), "callBack"),
                     false);
 
             newConfig.keyboard = Configuration.HARDKEYBOARDHIDDEN_NO;
@@ -434,6 +458,22 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
     }
 
 
+	private void updateButtonState(boolean state) {
+		if (mPrinterEpson.isEnablePrinter())
+			btnPrint.setEnabled(state);
+		else {
+			btnPrint.setEnabled(false);
+			btnPrint.setVisibility(View.GONE);
+		}
+
+		btnPaySale.setEnabled(state);
+	}
+
+	/**
+	 * Model Sale controller
+	 *
+	 * TODO - separar isso, trabalhar com injectors
+	 */
 	class SaleCtrl extends SaleController {
 
 		public SaleCtrl(Context context) {
@@ -447,7 +487,7 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 				return;
 			}
 			super.onSaleItemClick(saleItem);
-			//Log.w(TAG, saleItem.getName());
+			//Log.w(LOG_TAG, saleItem.getName());
 
 			new SaleItemEditDialog(SaleControllActivity.this, mSaleCtrl, saleItem);
 		}
@@ -468,8 +508,8 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 		public void onDecrementProduct(Product product) {
 			super.onDecrementProduct(product);
 
-			Log.v(TAG, "---> onDecrementProduct");
-			//Log.v(TAG, "---> onDecrementProduct - " + product.toString());
+			Log.v(LOG_TAG, "---> onDecrementProduct");
+			//Log.v(LOG_TAG, "---> onDecrementProduct - " + product.toString());
 
 			//gridViewProducts.clearTextFilter();
 			mSearchView.onActionViewCollapsed();
@@ -485,8 +525,8 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 		public void onIncrementProduct(Product product) {
 			super.onIncrementProduct(product);
 
-			Log.v(TAG, "---> onIncrementProduct");
-			//Log.v(TAG, "---> onIncrementProduct - " + product.toString());
+			Log.v(LOG_TAG, "---> onIncrementProduct");
+			//Log.v(LOG_TAG, "---> onIncrementProduct - " + product.toString());
 
 			if (product.getPriceResale() <= 0) {
 				Product joquer = new Product((Product) product);
@@ -503,7 +543,7 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 			if (!getCurrentSale().existsOrderCodeWait() && product.isRequestPass()) {
 				String code = OrderCodeUtil.nextCode(getContext());
 				getCurrentSale().setOrderCodeWait(code);
-				Log.v(TAG, "OrderCodeWait --> " + getCurrentSale().getOrderCodeWait());
+				Log.v(LOG_TAG, "OrderCodeWait --> " + getCurrentSale().getOrderCodeWait());
 			}
 
 			//gridViewProducts.clearTextFilter();
@@ -572,44 +612,68 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 			animateDecrementProduct();
 		}
 
+		/**
+		 * Imprime Cupom
+		 *
+		 * @param method
+		 * @param value
+		 * @param troco
+		 */
 		@Override
-		public void onPrintCupom(final View v) {
-			// Imprime o Cupom sem aparecer o troco
+		public void onPrintCupom(final PaymentMethodEnum method, final double value, final double troco) {
 
 			// Desativar temporariamente este botao
-			/*if (v != null) {
-				SaleControllActivity.this.printerEpson.updateViewState(v);
-			}*/
+			updateButtonState(false);
 
+			// TODO - Criar esquema de cupom com (Head, Body, Footer)
 			// Imprime Cupom
-			onPrintCupom2(null, 0, 0);
+			Cupom cupom = createCupom(method, value, troco);
+
+			//if (mPrinterEpson.isEnablePrinter() && !mPrinterEpson.runPrintReceiptSequence(cupom)) {
+			if (!mPrinterEpson.runPrintReceiptSequence(cupom)) {
+				updateButtonState(true);
+
+                SimpleToast.error(SaleControllActivity.this, "Não foi possivel imprimir o cupom");
+
+				new SweetAlertDialog(SaleControllActivity.this, SweetAlertDialog.ERROR_TYPE)
+						.setTitleText( getString(R.string.err_oops) )
+						.setContentText( getString(R.string.err_printer_cupom) )
+						.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+							@Override
+							public void onClick(SweetAlertDialog sDialog) {
+								SaleControllActivity.this.finish();
+							}
+						})
+						.show();
+
+			}
 		}
 
-		private void onPrintCupom2(final PaymentMethodEnum method, final double value, final double troco) {
-			// Imprime Cupom
+		/**
+		 * Criar Cupom
+		 * TODO - Criar esquema de cupom com (Head, Body, Footer)
+		 * @return
+		 */
+		private Cupom createCupom(PaymentMethodEnum method, double value, double troco) {
 			Cupom cupom = new Cupom();
 			cupom.setSale(getCurrentSale());
 			cupom.setMethod(method);
 			cupom.setAmountPaid(value);
 			cupom.setTroco(troco);
 			cupom.setCorporateName("Witt Burger"); // TODO - isso deve ser dinamico
-			//cupom.setCorporatePhone("(41) 988558596"); // TODO - isso deve ser dinamico
+			cupom.setCorporatePhone("(41) 99847-0357"); // TODO - isso deve ser dinamico
 			cupom.setCorporateSocialmedia("#WittBurger"); // TODO - isso deve ser dinamico
 			//cupom.setCorporateImage(getResources(), R.drawable.ic_action_add_alarm);
 
-			final PrinterEpson printerEpson = PrinterEpson.getInstance(SaleControllActivity.this);
-
-			if (PrinterEpson.PRINTER_TARGET != null && !printerEpson.runPrintReceiptSequence(cupom)) {
-                SimpleToast.error(SaleControllActivity.this, "Não foi possivel imprimir o cupom");
-			}
-			finish();
+			return cupom;
 		}
 		
 		@Override
 		public void onPaymentMethod(Sale sale, final PaymentMethodEnum method, final double value) {
-			Log.w(TAG, "TIPO PAGAMENTO - " + method.name());
-			Log.w(TAG, "Valor - " + value);
+			Log.w(LOG_TAG, "TIPO PAGAMENTO - " + method.name());
+			Log.w(LOG_TAG, "Valor - " + value);
 
+			isAutoClose = true;
 
 			// Pagamento total
 			if (value >= getCurrentSale().getTotalRestPay()) {
@@ -625,7 +689,7 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 							getString(R.string.sale_pay_spare_money), 
 							getString(R.string.sale_pay_spare_money) + ": " + troco, 
 							R.drawable.money, 
-							new CallbackModel(SaleControllActivity.this, "finish"),
+							new OnCallbackEvent(SaleControllActivity.this, "finish"),
 							true);*/
 
 					new SweetAlertDialog(SaleControllActivity.this, SweetAlertDialog.CUSTOM_IMAGE_TYPE)
@@ -636,14 +700,14 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 								@Override
 								public void onClick(SweetAlertDialog sDialog) {
 									// Imprime Cupom
-									onPrintCupom2(method, value, troco);
+									onPrintCupom(method, value, troco);
 								}
 							})
 							.show();
 
 				} else {
 					// Imprime Cupom
-					onPrintCupom2(method, value, 0);
+					onPrintCupom(method, value, 0);
 				}
 				
 			} else {
@@ -651,7 +715,7 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 				super.onPayPartiallySale(getCurrentSale(), value, method);
 				
 				// Imprime Cupom
-				onPrintCupom2(method, value, 0);
+				onPrintCupom(method, value, 0);
 			}
 		}
 	}
@@ -667,21 +731,25 @@ public class SaleControllActivity extends BaseActivity implements EpsonReceiveLi
 			@Override
 			public synchronized void run() {
 
-				if (PrinterEpson.PRINTER_TARGET != null) {
-					final PrinterEpson printerEpson = PrinterEpson.getInstance(SaleControllActivity.this);
+				String msg = mPrinterEpson.makeErrorMessage(status);
 
-					String msg = printerEpson.makeErrorMessage(status);
-					ShowMsg.showResult(code, "oi"+msg, getActivity());
-
-					printerEpson.dispPrinterWarnings(status);
-
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							printerEpson.disconnectPrinter();
-						}
-					}).start();
+				if (!TextUtils.isEmpty(msg)) {
+					Logger.e(msg);
+					ShowMsg.showResult(code, msg, getActivity());
 				}
+				mPrinterEpson.dispPrinterWarnings(status);
+
+				updateButtonState(true);
+
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						mPrinterEpson.disconnectPrinter();
+
+						if (isAutoClose)
+							SaleControllActivity.this.finish();
+					}
+				}).start();
 			}
 		});
 	}

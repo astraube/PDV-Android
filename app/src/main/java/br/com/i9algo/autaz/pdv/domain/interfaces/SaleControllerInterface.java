@@ -17,7 +17,7 @@ public interface SaleControllerInterface {
 	public void onChangeInfoSale(Sale sale);
 	public void onOpenSale(Sale sale);
 	public void onCleanListSale(Sale sale);
-	public void onPrintCupom(View v);
+	public void onPrintCupom(final PaymentMethodEnum method, final double value, final double troco);
 	public void onCancelSale(Sale sale);
 	public void onPayTotalSale(Sale sale, PaymentMethodEnum method);
 	public void onPayPartiallySale(Sale sale, double amountPaid, PaymentMethodEnum method);

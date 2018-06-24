@@ -18,7 +18,7 @@ public interface SaleProductItemInterface {
 	public void setRemoveItem();
 	
 	/**
-	 * Pre�o atual do produto
+	 * Preao atual do produto
 	 * @return
 	 */
 	public double getPriceResale();

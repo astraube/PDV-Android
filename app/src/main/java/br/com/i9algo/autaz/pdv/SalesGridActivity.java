@@ -1,6 +1,7 @@
 package br.com.i9algo.autaz.pdv;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.ContentResolver;
@@ -31,25 +32,27 @@ import org.json.JSONObject;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import br.com.i9algo.autaz.pdv.controllers.MaterialIntroController;
 import br.com.i9algo.autaz.pdv.controllers.SaleController;
+import br.com.i9algo.autaz.pdv.controllers.printer2.PrinterEpson;
 import br.com.i9algo.autaz.pdv.data.local.ProductsRealmRepository;
 import br.com.i9algo.autaz.pdv.data.local.SalesRealmRepository;
 import br.com.i9algo.autaz.pdv.data.remote.repositoryes.AuthRepository;
 import br.com.i9algo.autaz.pdv.data.remote.repositoryes.ProductsRepository;
 import br.com.i9algo.autaz.pdv.data.remote.repositoryes.SaleRepository;
 import br.com.i9algo.autaz.pdv.data.remote.subscribers.SubscriberInterface;
+import br.com.i9algo.autaz.pdv.domain.constants.Constants;
+import br.com.i9algo.autaz.pdv.domain.enums.PaymentMethodEnum;
+import br.com.i9algo.autaz.pdv.events.OnCallbackEvent;
 import br.com.i9algo.autaz.pdv.domain.enums.SaleStatusEnum;
-import br.com.i9algo.autaz.pdv.domain.models.CallbackModel;
 import br.com.i9algo.autaz.pdv.domain.models.Client;
 import br.com.i9algo.autaz.pdv.domain.models.Product;
 import br.com.i9algo.autaz.pdv.domain.models.Sale;
 import br.com.i9algo.autaz.pdv.domain.models.outbound.SaleApi;
+import br.com.i9algo.autaz.pdv.helpers.Logger;
 import br.com.i9algo.autaz.pdv.ui.adapters.SalesGridAdapter;
 import br.com.i9algo.autaz.pdv.ui.base.BaseActivity;
 import br.com.i9algo.autaz.pdv.ui.dialog.DialogUtil;
@@ -63,7 +66,8 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class SalesGridActivity extends BaseActivity implements SubscriberInterface {
 	
-	private final String TAG;
+	private final String LOG_TAG = PrinterEpson.class.getSimpleName();
+
 	private SaleCtrl mSaleCtrl;
 	private SalesGridAdapter mSalesGridAdapter;
 	private SaleStatusEnum currentStatus;
@@ -93,34 +97,43 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 	@BindView(R.id.btTeste)
 	Button btTeste;
 
-	public SalesGridActivity () {
-		super();
-		this.TAG = getClass().getSimpleName();
+
+	public static Intent createIntent(Context context) {
+		return new Intent(context, SalesGridActivity.class)
+				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	}
+	public static void startActivityIfDiff(Activity activity) {
+		if (!activity.getClass().getSimpleName().equals(SalesGridActivity.class.getSimpleName())){
+			activity.startActivity(createIntent(activity));
+		}
 	}
 
     /**************************************************************************/
-    private static final int PHOTO_WAS_PICKED = 2;
-
     public void setBackgroundImage(final View view) {
         final Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, PHOTO_WAS_PICKED);
+        startActivityForResult(photoPickerIntent, Constants.REQ_COD_PHOTO_WAS_PICKED);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (PHOTO_WAS_PICKED == requestCode && null != data) {
-            final Uri imageUri = data.getData();
-            if (null != imageUri) {
-                // AsyncTask, please...
-                final ContentResolver contentResolver = getContentResolver();
-                try {
-                    final InputStream imageStream = contentResolver.openInputStream(imageUri);
-                    System.out.println("DRAWING IMAGE FROM URI " + imageUri);
-                    final Bitmap background = BitmapFactory.decodeStream(imageStream);
-                    getWindow().setBackgroundDrawable(new BitmapDrawable(getResources(), background));
-                } catch (final FileNotFoundException e) {
-                    Log.e(TAG, "Image apparently has gone away", e);
+        super.onActivityResult(requestCode, resultCode, data);
+
+		if (resultCode == RESULT_OK && data != null) {
+            if (requestCode == Constants.REQ_COD_PHOTO_WAS_PICKED) {
+
+                final Uri imageUri = data.getData();
+                if (null != imageUri) {
+                    // AsyncTask, please...
+                    final ContentResolver contentResolver = getContentResolver();
+                    try {
+                        final InputStream imageStream = contentResolver.openInputStream(imageUri);
+                        Logger.v("DRAWING IMAGE FROM URI " + imageUri);
+                        final Bitmap background = BitmapFactory.decodeStream(imageStream);
+                        getWindow().setBackgroundDrawable(new BitmapDrawable(getResources(), background));
+                    } catch (final FileNotFoundException e) {
+                        Log.e(LOG_TAG, "Image apparently has gone away", e);
+                    }
                 }
             }
         }
@@ -136,7 +149,7 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 		startMixPanelApi(this);
 		fullScreen();
 		setContentView(R.layout.activity_sales_grid);
-		//Log.v(TAG, "onCreate");
+		//Log.v(LOG_TAG, "onCreate");
 		ButterKnife.bind(this);
 
 		// Firebase performance
@@ -144,7 +157,7 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 		//onCreateTrace.start();
 
 
-		Log.wtf(TAG, "API WEB - onLoginSuccess - UserWrapper");
+		Log.wtf(LOG_TAG, "API WEB - onLoginSuccess - UserWrapper");
 
 		
 		this.mCurrentSaleList = new ArrayList<Sale>();
@@ -177,12 +190,12 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 
 		if (sales != null && sales.size() > 0) {
 			for (Sale s : sales) {
-				Log.v(TAG, "TESTES - Sales getValueTotalPaid - " + s.getAccountId());
-				Log.v(TAG, "TESTES - Sales getUserId - " + s.getUserId());
-				Log.v(TAG, "TESTES - Sales getValueTotalPaid - " + s.getValueTotalPaid());
-				Log.v(TAG, "TESTES - Sales getTotalProducts- " + s.getTotalProducts());
-				Log.v(TAG, "TESTES - Sales getTotalSale- " + s.getTotalSale());
-				Log.v(TAG, "TESTES - Sales isSyncronized- " + s.isSyncronized());
+				Log.v(LOG_TAG, "TESTES - Sales getValueTotalPaid - " + s.getAccountId());
+				Log.v(LOG_TAG, "TESTES - Sales getUserId - " + s.getUserId());
+				Log.v(LOG_TAG, "TESTES - Sales getValueTotalPaid - " + s.getValueTotalPaid());
+				Log.v(LOG_TAG, "TESTES - Sales getTotalProducts- " + s.getTotalProducts());
+				Log.v(LOG_TAG, "TESTES - Sales getTotalSale- " + s.getTotalSale());
+				Log.v(LOG_TAG, "TESTES - Sales isSyncronized- " + s.isSyncronized());
 			}
 
 			if (BuildConfig.BACKEND_STATUS) {
@@ -252,13 +265,13 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 			mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 				@Override
 				public boolean onQueryTextSubmit(String query) {
-					//Log.w(TAG, "onQueryTextSubmit(" + query + ")");
+					//Log.w(LOG_TAG, "onQueryTextSubmit(" + query + ")");
 					return false;
 				}
 
 				@Override
 				public boolean onQueryTextChange(String newText) {
-					//Log.w(TAG, "onQueryTextChange(" + newText + ")");
+					//Log.w(LOG_TAG, "onQueryTextChange(" + newText + ")");
 
 					mSalesGridAdapter.filter(newText);
 
@@ -313,7 +326,7 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 		// Aqui só vai baixar os produtos se ainda nao sincronizou nenhum
 		// A sincronizacao convencional fica na classe "SampleSchedulingService"
 		if (ProductsRealmRepository.count() == 0) {
-			Log.v(TAG, "onStart - NAO TEM PRODUTO!!!");
+			Log.v(LOG_TAG, "onStart - NAO TEM PRODUTO!!!");
 			// API WEB - Repository "Products"
 
 			if (BuildConfig.BACKEND_STATUS) {
@@ -346,21 +359,25 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 	private void createProductsTest() {
 		try {
 			String json = loadJSONFromAsset("products.json");
-			Log.v(TAG, "createProductsTest - " + json);
+			Log.v(LOG_TAG, "createProductsTest - " + json);
 
 			List<Product> productList = new ArrayList<Product>();
 			JSONArray countries = new JSONArray(json);
 			for (int i=0;i<countries.length();i++){
 				JSONObject jsonObject = countries.getJSONObject(i);
 				String name = jsonObject.getString("name");
-				Double price = jsonObject.getDouble("price");
+				Double priceCost = jsonObject.getDouble("priceCost");
+				Double priceResale = jsonObject.getDouble("priceResale");
+				int requestPass = jsonObject.getInt("requestPass");
 
 				String token = Long.toHexString(Double.doubleToLongBits(Math.random()));
 
 				Product p = new Product();
 				p.setPublicToken(token);
 				p.setName(name);
-				p.setPriceResale(price);
+				p.setPriceResale(priceCost);
+				p.setPriceResale(priceResale);
+				p.setRequestPass(requestPass);
 
 				productList.add(p);
 			}
@@ -391,7 +408,7 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
-		Log.v(TAG, "onWindowFocusChanged - " + hasFocus);
+		Log.v(LOG_TAG, "onWindowFocusChanged - " + hasFocus);
 
 		if (hasFocus) {
 			this.mIntroCtrl.start();
@@ -437,7 +454,7 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		Log.i(TAG, "onConfigurationChanged(" + newConfig.toString() + ")");
+		Log.i(LOG_TAG, "onConfigurationChanged(" + newConfig.toString() + ")");
 
 		if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO) {
 			DialogUtil.showMessageDialog(
@@ -445,7 +462,7 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 					R.string.txt_physical_device_conected,
 					R.string.txt_disable_physical_keyboard,
 					0,
-					new CallbackModel(getApp(), "callBack"),
+					new OnCallbackEvent(getApp(), "callBack"),
 					false);
 
 			newConfig.keyboard = Configuration.HARDKEYBOARDHIDDEN_NO;
@@ -458,14 +475,6 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 		}
 	}
 
-	public void openCtrlSaleActivity() {
-		Intent intent = getIntent();
-		intent = new Intent(SalesGridActivity.this, SaleControllActivity.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-		//intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
-	}
-
 	class SaleCtrl extends SaleController {
 
 		public SaleCtrl(Context context) {
@@ -475,17 +484,22 @@ public class SalesGridActivity extends BaseActivity implements SubscriberInterfa
 		@Override
 		public void onAddNewSale(Client client, String codeSale, String saller) {
 			super.onAddNewSale(client, codeSale, saller);
-			//Log.w(TAG, "addNewSale(" + nameSale + ", " + codeSale + ", " + saller + ")");
+			//Log.w(LOG_TAG, "addNewSale(" + nameSale + ", " + codeSale + ", " + saller + ")");
 
-            openCtrlSaleActivity();
+			SaleControllActivity.startActivityIfDiff(SalesGridActivity.this);
 		}
 
 		@Override
 		public void onOpenSale(Sale sale) {
 			super.onOpenSale(sale);
-			//Log.w(TAG, "openSale(" + sale.getClient().getName() + ")");
+			//Log.w(LOG_TAG, "openSale(" + sale.getClient().getName() + ")");
 
-            openCtrlSaleActivity();
+			SaleControllActivity.startActivityIfDiff(SalesGridActivity.this);
+		}
+
+		@Override
+		public void onPrintCupom(PaymentMethodEnum method, double value, double troco) {
+
 		}
 	}
 }

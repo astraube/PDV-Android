@@ -1,5 +1,7 @@
 package br.com.i9algo.autaz.pdv;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.GridView;
@@ -16,7 +18,17 @@ import br.com.i9algo.autaz.pdv.ui.base.BaseActivity;
 public class LayoutActivity extends BaseActivity implements ItemAdapterInterface {
 	
 	private int mLayoutSelected = 0;
-	
+
+
+	public static Intent createIntent(Context context) {
+		return new Intent(context, LayoutActivity.class);
+	}
+	public static void startActivityIfDiff(Activity activity) {
+		if (!activity.getClass().getSimpleName().equals(LayoutActivity.class.getSimpleName())){
+			activity.startActivity(createIntent(activity));
+		}
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,8 +64,6 @@ public class LayoutActivity extends BaseActivity implements ItemAdapterInterface
 		//PreferencesUtil.setLayout(this, position);
 		PreferencesRepository.setLayout(0);
 		
-		Intent i = new Intent(getBaseContext(), MainActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
+		startActivity( MainActivity.createIntent(getBaseContext()) );
 	}
 }

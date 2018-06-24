@@ -35,7 +35,7 @@
     <string name="txt_cancel_sale_title">Cancelar Venda</string>
     <string name="txt_cancel_sale_text">Deseja realmente cancelar essa venda?</string>
 
-    <!-- Strings SalesActivity -->
+    <!-- Strings SalesListActivity -->
     <string name="txt_bt_sale_init_name">Venda %1$s</string>
     <string name="txt_bt_sale_code_controll">Controle: %1$s</string>
     <string name="txt_bt_sale_num_item">%1$s item</string>
@@ -157,6 +157,7 @@
 
     <string name="err_oops">Ooops...</string>
     <string name="err_internal_error">Ocorreu um erro interno</string>
+    <string name="err_printer_cupom">Não foi possivel imprimir o cupom. Tente configurar a impressora novamente!</string>
     <string name="err_try_again">Por favor, tente novamente mais tarde.</string>
     <string name="err_working_offline_title">Você está trabalhando off-line.</string>
     <string name="err_working_offline_msg">Tudo que você vender ou editar aqui, ficará salvo apenas neste equipamento!</string>

@@ -247,9 +247,9 @@ public class PreferencesRepository {
 	}
 	
 	/**
-	 * Bot�o do p�nico
+	 * Botao do p�nico
 	 * 
-	 * true = Estado de socorro ligado. Bot�o socorro pressionado
+	 * true = Estado de socorro ligado. Botao socorro pressionado
 	 * false = Estado de socorro desligado.
 	 * @return
 	 */

@@ -3,6 +3,7 @@ package br.com.i9algo.autaz.pdv.ui.base;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -20,9 +21,11 @@ import com.mixpanel.android.mpmetrics.MixpanelAPI;
 import java.util.Random;
 
 import br.com.i9algo.autaz.pdv.R;
+import br.com.i9algo.autaz.pdv.controllers.printer2.PrinterEpson;
 import br.com.i9algo.autaz.pdv.data.remote.service.ApiService;
 import br.com.i9algo.autaz.pdv.data.remote.subscribers.SubscriberInterface;
 import br.com.i9algo.autaz.pdv.domain.constants.Constants;
+import br.com.i9algo.autaz.pdv.helpers.Logger;
 import br.com.i9algo.autaz.pdv.ui.views.BaseViewInterface;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -30,7 +33,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class BaseActivity extends Activity implements BaseViewInterface, SubscriberInterface {
 
 
-	private final String TAG;
+	private final String LOG_TAG = getClass().getSimpleName();
 	private CustomApplication app;
 	private SweetAlertDialog sweetDialog = null;
 
@@ -38,12 +41,23 @@ public class BaseActivity extends Activity implements BaseViewInterface, Subscri
 	private static final String MIXPANEL_DISTINCT_ID_NAME = "Mixpanel Example $distinctid";
 
 
-	public BaseActivity () {
-		this.TAG = getClass().getSimpleName();
-	}
-	
 	public CustomApplication getApp() {
 		return (this.app);
+	}
+
+
+	@Override
+	protected void onActivityResult(int requestCode, final int resultCode, final Intent data) {
+		if (resultCode == RESULT_OK && data != null) {
+			if (requestCode == Constants.REQ_COD_DISCOVERY_PRINTER) {
+				Logger.v(LOG_TAG, "-----> data: " + data.getDataString());
+
+				String target = data.getStringExtra(PrinterEpson.TARGET);
+				if (target != null) {
+					PrinterEpson.PRINTER_TARGET = target;
+				}
+			}
+		}
 	}
 
 	/****************************************************************
@@ -256,7 +270,7 @@ public class BaseActivity extends Activity implements BaseViewInterface, Subscri
 	@Override
 	public void onSubscriberError(Throwable e, final String title, final String msg) {
 		/*if (e != null) {
-			Log.e(TAG, "onSubscriberError - " + e.getMessage());
+			Log.e(LOG_TAG, "onSubscriberError - " + e.getMessage());
 		}*/
 		final String _title;
 		final String _msg;

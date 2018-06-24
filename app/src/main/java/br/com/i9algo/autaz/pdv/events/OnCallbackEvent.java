@@ -1,20 +1,21 @@
-package br.com.i9algo.autaz.pdv.domain.models;
+package br.com.i9algo.autaz.pdv.events;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class CallbackModel {
+@Deprecated
+public class OnCallbackEvent {
 
 	private Object listener = null;
 	private String methodName = null;
 	
 	/**
-	 * .models.CallbackModel
+	 * .models.OnCallbackEvent
 	 * 
 	 * @param l Object listener
 	 * @param s Method callback string
 	 */
-	public CallbackModel (Object l, String s) {
+	public OnCallbackEvent(Object l, String s) {
 		this.listener = l;
 		this.methodName = s;
 	}

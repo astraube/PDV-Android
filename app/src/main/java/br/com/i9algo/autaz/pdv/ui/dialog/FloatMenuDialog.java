@@ -14,16 +14,14 @@ import android.widget.RelativeLayout.LayoutParams;
 
 import com.github.pierry.simpletoast.SimpleToast;
 
-import java.util.Arrays;
-import java.util.List;
-
 import br.com.i9algo.autaz.pdv.BuildConfig;
 import br.com.i9algo.autaz.pdv.LayoutActivity;
 import br.com.i9algo.autaz.pdv.PreferenceActivity;
 import br.com.i9algo.autaz.pdv.ProductsActivity;
 import br.com.i9algo.autaz.pdv.R;
-import br.com.i9algo.autaz.pdv.SalesActivity;
+import br.com.i9algo.autaz.pdv.SalesListActivity;
 import br.com.i9algo.autaz.pdv.controllers.printer2.DiscoveryActivity;
+import br.com.i9algo.autaz.pdv.domain.constants.Constants;
 import br.com.i9algo.autaz.pdv.executor.services.SampleSchedulingService;
 import br.com.i9algo.autaz.pdv.ui.views.ImageTextView;
 
@@ -66,19 +64,19 @@ public class FloatMenuDialog extends Dialog implements View.OnClickListener {
 
 		} else if (tag.equals(mActivity.getString(R.string.float_menu_item_adjustments)) || tag.equals(mActivity.getString(R.string.float_menu_item_style))) {
 			// Ajustes
-			intent = new Intent(mActivity, PreferenceActivity.class);
+			intent = PreferenceActivity.createIntent(mActivity);
 			
 		} else if (tag.equals(mActivity.getString(R.string.float_menu_item_layout))) {
 			// Layout
-			intent = new Intent(mActivity, LayoutActivity.class);
+			intent = LayoutActivity.createIntent(mActivity);
 			
 		} else if (tag.equals(mActivity.getString(R.string.float_menu_item_products))) {
 			// Produtos
-			intent = new Intent(mActivity, ProductsActivity.class);
+			intent = ProductsActivity.createIntent(mActivity);
 			
 		} else if (tag.equals(mActivity.getString(R.string.float_menu_item_sales))) {
 			// Vendas Sync
-			intent = new Intent(mActivity, SalesActivity.class);
+			intent = SalesListActivity.createIntent(mActivity);
 			
 		} else if (tag.equals(mActivity.getString(R.string.float_menu_item_suggestion))) {
 			// Sugestoes
@@ -98,8 +96,7 @@ public class FloatMenuDialog extends Dialog implements View.OnClickListener {
 			
 		} else if (tag.equals(mActivity.getString(R.string.float_menu_item_printer))) {
 			// Assistende da impressora
-			intent = new Intent(mActivity, DiscoveryActivity.class);
-			mActivity.startActivityForResult(intent, 0);
+			DiscoveryActivity.startActivityResult(mActivity);
 			return;
 		}
 		

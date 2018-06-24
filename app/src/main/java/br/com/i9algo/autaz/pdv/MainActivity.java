@@ -21,18 +21,21 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
+import br.com.i9algo.autaz.pdv.controllers.printer2.PrinterEpson;
 import br.com.i9algo.autaz.pdv.data.local.AccountRealmRepository;
 import br.com.i9algo.autaz.pdv.data.local.PreferencesRepository;
 import br.com.i9algo.autaz.pdv.data.local.UserRealmRepository;
 import br.com.i9algo.autaz.pdv.data.remote.repositoryes.AuthRepository;
 import br.com.i9algo.autaz.pdv.data.remote.service.ApiService;
 import br.com.i9algo.autaz.pdv.data.remote.subscribers.SubscriberInterface;
+import br.com.i9algo.autaz.pdv.domain.constants.Constants;
 import br.com.i9algo.autaz.pdv.domain.interfaces.LoginInterface;
 import br.com.i9algo.autaz.pdv.domain.models.Account;
 import br.com.i9algo.autaz.pdv.domain.models.User;
 import br.com.i9algo.autaz.pdv.domain.models.inbound.ResultStatusDefault;
 import br.com.i9algo.autaz.pdv.domain.models.inbound.UserWrapper;
 import br.com.i9algo.autaz.pdv.helpers.IDManagement;
+import br.com.i9algo.autaz.pdv.helpers.Logger;
 import br.com.i9algo.autaz.pdv.helpers.defaults.MainThreadBus;
 import br.com.i9algo.autaz.pdv.ui.base.BaseActivity;
 import br.com.i9algo.autaz.pdv.ui.dialog.LoginDialog;
@@ -40,7 +43,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements LoginInterface, SubscriberInterface {
 
-	private final String TAG;
+	private final String LOG_TAG = getClass().getSimpleName();
 
 	private int mLayoutSelected = 0;
 
@@ -56,12 +59,17 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 	MainThreadBus bus;
 
 
-	public MainActivity () {
-		super();
-		this.TAG = getClass().getSimpleName();
+	public static Intent createIntent(Context context) {
+		return new Intent(context, MainActivity.class)
+				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	}
+	public static void startActivityIfDiff(Activity activity) {
+		if (!activity.getClass().getSimpleName().equals(MainActivity.class.getSimpleName())){
+			activity.startActivity(createIntent(activity));
+		}
 	}
 
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,9 +83,7 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 		if (BuildConfig.BACKEND_STATUS) {
 			this.mAuthRepo = new AuthRepository(this);
 		} else {
-			Intent intent = new Intent(MainActivity.this, SalesGridActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
+			startActivity( SalesGridActivity.createIntent(MainActivity.this) );
 		}
 
 		// TODO verificar atualizacao por enquanto no servidor
@@ -99,7 +105,7 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 	@Override
 	public void onStart() {
 		super.onStart();
-		Log.v(TAG, "onStart");
+		Logger.v(LOG_TAG, "onStart");
 
 		if (BuildConfig.BACKEND_STATUS) {
 			User model = UserRealmRepository.getFirst();
@@ -185,21 +191,14 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 		hideDialog();
 
 		mLayoutSelected = PreferencesRepository.getLayout();
-		
-		Intent intent = getIntent();
-		
-		switch (mLayoutSelected) {
-		case 0 :
-			intent = new Intent(MainActivity.this, SalesGridActivity.class);
-			break;
-		case 1 :
-			intent = new Intent(MainActivity.this, SaleControllActivity.class); // TODO implementar abertura na tela de venda
-			break;
-		default:
-			intent = new Intent(MainActivity.this, SalesGridActivity.class);
-			break;
+
+		Intent intent;
+
+		if (mLayoutSelected == 1) {
+			intent = SaleControllActivity.createIntent(MainActivity.this);// TODO implementar abertura na tela de venda
+		} else {
+			intent = SalesGridActivity.createIntent(MainActivity.this);
 		}
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 	}
 
@@ -238,7 +237,7 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 
 	@Override
 	public void onLoginSuccess(UserWrapper object) {
-		Log.i(TAG, "API WEB - onLoginSuccess - UserWrapper");
+		Logger.i(LOG_TAG, "API WEB - onLoginSuccess - UserWrapper");
 
 		// Adicionar o UUID do device + o token do usuario como DistinctId no mixpanel
 		final String uuid = IDManagement.getDeviceUuid().toString();
@@ -255,7 +254,7 @@ public class MainActivity extends BaseActivity implements LoginInterface, Subscr
 
 	@Override
 	public void onLoginError(ResultStatusDefault resultStatus) {
-		Log.e(TAG, "API WEB - onLoginError - UserWrapper");
+		Logger.e(LOG_TAG, "API WEB - onLoginError - UserWrapper");
 
 		showLoginView();
 		onSubscriberError(resultStatus.error, resultStatus.title, resultStatus.message);

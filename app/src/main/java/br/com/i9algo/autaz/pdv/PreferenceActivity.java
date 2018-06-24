@@ -1,12 +1,25 @@
 package br.com.i9algo.autaz.pdv;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD_MR1)
 public class PreferenceActivity extends android.preference.PreferenceActivity /*implements SharedPreferences.OnSharedPreferenceChangeListener*/ {
+
+
+    public static Intent createIntent(Context context) {
+        return new Intent(context, PreferenceActivity.class);
+    }
+    public static void startActivityIfDiff(Activity activity) {
+        if (!activity.getClass().getSimpleName().equals(PreferenceActivity.class.getSimpleName())){
+            activity.startActivity(createIntent(activity));
+        }
+    }
 
     @SuppressWarnings("deprecation")
     @Override

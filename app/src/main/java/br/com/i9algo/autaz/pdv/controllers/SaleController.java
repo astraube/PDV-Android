@@ -21,7 +21,7 @@ public abstract class SaleController implements SaleControllerInterface {
 
 	private Context mContext;
 	private CustomApplication app;
-	private static Sale _saleModel;
+	private static Sale _saleModel; // TODO - esta errado, trabalhar com ViewModel
 	
 	public SaleController (Context context) {
 		mContext = context;
@@ -66,11 +66,6 @@ public abstract class SaleController implements SaleControllerInterface {
 
 	@Override
 	public void onSaleItemClick(ProductSale saleItem) {
-		// Code Default
-	}
-
-	@Override
-	public void onPrintCupom(View v) {
 		// Code Default
 	}
 	

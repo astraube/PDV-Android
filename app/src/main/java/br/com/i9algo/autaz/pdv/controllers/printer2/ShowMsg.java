@@ -9,6 +9,7 @@ import com.github.pierry.simpletoast.SimpleToast;
 import br.com.i9algo.autaz.pdv.R;
 
 public class ShowMsg {
+
     public static void showException(Exception e, String method, Context context) {
         String msg = getExceptionString(e, method, context);
         showError(msg, context);

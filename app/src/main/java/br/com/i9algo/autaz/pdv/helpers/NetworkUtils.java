@@ -3,15 +3,18 @@ package br.com.i9algo.autaz.pdv.helpers;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 public class NetworkUtils {
-	
+
+	private static final String TAG = NetworkUtils.class.getSimpleName();
+
 	/**
 	 * <uses-permission android:name="android.permission.INTERNET" />
      * <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
      * <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
      * 
-	 * Verifica a conex�o do device.
+	 * Verifica a conexao do device.
 	 * Pode estar conectado via wifi ou 3G
 	 * @param context
 	 * @return boolean
@@ -19,8 +22,20 @@ public class NetworkUtils {
 	 */
 	public static boolean isOnline(Context context)
 	{
-		final ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);//Pego a conectividade do contexto o qual o metodo foi chamado
-		final NetworkInfo netInfo = cm.getActiveNetworkInfo();//Crio o objeto netInfo que recebe as informacoes da NEtwork
-		return (netInfo != null && netInfo.isConnected());
+		try {
+			ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+			if (cm != null) {
+				Log.d(TAG, "^ isOnline()=true");
+				return cm.getActiveNetworkInfo().isConnected();
+			} else {
+				Log.d(TAG, "^ isOnline()=false");
+				return false;
+			}
+
+		} catch (Exception e) {
+			Log.e(TAG, "^ isOnline()=false", e);
+			return false;
+		}
     }
 }

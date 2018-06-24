@@ -1,6 +1,8 @@
 package br.com.i9algo.autaz.pdv;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,8 +35,16 @@ public class ProductsActivity extends BaseActivity implements ProductControllerI
 	private Realm realm;
 
 	public List<Product> productsList;
-	public ProductsActivity() {
-		super();
+
+
+	public static Intent createIntent(Context context) {
+		return new Intent(context, ProductsActivity.class);
+	}
+
+	public static void startActivityIfDiff(Activity activity) {
+		if (!activity.getClass().getSimpleName().equals(ProductsActivity.class.getSimpleName())){
+			activity.startActivity(createIntent(activity));
+		}
 	}
 
 	@Override

@@ -1,62 +1,92 @@
 [
   {
     "name": "WB Alcatra Bacon",
-    "price": 18.0
+    "priceCost": 0,
+    "priceResale": 18.0,
+    "requestPass": 1
   },
   {
     "name": "WB Alcatra Salada",
-    "price": 18.0
+    "priceCost": 0,
+    "priceResale": 18.0,
+    "requestPass": 1
   },
   {
     "name": "WB Costela",
-    "price": 23.0
+    "priceCost": 0,
+    "priceResale": 23.0,
+    "requestPass": 1
   },
   {
     "name": "Porção de Fritas",
-    "price": 15.0
+    "priceCost": 0,
+    "priceResale": 15.0,
+    "requestPass": 1
   },
   {
     "name": "Fritas pequena",
-    "price": 5.0
+    "priceCost": 0,
+    "priceResale": 5.0,
+    "requestPass": 1
   },
   {
     "name": "Refri",
-    "price": 5.0
+    "priceCost": 0,
+    "priceResale": 5.0,
+    "requestPass": 0
   },
   {
-    "name": "DUPLO ALCATRA BACON",
-    "price": 30.0
+    "name": "Duplo Alcatra Bacon",
+    "priceCost": 0,
+    "priceResale": 30.0,
+    "requestPass": 1
   },
   {
     "name": "Adicional",
-    "price": 2.0
+    "priceCost": 0,
+    "priceResale": 2.0,
+    "requestPass": 1
   },
   {
     "name": "Pão Carne e queijo fritas",
-    "price": 18.0
+    "priceCost": 0,
+    "priceResale": 18.0,
+    "requestPass": 1
   },
   {
     "name": "Água",
-    "price": 3.0
+    "priceCost": 0,
+    "priceResale": 3.0,
+    "requestPass": 0
   },
   {
     "name": "Cerveja",
-    "price": 5.0
+    "priceCost": 0,
+    "priceResale": 5.0,
+    "requestPass": 0
   },
   {
     "name": "WB Cordeiro",
-    "price": 25.0
+    "priceCost": 0,
+    "priceResale": 25.0,
+    "requestPass": 1
   },
   {
     "name": "WB Alcatra Onions Rings",
-    "price": 23.0
+    "priceCost": 0,
+    "priceResale": 23.0,
+    "requestPass": 1
   },
   {
     "name": "WB Pernil",
-    "price": 18.0
+    "priceCost": 0,
+    "priceResale": 18.0,
+    "requestPass": 1
   },
   {
     "name": "Onion Pq",
-    "price": 5.0
+    "priceCost": 0,
+    "priceResale": 5.0,
+    "requestPass": 1
   }
 ]
