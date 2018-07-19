@@ -1,7 +1,5 @@
 package br.com.i9algo.autaz.pdv.domain.interfaces;
 
-import android.view.View;
-
 import br.com.i9algo.autaz.pdv.domain.enums.PaymentMethodEnum;
 import br.com.i9algo.autaz.pdv.domain.models.Client;
 import br.com.i9algo.autaz.pdv.domain.models.Product;

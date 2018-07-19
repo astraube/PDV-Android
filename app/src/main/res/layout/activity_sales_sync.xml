@@ -103,7 +103,7 @@
         android:paddingRight="@dimen/horizontal_padding_textView"
         android:paddingTop="@dimen/vertical_padding_textView" />
 
-    <br.com.i9algo.autaz.pdv.ui.views.FloatUserButtonView
+    <br.com.i9algo.autaz.pdv.ui.components.FloatUserButtonView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

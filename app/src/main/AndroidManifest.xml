@@ -160,19 +160,6 @@
             </intent-filter>
         </service>
 
-        <service
-            android:name=".customkeyboard.SoftKeyboard"
-            android:label="@string/ime_name"
-            android:permission="android.permission.BIND_INPUT_METHOD">
-            <meta-data
-                android:name="android.view.im"
-                android:resource="@xml/method" />
-
-            <intent-filter>
-                <action android:name="android.view.InputMethod" />
-            </intent-filter>
-        </service>
-
         <receiver android:name=".executor.receivers.SampleAlarmReceiver"></receiver>
         <receiver
             android:name=".executor.receivers.BootUpReceiver"
@@ -182,39 +169,6 @@
             </intent-filter>
         </receiver>
         <service android:name=".executor.services.SampleSchedulingService" />
-
-        <!-- Firebase Cloud Msg -->
-        <service
-            android:name=".executor.services.MyFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
-        <service
-            android:name=".executor.services.MyFirebaseInstanceIDService" android:exported="true">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-            </intent-filter>
-        </service>
-        <service android:name=".executor.services.MyJobService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
-            </intent-filter>
-        </service>
-
-        <!-- Personalizar mensagem da barra de notificacao -->
-
-        <!--<meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/bg_corner_gray" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/accent" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel"
-            android:value="@string/action_add_product"/>
-            -->
 
 
         <!--

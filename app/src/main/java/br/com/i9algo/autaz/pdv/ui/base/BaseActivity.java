@@ -26,7 +26,7 @@ import br.com.i9algo.autaz.pdv.data.remote.service.ApiService;
 import br.com.i9algo.autaz.pdv.data.remote.subscribers.SubscriberInterface;
 import br.com.i9algo.autaz.pdv.domain.constants.Constants;
 import br.com.i9algo.autaz.pdv.helpers.Logger;
-import br.com.i9algo.autaz.pdv.ui.views.BaseViewInterface;
+import br.com.i9algo.autaz.pdv.ui.components.BaseViewInterface;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 

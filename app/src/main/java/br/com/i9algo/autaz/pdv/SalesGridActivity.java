@@ -57,7 +57,7 @@ import br.com.i9algo.autaz.pdv.ui.adapters.SalesGridAdapter;
 import br.com.i9algo.autaz.pdv.ui.base.BaseActivity;
 import br.com.i9algo.autaz.pdv.ui.dialog.DialogUtil;
 import br.com.i9algo.autaz.pdv.ui.dialog.SaleNewDialog;
-import br.com.i9algo.autaz.pdv.ui.views.FloatUserButtonView;
+import br.com.i9algo.autaz.pdv.ui.components.FloatUserButtonView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

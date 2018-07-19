@@ -21,9 +21,8 @@ import br.com.i9algo.autaz.pdv.ProductsActivity;
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.SalesListActivity;
 import br.com.i9algo.autaz.pdv.controllers.printer2.DiscoveryActivity;
-import br.com.i9algo.autaz.pdv.domain.constants.Constants;
 import br.com.i9algo.autaz.pdv.executor.services.SampleSchedulingService;
-import br.com.i9algo.autaz.pdv.ui.views.ImageTextView;
+import br.com.i9algo.autaz.pdv.ui.components.ImageTextView;
 
 public class FloatMenuDialog extends Dialog implements View.OnClickListener {
 	

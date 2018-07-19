@@ -16,7 +16,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
 
-    <faranjit.currency.edittext.CurrencyEditText
+    <br.com.i9algo.autaz.pdv.ui.components.CurrencyEditText
         android:id="@+id/txtMoney"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         app:showSymbol="true" >
 
         <requestFocus />
-    </faranjit.currency.edittext.CurrencyEditText>
+    </br.com.i9algo.autaz.pdv.ui.components.CurrencyEditText>
 
     <!--<EditText
         android:id="@+id/txtMoney"

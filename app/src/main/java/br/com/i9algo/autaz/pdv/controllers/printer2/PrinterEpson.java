@@ -103,6 +103,7 @@ public class PrinterEpson {
 		return true;
 	}
 
+	/*
 	private boolean createReceiptData() {
 		String method = "";
 		StringBuilder textData = new StringBuilder();
@@ -195,7 +196,7 @@ public class PrinterEpson {
 		textData = null;
 
 		return true;
-	}
+	}*/
 
 	private boolean createReceiptDataSale(final Cupom cupom, Date d, Map<PaymentMethodEnum, Double> reportPayMethods) {
 		String method = "";
@@ -212,7 +213,7 @@ public class PrinterEpson {
 
 			method = "addTextAlign";
 			mPrinter.addTextAlign(Printer.ALIGN_CENTER);
-            mPrinter.addTextFont(Printer.FONT_B);
+			mPrinter.addTextFont(Printer.FONT_B);
 
 			if (cupom.getCorporateImage() != null) {
 				method = "addImage";
@@ -239,14 +240,22 @@ public class PrinterEpson {
 
 			method = "addCorporateInfo.Phone";
 			if (!cupom.getCorporatePhone().isEmpty()) {
-                mPrinter.addTextAlign(Printer.ALIGN_CENTER);
+				mPrinter.addTextAlign(Printer.ALIGN_LEFT);
+				mPrinter.addHPosition(100);
 				mPrinter.addText(cupom.getCorporatePhone());
+				mPrinter.addTextAlign(Printer.ALIGN_CENTER);
 			}
 
 			method = "addCorporateInfo.Socialmedia";
 			if (!cupom.getCorporateSocialmedia().isEmpty()) {
-                mPrinter.addTextAlign(Printer.ALIGN_CENTER);
+				mPrinter.addTextAlign(Printer.ALIGN_LEFT);
+				if (cupom.getCorporatePhone().isEmpty()) {
+					mPrinter.addHPosition(100);
+				} else {
+					mPrinter.addHPosition(300);
+				}
 				mPrinter.addText(cupom.getCorporateSocialmedia());
+				mPrinter.addTextAlign(Printer.ALIGN_CENTER);
 			}
 
 			mPrinter.addFeedLine(2);
@@ -266,7 +275,7 @@ public class PrinterEpson {
 			method = "addReports";
 
 			mPrinter.addTextAlign(mPrinter.ALIGN_LEFT);
-            mPrinter.addTextFont(Printer.FONT_B);
+			mPrinter.addTextFont(Printer.FONT_B);
 			mPrinter.addTextSize(1, 1);
 
 			// Valores de pagamento dinheir/credito/...
@@ -431,16 +440,24 @@ public class PrinterEpson {
 			}
 
 			method = "addCorporateInfo.Phone";
-            if (!cupom.getCorporatePhone().isEmpty()) {
-                mPrinter.addTextAlign(Printer.ALIGN_CENTER);
-                mPrinter.addText(cupom.getCorporatePhone());
-            }
+			if (!cupom.getCorporatePhone().isEmpty()) {
+				mPrinter.addTextAlign(Printer.ALIGN_LEFT);
+				mPrinter.addHPosition(100);
+				mPrinter.addText(cupom.getCorporatePhone());
+				mPrinter.addTextAlign(Printer.ALIGN_CENTER);
+			}
 
-            method = "addCorporateInfo.Socialmedia";
-            if (!cupom.getCorporateSocialmedia().isEmpty()) {
-                mPrinter.addTextAlign(Printer.ALIGN_CENTER);
-                mPrinter.addText(cupom.getCorporateSocialmedia());
-            }
+			method = "addCorporateInfo.Socialmedia";
+			if (!cupom.getCorporateSocialmedia().isEmpty()) {
+				mPrinter.addTextAlign(Printer.ALIGN_LEFT);
+				if (cupom.getCorporatePhone().isEmpty()) {
+					mPrinter.addHPosition(100);
+				} else {
+					mPrinter.addHPosition(300);
+				}
+				mPrinter.addText(cupom.getCorporateSocialmedia());
+				mPrinter.addTextAlign(Printer.ALIGN_CENTER);
+			}
 
 			mPrinter.addFeedLine(2);
 			mPrinter.addTextAlign(Printer.ALIGN_CENTER);
@@ -542,7 +559,7 @@ public class PrinterEpson {
 
 			/********************* SENHA DE ESPERA ************************/
 			method = "addOrderCodeWait";
-            if (cupom.getSale().existsOrderCodeWait()) {
+			if (cupom.getSale().existsOrderCodeWait()) {
 
 				method = "addDivider";
 				mPrinter.addTextFont(Printer.FONT_A);
@@ -553,9 +570,9 @@ public class PrinterEpson {
 				mPrinter.addTextSize(2, 2);
 				method = "addOrderCodeWait";
 
-                mPrinter.addTextFont(Printer.FONT_B);
-                mPrinter.addText(this.mOwner.getActivity().getString(R.string.code_wait, cupom.getSale().getOrderCodeWait()).toUpperCase() + "\n");
-                mPrinter.addTextFont(Printer.FONT_A);
+				mPrinter.addTextFont(Printer.FONT_B);
+				mPrinter.addText(this.mOwner.getActivity().getString(R.string.code_wait, cupom.getSale().getOrderCodeWait()).toUpperCase() + "\n");
+				mPrinter.addTextFont(Printer.FONT_A);
 
 				method = "addTextSize";
 				mPrinter.addTextSize(1, 1);
@@ -563,7 +580,7 @@ public class PrinterEpson {
 				method = "addText.SenhaEspera";
 				mPrinter.addText(textData.toString());
 				textData.delete(0, textData.length());
-            }
+			}
 			/********************************************************/
 
 			method = "addCupomNaoFiscalMessage";
@@ -606,17 +623,17 @@ public class PrinterEpson {
 				mPrinter.addText(this.mOwner.getActivity().getString(R.string.code_wait, cupom.getSale().getOrderCodeWait()).toUpperCase() + "\n");
 				mPrinter.addTextSize(1, 1);
 
-                mPrinter.addTextFont(Printer.FONT_A);
+				mPrinter.addTextFont(Printer.FONT_A);
 				mPrinter.addText(this.mOwner.getActivity().getString(R.string.divider));
-                mPrinter.addTextFont(Printer.FONT_B);
+				mPrinter.addTextFont(Printer.FONT_B);
 
 				/********************* PRODUTOS ************************/
 				method = "addProductsPreparation";
 				printProductsSalePreparation(cupom);
 
-                mPrinter.addTextFont(Printer.FONT_A);
-                mPrinter.addText(this.mOwner.getActivity().getString(R.string.divider));
-                mPrinter.addTextFont(Printer.FONT_B);
+				mPrinter.addTextFont(Printer.FONT_A);
+				mPrinter.addText(this.mOwner.getActivity().getString(R.string.divider));
+				mPrinter.addTextFont(Printer.FONT_B);
 				/********************************************************/
 			}
 

@@ -9,7 +9,7 @@ import android.util.Log;
 
 import java.util.Calendar;
 
-import br.com.i9algo.autaz.pdv.ui.views.HelpButtonView;
+import br.com.i9algo.autaz.pdv.ui.components.HelpButtonView;
 
 /**
  * <p>Botao do panico</p>

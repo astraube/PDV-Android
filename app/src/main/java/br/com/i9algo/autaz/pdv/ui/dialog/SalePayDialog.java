@@ -12,7 +12,7 @@ import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.domain.enums.PaymentMethodEnum;
 import br.com.i9algo.autaz.pdv.domain.interfaces.SaleControllerInterface;
 import br.com.i9algo.autaz.pdv.domain.models.Sale;
-import br.com.i9algo.autaz.pdv.ui.views.ImageTextView;
+import br.com.i9algo.autaz.pdv.ui.components.ImageTextView;
 
 public class SalePayDialog extends AlertDialog.Builder implements View.OnClickListener {
 	

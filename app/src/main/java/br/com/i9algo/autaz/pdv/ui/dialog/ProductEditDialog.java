@@ -17,7 +17,7 @@ import br.com.i9algo.autaz.pdv.domain.interfaces.ProductControllerInterface;
 import br.com.i9algo.autaz.pdv.domain.models.Product;
 import br.com.i9algo.autaz.pdv.helpers.FormatUtil;
 import br.com.i9algo.autaz.pdv.ui.base.BaseActivity;
-import faranjit.currency.edittext.CurrencyEditText;
+import br.com.i9algo.autaz.pdv.ui.components.CurrencyEditText;
 
 public class ProductEditDialog extends MaterialDialog {
 	

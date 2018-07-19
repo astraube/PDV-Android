@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,7 +13,7 @@ import java.text.ParseException;
 import br.com.i9algo.autaz.pdv.R;
 import br.com.i9algo.autaz.pdv.domain.interfaces.SaleControllerInterface;
 import br.com.i9algo.autaz.pdv.domain.models.Product;
-import faranjit.currency.edittext.CurrencyEditText;
+import br.com.i9algo.autaz.pdv.ui.components.CurrencyEditText;
 
 public class ProductChangePriceDialog extends AlertDialog.Builder {
 	
@@ -76,7 +77,8 @@ public class ProductChangePriceDialog extends AlertDialog.Builder {
                 }
             }
         );
-        this.mDialog = this.create();
+
+		this.mDialog = this.create();
         this.mDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationCenter; 
         this.mDialog.show();
 	}

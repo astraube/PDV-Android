@@ -15,7 +15,125 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/sale_pay_value_received" />
 
-    <faranjit.currency.edittext.CurrencyEditText
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/bts_money"
+        android:visibility="gone">
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp">
+
+            <com.andexert.library.RippleView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                app:rv_rippleDuration="200"
+                app:rv_color="@android:color/black"
+                android:id="@+id/bt_money_2">
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:adjustViewBounds="true"
+                    app:srcCompat="@drawable/money_br_2"
+                    android:clickable="true"
+                    android:focusable="true"/>
+            </com.andexert.library.RippleView>
+
+            <com.andexert.library.RippleView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                app:rv_rippleDuration="200"
+                app:rv_color="@android:color/black"
+                android:id="@+id/bt_money_5">
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:adjustViewBounds="true"
+                    app:srcCompat="@drawable/money_br_5"
+                    android:clickable="true"
+                    android:focusable="true"  />
+            </com.andexert.library.RippleView>
+
+            <com.andexert.library.RippleView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                app:rv_rippleDuration="200"
+                app:rv_color="@android:color/black"
+                android:id="@+id/bt_money_10">
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    app:srcCompat="@drawable/money_br_10"/>
+            </com.andexert.library.RippleView>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="5dp">
+
+            <com.andexert.library.RippleView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                app:rv_rippleDuration="200"
+                app:rv_color="@android:color/black"
+                android:id="@+id/bt_money_20">
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:adjustViewBounds="true"
+                    app:srcCompat="@drawable/money_br_20" />
+            </com.andexert.library.RippleView>
+
+            <com.andexert.library.RippleView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                app:rv_rippleDuration="200"
+                app:rv_color="@android:color/black"
+                android:id="@+id/bt_money_50">
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:adjustViewBounds="true"
+                    app:srcCompat="@drawable/money_br_50" />
+            </com.andexert.library.RippleView>
+
+            <com.andexert.library.RippleView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                app:rv_rippleDuration="200"
+                app:rv_color="@android:color/black"
+                android:id="@+id/bt_money_100">
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    app:srcCompat="@drawable/money_br_100" />
+            </com.andexert.library.RippleView>
+        </TableRow>
+    </TableLayout>
+
+    <br.com.i9algo.autaz.pdv.ui.components.CurrencyEditText
         android:id="@+id/txtMoney"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,7 +147,7 @@
         app:showSymbol="true" >
 
         <requestFocus />
-    </faranjit.currency.edittext.CurrencyEditText>
+    </br.com.i9algo.autaz.pdv.ui.components.CurrencyEditText>
 
     <!--<EditText
         android:id="@+id/txtMoney"

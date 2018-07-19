@@ -1,4 +1,4 @@
-package br.com.i9algo.autaz.pdv.ui.views;
+package br.com.i9algo.autaz.pdv.ui.components;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
