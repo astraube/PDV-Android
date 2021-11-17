@@ -1,1 +1,1 @@
-leia me
+Ponto de venda Android
